@@ -8,7 +8,7 @@ import { toast, Toasts } from "@/components/toast";
 import { generateBatch } from "@/lib/generator";
 import { Post, Channel, emptyPost } from "@/lib/schema";
 import { ConnectedModal } from "@/components/connected";
-
+ 
 type ProviderId = "x" | "linkedin" | "facebook" | "instagram";
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
@@ -97,6 +97,7 @@ export default function Dashboard() {
     } finally { setLoading(false); }
   }
 
+  // Update Post
   async function updatePost(p: Post) {
     setPosts(prev => prev.map(x => x.id === p.id ? p : x)); // optimistic
     await fetch(`/api/posts/${p.id}`, {
@@ -106,6 +107,7 @@ export default function Dashboard() {
     });
   }
 
+  // Delete Post
   async function deletePost(id: string) {
     setPosts(prev => prev.filter(p => p.id !== id));
     await fetch(`/api/posts/${id}`, { method: "DELETE" });
