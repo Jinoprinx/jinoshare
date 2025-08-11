@@ -7,7 +7,7 @@ import { Calendar } from "@/components/calendar";
 import { toast, Toasts } from "@/components/toast";
 import { generateBatch } from "@/lib/generator";
 import { Post, Channel, emptyPost } from "@/lib/schema";
-import { ConnectedModal } from "@/components/Connected";
+import { ConnectedModal } from "@/components/connected";
 
 type ProviderId = "x" | "linkedin" | "facebook" | "instagram";
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
