@@ -2,16 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { get, remove, upsert } from "@/lib/db";
 import { Post } from "@/lib/schema";
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+interface RouteContext {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
+export async function PUT(req: NextRequest, { params }: RouteContext) {
   const body = (await req.json()) as Post;
-  const existing = await get(params.id);
+  const { id } = await params;
+  const existing = await get(id);
   if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  const updated: Post = { ...existing, ...body, id: params.id, updatedAt: new Date().toISOString() };
+  const updated: Post = { ...existing, ...body, id, updatedAt: new Date().toISOString() };
   await upsert(updated);
   return NextResponse.json({ post: updated });
 }
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
-  await remove(params.id);
+export async function DELETE(_: NextRequest, { params }: RouteContext) {
+  const { id } = await params;
+  await remove(id);
   return NextResponse.json({ ok: true });
 }

@@ -1,4 +1,4 @@
-export type Channel = "x" | "tiktok" | "instagram" | "youtube" | "linkedin";
+export type Channel = "x" | "tiktok" | "instagram" | "youtube" | "linkedin" | "facebook";
 export type Status = "draft" | "scheduled" | "published";
 
 export type Post = {
