@@ -1,0 +1,14 @@
+npm warn Unknown user config "python". This will stop working in the next major version of npm.
+
+> api@0.2.0 test
+> jest
+
+PASS src/index.test.ts
+  Health Check
+    √ should return 200 and { ok: true } (85 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        2.478 s
+Ran all test suites.
