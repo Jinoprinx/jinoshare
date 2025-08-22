@@ -8,7 +8,7 @@ import { toast, Toasts } from "@/components/toast";
 import { generateBatch } from "@/lib/generator";
 import { Post, Channel, emptyPost } from "@jino/common";
 import { ConnectedModal } from "@/components/connected";
-import { AI } from "@/components/AI";
+import AIPage from "./ai/page";
  
 type ProviderId = "x" | "linkedin" | "facebook" | "instagram";
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
@@ -386,7 +386,7 @@ export default function Dashboard() {
         <ContentList posts={posts} onUpdate={updatePost} onDelete={deletePost} />
       )}
 
-      {tab === "ai" && <AI />}
+      {tab === "ai" && <AIPage />}
 
       <div className="text-sm text-gray-500">
         {selectedCount} items in pipeline
