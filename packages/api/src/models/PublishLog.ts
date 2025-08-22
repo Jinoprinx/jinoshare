@@ -8,6 +8,8 @@ const PublishLogSchema = new Schema<IPublishLog>(
     content: { type: String, required: true },
     providerPostId: String,
     status: { type: String, enum: ["success", "error"], required: true },
+    mediaUrl: String,
+    mediaType: String,
     errorMessage: String
   },
   { timestamps: { createdAt: true, updatedAt: false } }

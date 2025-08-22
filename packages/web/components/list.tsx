@@ -52,6 +52,15 @@ export function ContentList({ posts, onUpdate, onDelete }: { posts: Post[]; onUp
               </div>
               <h3 className="font-semibold mt-1">{p.title || "Untitled"}</h3>
               <p className="text-gray-700 whitespace-pre-wrap">{p.content}</p>
+              {p.mediaUrl && (
+                <div className="mt-2">
+                  {p.mediaType === "image" ? (
+                    <img src={`${BACKEND}${p.mediaUrl}`} alt="Post media" className="max-w-full h-auto" />
+                  ) : p.mediaType === "video" ? (
+                    <video src={`${BACKEND}${p.mediaUrl}`} controls className="max-w-full h-auto" />
+                  ) : null}
+                </div>
+              )}
               {p.scheduledAt && (
                 <p className="text-sm text-gray-500 mt-1">
                   Scheduled: {format(new Date(p.scheduledAt), "EEE, MMM d p")}

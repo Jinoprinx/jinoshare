@@ -40,9 +40,26 @@ async function postToProvider(provider: ProviderId, text: string, userId?: strin
   return data as { ok: true; id: string };
 }
 
+async function postMediaToProvider(provider: ProviderId, file: File, text?: string, userId?: string) {
+  const formData = new FormData();
+  formData.append("file", file);
+  if (text) formData.append("text", text);
+  if (userId) formData.append("userId", userId);
+
+  const res = await fetch(`${BACKEND}/api/${provider}/upload`, {
+    method: "POST",
+    body: formData
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.detail || data.error || `Failed to upload to ${provider}`);
+  return data as { ok: true; url: string };
+}
+
 export default function Dashboard() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [draft, setDraft] = useState<Post>(emptyPost());
+  const [mediaFile, setMediaFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [posting, setPosting] = useState<ProviderId | "all" | null>(null);
   const [tab, setTab] = useState<"write"|"batch"|"calendar"|"library"|"ai">("write");
@@ -84,14 +101,36 @@ export default function Dashboard() {
   async function saveDraft() {
     setLoading(true);
     try {
+      let postData = { ...draft };
+      
+      // If there's a media file, upload it to storage first
+      if (mediaFile) {
+        const formData = new FormData();
+        formData.append("file", mediaFile);
+        
+        const uploadRes = await fetch(`${BACKEND}/api/media-storage/store`, {
+          method: "POST",
+          body: formData
+        });
+        
+        if (!uploadRes.ok) {
+          throw new Error("Failed to upload media");
+        }
+        
+        const uploadData = await uploadRes.json();
+        postData.mediaUrl = uploadData.mediaUrl;
+        postData.mediaType = uploadData.mediaType;
+      }
+      
       const res = await fetch("/api/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(draft)
+        body: JSON.stringify(postData)
       });
       const data = await res.json();
       setPosts(p => [data.post, ...p]);
       setDraft(emptyPost());
+      setMediaFile(null);
       toast.success("Saved");
     } catch {
       toast.error("Could not save");
@@ -125,37 +164,66 @@ export default function Dashboard() {
   }
 
   async function postDraftTo(provider: ProviderId) {
-    const text = draft.content.trim();
-    if (!text) return toast.info("Write something first");
-    try {
-      setPosting(provider);
-      const res = await postToProvider(provider, text);
-      toast.success(`Posted to ${provider.toUpperCase()} (id: ${res.id})`);
-    } catch (e: any) {
-      toast.error(e.message || `Failed to post to ${provider}`);
-    } finally {
-      setPosting(null);
+    if (mediaFile) {
+      try {
+        setPosting(provider);
+        const res = await postMediaToProvider(provider, mediaFile, draft.content.trim());
+        toast.success(`Posted to ${provider.toUpperCase()} (url: ${res.url})`);
+      } catch (e: any) {
+        toast.error(e.message || `Failed to post to ${provider}`);
+      } finally {
+        setPosting(null);
+      }
+    } else {
+      const text = draft.content.trim();
+      if (!text) return toast.info("Write something first");
+      try {
+        setPosting(provider);
+        const res = await postToProvider(provider, text);
+        toast.success(`Posted to ${provider.toUpperCase()} (id: ${res.id})`);
+      } catch (e: any) {
+        toast.error(e.message || `Failed to post to ${provider}`);
+      } finally {
+        setPosting(null);
+      }
     }
   }
 
   async function postDraftToSelected() {
-    const text = draft.content.trim();
-    if (!text) return toast.info("Write something first");
     const targets = providersFromChannels(draft.channels);
     if (targets.length === 0) return toast.info("Select at least one supported provider in Channels");
 
-    try {
-      setPosting("all");
-      for (const p of targets) {
-        try {
-          const res = await postToProvider(p, text);
-          toast.success(`Posted to ${p.toUpperCase()} (id: ${res.id})`);
-        } catch (err: any) {
-          toast.error(`${p.toUpperCase()}: ${err.message || "Failed"}`);
+    if (mediaFile) {
+      try {
+        setPosting("all");
+        for (const p of targets) {
+          try {
+            const res = await postMediaToProvider(p, mediaFile, draft.content.trim());
+            toast.success(`Posted to ${p.toUpperCase()} (url: ${res.url})`);
+          } catch (err: any) {
+            toast.error(`${p.toUpperCase()}: ${err.message || "Failed"}`);
+          }
         }
+      } finally {
+        setPosting(null);
       }
-    } finally {
-      setPosting(null);
+    } else {
+      const text = draft.content.trim();
+      if (!text) return toast.info("Write something first");
+
+      try {
+        setPosting("all");
+        for (const p of targets) {
+          try {
+            const res = await postToProvider(p, text);
+            toast.success(`Posted to ${p.toUpperCase()} (id: ${res.id})`);
+          } catch (err: any) {
+            toast.error(`${p.toUpperCase()}: ${err.message || "Failed"}`);
+          }
+        }
+      } finally {
+        setPosting(null);
+      }
     }
   }
 
@@ -253,7 +321,7 @@ export default function Dashboard() {
       {tab === "write" && (
         <div className="grid md:grid-cols-3 gap-6">
           <div className="md:col-span-2 card">
-            <Editor value={draft} onChange={setDraft} />
+            <Editor value={draft} onChange={(p, file) => { setDraft(p); setMediaFile(file || null); }} />
             <div className="flex items-center justify-between mt-4">
               <Channels value={draft.channels} onChange={(c) => setDraft({ ...draft, channels: c })} />
               <div className="flex gap-2">

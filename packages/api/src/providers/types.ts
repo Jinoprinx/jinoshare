@@ -1,3 +1,5 @@
+import "multer";
+
 export type ProviderId = "x" | "linkedin" | "facebook" | "instagram";
 
 export interface TokenResponse {
@@ -39,5 +41,8 @@ export interface Provider {
   }): Promise<string>;
 
   // Minimal posting interface (text). Providers can expand later.
-  postText(accessToken: string, payload: { text: string }): Promise<{ id: string }>;
+  postText(accessToken: string, payload: { text: string }): Promise<{ id: string, url: string }>;
+
+  // Optional media posting interface.
+  postMedia?(accessToken: string, payload: { file: any, text?: string }): Promise<{ id: string, url: string }>;
 }

@@ -1,30 +1,28 @@
-# Node.js
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
+# Node modules
+**/node_modules/
 
 # Build output
-.next/
-dist/
-out/
-coverage/
-.cache/
-tmp/
-temp/
+**/.next/
+**/dist/
+**/out/
+**/.turbo/
+**/.vercel/
+**/.cache/
+**/.eslintcache
 
 # Environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+
+
 
 # Logs
-logs/
-*.log
-*.log.*
+**/logs/
+**/*.log
+**/*.log.*
 
 # OS junk
 .DS_Store
@@ -37,27 +35,38 @@ Thumbs.db
 
 # Lockfiles (choose one)
 package-lock.json
-# pnpm-lock.yaml
 # yarn.lock
+# pnpm-lock.yaml
 
-# ngrok
-ngrok.log
-ngrok.yml
+# Turborepo
+turbo/
+.turbo/
 
-# MongoDB local data (if used)
-data/
-dump/
+# Local databases
+**/db.json
+**/data/
+**/dump/
 
-# Optional: uploads/media
-public/uploads/
-*.mp4
-*.mov
-*.webm
-*.png
-*.jpg
-*.jpeg
-*.gif
+# Uploads or media
+**/public/uploads/
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.gif
+**/*.mp4
+**/*.webm
 
-# Optional: generated files
-*.generated.*
-*.tsbuildinfo
+# Media storage directories
+**/media-storage/
+**/ai-generated/
+
+# AI artifacts
+**/ai-output/
+**/generated-prompts/
+
+# API keys and secrets (extra protection)
+**/*.pem
+**/*.p12
+**/*.key
+**/secrets.json
+

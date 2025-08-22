@@ -20,6 +20,8 @@ export interface IPublishLog {
   userId: string;
   provider: Channel;
   content: string;
+  mediaUrl?: string;
+  mediaType?: "image" | "video";
   providerPostId?: string;
   status: "success" | "error";
   errorMessage?: string;
@@ -30,6 +32,9 @@ export interface Post {
   id: string;
   title?: string;
   content: string;
+  mediaUrl?: string;
+  mediaType?: "image" | "video";
+  mediaBuffer?: Buffer; // For temporary storage before uploading
   status: "draft" | "scheduled" | "published";
   channels: Channel[];
   scheduledAt?: string;
@@ -73,5 +78,31 @@ export interface AIRewriteRequest {
 export interface AIRewriteResponse {
   ok: boolean;
   text?: string;
+  error?: string;
+}
+
+export interface AIImageGenerateRequest {
+  prompt: string;
+  style?: string;
+  dimensions?: string;
+  quality?: string;
+}
+
+export interface AIImageGenerateResponse {
+  ok: boolean;
+  imageUrl?: string;
+  error?: string;
+}
+
+export interface AIVideoGenerateRequest {
+  prompt: string;
+  duration?: number;
+  style?: string;
+  dimensions?: string;
+}
+
+export interface AIVideoGenerateResponse {
+  ok: boolean;
+  videoUrl?: string;
   error?: string;
 }

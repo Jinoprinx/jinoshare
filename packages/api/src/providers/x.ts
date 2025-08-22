@@ -1,4 +1,6 @@
+import "multer";
 import axios from "axios";
+import FormData from "form-data";
 import { config } from "../config";
 import { Provider, TokenResponse } from "./types";
 
@@ -13,7 +15,7 @@ function basicAuthHeader() {
 
 export const xProvider: Provider = {
   id: "x",
-  displayName: "X",
+  displayName: "X (formerly Twitter)",
   usesPkce: true,
 
   buildAuthUrl({ state, codeChallenge }) {
@@ -93,6 +95,43 @@ export const xProvider: Provider = {
       { text },
       { headers: { Authorization: `Bearer ${accessToken}`, "Content-Type": "application/json" } }
     );
-    return { id: res.data?.data?.id };
+    const id = res.data?.data?.id;
+    return { id, url: `https://x.com/anyuser/status/${id}` };
+  },
+
+  async postMedia(accessToken: string, { file, text }: { file: any, text?: string }) {
+    // 1. Upload media first
+    const formData = new FormData();
+    formData.append("media", file.buffer, {
+      filename: file.originalname,
+      contentType: file.mimetype
+    });
+    
+    const uploadRes = await axios.post("https://upload.twitter.com/1.1/media/upload.json", formData, {
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        ...formData.getHeaders()
+      }
+    });
+    
+    const mediaId = uploadRes.data.media_id_string;
+    
+    // 2. Create tweet with media
+    const tweetRes = await axios.post(
+      TWEET_URL,
+      { 
+        text: text || "",
+        media: { media_ids: [mediaId] }
+      },
+      { 
+        headers: { 
+          Authorization: `Bearer ${accessToken}`, 
+          "Content-Type": "application/json" 
+        } 
+      }
+    );
+    
+    const id = tweetRes.data?.data?.id;
+    return { id, url: `https://x.com/anyuser/status/${id}` };
   }
 };

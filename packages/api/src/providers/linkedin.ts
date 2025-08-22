@@ -1,3 +1,4 @@
+import "multer";
 import axios from "axios";
 import { config } from "../config";
 import { Provider, TokenResponse } from "./types";
@@ -46,7 +47,80 @@ export const linkedinProvider: Provider = {
   },
 
   async postText(accessToken: string, { text }: { text: string }) {
-    // Placeholder: implement UGC Post or Shares API with author URN.
-    throw new Error("LinkedIn postText not implemented yet");
+    const user = await axios.get("https://api.linkedin.com/v2/userinfo", {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    const urn = `urn:li:person:${user.data.sub}`
+    const body = {
+      "author": urn,
+      "commentary": text,
+      "visibility": "PUBLIC",
+      "distribution": {
+        "feedDistribution": "MAIN_FEED",
+      },
+    };
+    const res = await axios.post("https://api.linkedin.com/rest/posts", body, {
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+        "X-Restli-Protocol-Version": "2.0.0",
+        "LinkedIn-Version": "2024.08"
+      }
+    });
+    return { id: res.headers["x-restli-id"], url: `https://www.linkedin.com/feed/update/${res.headers["x-restli-id"]}` };
+  },
+
+  async postMedia(accessToken: string, { file, text }: { file: any, text?: string }) {
+    const user = await axios.get("https://api.linkedin.com/v2/userinfo", {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    const urn = `urn:li:person:${user.data.sub}`
+
+    // 1. Initialize upload
+    const initRes = await axios.post("https://api.linkedin.com/rest/images?action=initializeUpload", {
+      "initializeUploadRequest": {
+        "owner": urn
+      }
+    }, {
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+        "X-Restli-Protocol-Version": "2.0.0",
+        "LinkedIn-Version": "2024.08"
+      }
+    });
+    const uploadUrl = initRes.data.value.uploadUrl;
+    const imageUrn = initRes.data.value.image;
+
+    // 2. Upload media
+    await axios.put(uploadUrl, file.buffer, {
+      headers: { "Content-Type": file.mimetype }
+    });
+
+    // 3. Create post
+    const body = {
+      "author": urn,
+      "commentary": text || "",
+      "visibility": "PUBLIC",
+      "distribution": {
+        "feedDistribution": "MAIN_FEED",
+      },
+      "content": {
+        "media": {
+          "id": imageUrn
+        }
+      }
+    };
+
+    const res = await axios.post("https://api.linkedin.com/rest/posts", body, {
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+        "X-Restli-Protocol-Version": "2.0.0",
+        "LinkedIn-Version": "2024.08"
+      }
+    });
+
+    return { id: res.headers["x-restli-id"], url: `https://www.linkedin.com/feed/update/${res.headers["x-restli-id"]}` };
   }
 };
