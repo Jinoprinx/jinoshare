@@ -9,11 +9,18 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "test": "turbo run test",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "heroku-postbuild": "turbo run build --filter=api"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
     "prettier": "^3.3.2",
+    "tailwindcss": "^4.1.12",
     "turbo": "latest"
   },
-  "packageManager": "npm@11.5.2"
+  "packageManager": "npm@11.5.2",
+  "dependencies": {
+    "daisyui": "^5.0.52"
+  }
 }
