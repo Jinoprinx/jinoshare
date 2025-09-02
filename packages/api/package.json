@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "nodemon --watch src --exec \"ts-node src/index.ts\"",
     "start": "node dist/index.js",
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc",
+    "heroku-postbuild": "npm run build",
     "lint": "eslint .",
     "test": "jest"
   },
@@ -34,7 +35,10 @@
     "nodemon": "3.1.4",
     "supertest": "^6.3.4",
     "ts-jest": "^29.4.1",
-    "ts-node": "10.9.2",
+    "ts-node": "^10.9.2",
     "typescript": "5.5.3"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
