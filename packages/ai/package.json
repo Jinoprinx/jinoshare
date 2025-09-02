@@ -2,6 +2,9 @@
   "name": "@jino/ai",
   "version": "0.0.1",
   "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
   "dependencies": {
     "node-fetch": "^3.3.2"
   }

@@ -7,11 +7,11 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "start": "node dist/index.js",
+    "start": "npm --workspace packages/api start",
     "lint": "turbo lint",
     "test": "turbo run test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "heroku-postbuild": "turbo run build --filter=api"
+    "heroku-postbuild": "npm --workspace packages/common run build && npm --workspace packages/ai run build && npm --workspace packages/api run build"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
