@@ -19,7 +19,8 @@
     "dotenv": "16.4.5",
     "express": "4.19.2",
     "mongoose": "8.5.0",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/cookie-parser": "1.4.7",
@@ -35,7 +36,6 @@
     "nodemon": "3.1.4",
     "supertest": "^6.3.4",
     "ts-jest": "^29.4.1",
-    "ts-node": "^10.9.2",
     "typescript": "5.5.3"
   },
   "workspaces": [
