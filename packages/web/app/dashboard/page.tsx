@@ -6,7 +6,7 @@ import { ContentList } from "@/components/list";
 import { Calendar } from "@/components/calendar";
 import { toast, Toasts } from "@/components/toast";
 import { generateBatch } from "@/lib/generator";
-import { Post, Channel, emptyPost } from "@jino/common";
+import { ISharedPost, Channel } from "@jino/common";
 import { ConnectedModal } from "@/components/connected";
 import AIPage from "./ai/page";
  
@@ -25,7 +25,6 @@ function providersFromChannels(channels: Channel[]): ProviderId[] {
   if (channels.includes("x")) set.add("x");
   if (channels.includes("linkedin")) set.add("linkedin");
   if (channels.includes("instagram")) set.add("instagram");
-  // Add "facebook" here if you add it to Channels.
   return Array.from(set);
 }
 
@@ -57,17 +56,15 @@ async function postMediaToProvider(provider: ProviderId, file: File, text?: stri
 }
 
 export default function Dashboard() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [draft, setDraft] = useState<Post>(emptyPost());
+  const [posts, setPosts] = useState<ISharedPost[]>([]);
+  const [draft, setDraft] = useState<Partial<ISharedPost>>({});
   const [mediaFile, setMediaFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [posting, setPosting] = useState<ProviderId | "all" | null>(null);
   const [tab, setTab] = useState<"write"|"batch"|"calendar"|"library"|"ai">("write");
   const [justConnected, setJustConnected] = useState<ProviderId | null>(null);
 
-  // Auto-post state
   const [autoPostEnabled, setAutoPostEnabled] = useState(false);
-  const autoPostingRef = useRef(false);
 
   const selectedCount = posts.filter(p => p.status === "scheduled" || p.status === "draft").length;
 
@@ -78,7 +75,6 @@ export default function Dashboard() {
   }
   useEffect(() => { fetchPosts(); }, []);
 
-  // Detect OAuth callback (?x=connected, ?linkedin=error, etc.)
   useEffect(() => {
     if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
@@ -101,35 +97,14 @@ export default function Dashboard() {
   async function saveDraft() {
     setLoading(true);
     try {
-      let postData = { ...draft };
-      
-      // If there's a media file, upload it to storage first
-      if (mediaFile) {
-        const formData = new FormData();
-        formData.append("file", mediaFile);
-        
-        const uploadRes = await fetch(`${BACKEND}/api/media-storage/store`, {
-          method: "POST",
-          body: formData
-        });
-        
-        if (!uploadRes.ok) {
-          throw new Error("Failed to upload media");
-        }
-        
-        const uploadData = await uploadRes.json();
-        postData.mediaUrl = uploadData.mediaUrl;
-        postData.mediaType = uploadData.mediaType;
-      }
-      
       const res = await fetch("/api/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(postData)
+        body: JSON.stringify(draft)
       });
       const data = await res.json();
       setPosts(p => [data.post, ...p]);
-      setDraft(emptyPost());
+      setDraft({});
       setMediaFile(null);
       toast.success("Saved");
     } catch {
@@ -137,25 +112,22 @@ export default function Dashboard() {
     } finally { setLoading(false); }
   }
 
-  // Update Post
-  async function updatePost(p: Post) {
-    setPosts(prev => prev.map(x => x.id === p.id ? p : x)); // optimistic
-    await fetch(`/api/posts/${p.id}`, {
+  async function updatePost(p: ISharedPost) {
+    setPosts(prev => prev.map(x => x._id === p._id ? p : x));
+    await fetch(`/api/posts/${p._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(p)
     });
   }
 
-  // Delete Post
   async function deletePost(id: string) {
-    setPosts(prev => prev.filter(p => p.id !== id));
+    setPosts(prev => prev.filter(p => p._id !== id));
     await fetch(`/api/posts/${id}`, { method: "DELETE" });
   }
 
   function onBatchGenerate(seed: string, count: number, tone: string, preset: Channel | "generic") {
     const items = generateBatch(seed, count, tone, preset);
-    setPosts(prev => [...items, ...prev]);
     toast.success(`Generated ${items.length} posts`);
   }
 
@@ -167,7 +139,7 @@ export default function Dashboard() {
     if (mediaFile) {
       try {
         setPosting(provider);
-        const res = await postMediaToProvider(provider, mediaFile, draft.content.trim());
+        const res = await postMediaToProvider(provider, mediaFile, (draft.content || '').trim());
         toast.success(`Posted to ${provider.toUpperCase()} (url: ${res.url})`);
       } catch (e: any) {
         toast.error(e.message || `Failed to post to ${provider}`);
@@ -175,7 +147,7 @@ export default function Dashboard() {
         setPosting(null);
       }
     } else {
-      const text = draft.content.trim();
+      const text = (draft.content || '').trim();
       if (!text) return toast.info("Write something first");
       try {
         setPosting(provider);
@@ -190,7 +162,7 @@ export default function Dashboard() {
   }
 
   async function postDraftToSelected() {
-    const targets = providersFromChannels(draft.channels);
+    const targets = providersFromChannels(draft.channels || []);
     if (targets.length === 0) return toast.info("Select at least one supported provider in Channels");
 
     if (mediaFile) {
@@ -198,7 +170,7 @@ export default function Dashboard() {
         setPosting("all");
         for (const p of targets) {
           try {
-            const res = await postMediaToProvider(p, mediaFile, draft.content.trim());
+            const res = await postMediaToProvider(p, mediaFile, (draft.content || '').trim());
             toast.success(`Posted to ${p.toUpperCase()} (url: ${res.url})`);
           } catch (err: any) {
             toast.error(`${p.toUpperCase()}: ${err.message || "Failed"}`);
@@ -208,7 +180,7 @@ export default function Dashboard() {
         setPosting(null);
       }
     } else {
-      const text = draft.content.trim();
+      const text = (draft.content || '').trim();
       if (!text) return toast.info("Write something first");
 
       try {
@@ -226,47 +198,6 @@ export default function Dashboard() {
       }
     }
   }
-
-  // Auto-posting loop: checks scheduled posts every 30s (only while dashboard is open)
-  useEffect(() => {
-    if (!autoPostEnabled) return;
-    const interval = setInterval(async () => {
-      if (autoPostingRef.current) return;
-      autoPostingRef.current = true;
-
-      try {
-        const now = Date.now();
-        // Find due posts: status scheduled and scheduledAt <= now
-        const due = posts.filter(p => p.status === "scheduled" && p.scheduledAt && new Date(p.scheduledAt).getTime() <= now);
-        for (const p of due) {
-          const text = p.content.trim();
-          if (!text) continue;
-          const targets = providersFromChannels(p.channels);
-          if (targets.length === 0) continue;
-
-          let anySuccess = false;
-          for (const provider of targets) {
-            try {
-              const res = await postToProvider(provider, text);
-              toast.success(`Auto-posted to ${provider.toUpperCase()} (id: ${res.id})`);
-              anySuccess = true;
-            } catch (e: any) {
-              toast.error(`Auto-post ${provider.toUpperCase()}: ${e.message || "Failed"}`);
-            }
-          }
-
-          if (anySuccess) {
-            const updated: Post = { ...p, status: "published" };
-            await updatePost(updated);
-          }
-        }
-      } finally {
-        autoPostingRef.current = false;
-      }
-    }, 30_000);
-
-    return () => clearInterval(interval);
-  }, [autoPostEnabled, posts]); // Re-run if posts change or toggle changes
 
   const tabs = useMemo(() => ([
     { key: "write", label: "Write" },
@@ -299,7 +230,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Connections + Auto-post toggle */}
       <div className="card flex flex-wrap items-center gap-2 justify-between">
         <div className="flex flex-wrap gap-2">
           {PROVIDERS.map(p => (
@@ -321,9 +251,9 @@ export default function Dashboard() {
       {tab === "write" && (
         <div className="grid md:grid-cols-3 gap-6">
           <div className="md:col-span-2 card">
-            <Editor value={draft} onChange={(p, file) => { setDraft(p); setMediaFile(file || null); }} />
+            <Editor value={draft} onChange={(p, file) => { setDraft(p); if(file) setMediaFile(file); }} />
             <div className="flex items-center justify-between mt-4">
-              <Channels value={draft.channels} onChange={(c) => setDraft({ ...draft, channels: c })} />
+              <Channels value={draft.channels || []} onChange={(c) => setDraft({ ...draft, channels: c })} />
               <div className="flex gap-2">
                 <button className="btn" onClick={saveDraft} disabled={loading}>
                   {loading ? "Saving..." : "Save draft"}
@@ -331,13 +261,12 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Distribute controls */}
             <div className="mt-4 border-t pt-4">
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   className="btn"
                   onClick={postDraftToSelected}
-                  disabled={posting !== null || !draft.content.trim()}
+                  disabled={posting !== null || !(draft.content || '').trim()}
                   title="Posts to providers represented in selected Channels"
                 >
                   {posting === "all" ? "Posting..." : "Post to selected providers"}
@@ -348,7 +277,7 @@ export default function Dashboard() {
                     key={p.id}
                     className="btn-outline"
                     onClick={() => postDraftTo(p.id)}
-                    disabled={posting !== null || !draft.content.trim()}
+                    disabled={posting !== null || !(draft.content || '').trim()}
                   >
                     {posting === p.id ? `Posting ${p.label}...` : `Post ${p.label}`}
                   </button>
@@ -379,7 +308,7 @@ export default function Dashboard() {
       )}
 
       {tab === "calendar" && (
-        <Calendar posts={posts} onChange={updatePost} />
+        <Calendar />
       )}
 
       {tab === "library" && (

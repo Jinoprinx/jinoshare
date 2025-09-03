@@ -28,30 +28,15 @@ export interface IPublishLog {
   createdAt: Date;
 }
 
-export interface Post {
-  id: string;
-  title?: string;
+export interface ISharedPost {
+  _id: string;
+  userId: string;
   content: string;
-  mediaUrl?: string;
-  mediaType?: "image" | "video";
-  mediaBuffer?: Buffer; // For temporary storage before uploading
-  status: "draft" | "scheduled" | "published";
   channels: Channel[];
-  scheduledAt?: string;
+  status: "draft" | "scheduled" | "publishing" | "published" | "failed";
+  scheduled_at: string | null;
   createdAt: string;
   updatedAt: string;
-}
-
-export function emptyPost(): Post {
-  const now = new Date().toISOString();
-  return {
-    id: crypto.randomUUID(),
-    content: "",
-    status: "draft",
-    channels: [],
-    createdAt: now,
-    updatedAt: now,
-  };
 }
 
 // AI integration Section

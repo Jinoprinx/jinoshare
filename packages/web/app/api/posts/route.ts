@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAll, upsert } from "@/lib/db";
-import { Post, emptyPost } from "@jino/common";
+import { ISharedPost } from "@jino/common";
 
 export async function GET() {
   const posts = await getAll();
@@ -8,14 +8,18 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const body = (await req.json()) as Partial<Post>;
+  const body = (await req.json()) as Partial<ISharedPost>;
   const now = new Date().toISOString();
-  const post: Post = {
-    ...emptyPost(),
+  const post: ISharedPost = {
+    userId: 'dev-user', // Assuming a default user
+    status: 'draft',
+    channels: [],
     ...body,
-    id: body.id || crypto.randomUUID(),
+    _id: body._id || crypto.randomUUID(),
     createdAt: body.createdAt || now,
-    updatedAt: now
+    updatedAt: now,
+    content: body.content || '',
+    scheduled_at: body.scheduled_at || null,
   };
   await upsert(post);
   return NextResponse.json({ post });

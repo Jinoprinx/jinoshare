@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { get, remove, upsert } from "@/lib/db";
-import { Post } from "@jino/common";
+import { ISharedPost } from "@jino/common";
 
 interface RouteContext {
   params: Promise<{
@@ -9,11 +9,11 @@ interface RouteContext {
 }
 
 export async function PUT(req: NextRequest, { params }: RouteContext) {
-  const body = (await req.json()) as Post;
+  const body = (await req.json()) as ISharedPost;
   const { id } = await params;
   const existing = await get(id);
   if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
-  const updated: Post = { ...existing, ...body, id, updatedAt: new Date().toISOString() };
+  const updated: ISharedPost = { ...existing, ...body, _id: id, updatedAt: new Date().toISOString() };
   await upsert(updated);
   return NextResponse.json({ post: updated });
 }

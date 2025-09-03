@@ -1,4 +1,4 @@
-import { Post, Channel } from "@jino/common";
+import { ISharedPost, Channel } from "@jino/common";
 
 const PRESETS: Record<string, (t: string) => string[]> = {
   concise: (seed) => [
@@ -35,20 +35,21 @@ function applyChannelStyle(preset: Channel | "generic", text: string) {
   }
 }
 
-export function generateBatch(seed: string, count = 8, tone = "concise", preset: Channel | "generic" = "generic"): Post[] {
+export function generateBatch(seed: string, count = 8, tone = "concise", preset: Channel | "generic" = "generic"): ISharedPost[] {
   const now = new Date().toISOString();
   const base = PRESETS[tone] ? PRESETS[tone](seed) : PRESETS.concise(seed);
-  const out: Post[] = [];
+  const out: ISharedPost[] = [];
   for (let i = 0; i < count; i++) {
     const variant = base[i % base.length];
     const spin = i === 0 ? variant : `${variant}\n\n#${seed.replace(/\s+/g, "")}${i}`;
     const content = applyChannelStyle(preset, spin);
     out.push({
-      id: crypto.randomUUID(),
-      title: i === 0 ? seed : `${seed} ${i + 1}`,
+      _id: crypto.randomUUID(),
+      userId: "dev-user", // Assuming a default user
       content,
       channels: preset === "generic" ? [] : [preset],
       status: "draft",
+      scheduled_at: null,
       createdAt: now,
       updatedAt: now
     });

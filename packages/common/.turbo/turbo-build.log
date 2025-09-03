@@ -1,4 +1,3 @@
-npm warn Unknown user config "python". This will stop working in the next major version of npm.
 
 > @jino/common@1.0.0 build
 > echo 'Common package built'

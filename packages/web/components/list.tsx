@@ -1,6 +1,6 @@
 "use client";
 import { format } from "date-fns";
-import { Post } from "@jino/common";
+import { ISharedPost } from "@jino/common";
 import { toast } from "@/components/toast";
 
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
@@ -21,9 +21,9 @@ async function postToProvider(provider: string, text: string) {
   return data;
 }
 
-export function ContentList({ posts, onUpdate, onDelete }: { posts: Post[]; onUpdate: (p: Post)=>void; onDelete: (id: string)=>void }) {
+export function ContentList({ posts, onUpdate, onDelete }: { posts: ISharedPost[]; onUpdate: (p: ISharedPost)=>void; onDelete: (id: string)=>void }) {
 
-  async function postNow(p: Post) {
+  async function postNow(p: ISharedPost) {
     const text = p.content.trim();
     if (!text) return toast.info("Post has no content");
     const targets = getProvidersFromChannels(p.channels);
@@ -41,7 +41,7 @@ export function ContentList({ posts, onUpdate, onDelete }: { posts: Post[]; onUp
   return (
     <div className="grid gap-3">
       {posts.map(p => (
-        <div key={p.id} className="card">
+        <div key={p._id} className="card">
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1">
               <div className="flex items-center gap-2">
@@ -50,20 +50,10 @@ export function ContentList({ posts, onUpdate, onDelete }: { posts: Post[]; onUp
                   {p.channels.map(c => <span key={c} className="badge">{c}</span>)}
                 </div>
               </div>
-              <h3 className="font-semibold mt-1">{p.title || "Untitled"}</h3>
-              <p className="text-gray-700 whitespace-pre-wrap">{p.content}</p>
-              {p.mediaUrl && (
-                <div className="mt-2">
-                  {p.mediaType === "image" ? (
-                    <img src={`${BACKEND}${p.mediaUrl}`} alt="Post media" className="max-w-full h-auto" />
-                  ) : p.mediaType === "video" ? (
-                    <video src={`${BACKEND}${p.mediaUrl}`} controls className="max-w-full h-auto" />
-                  ) : null}
-                </div>
-              )}
-              {p.scheduledAt && (
+              <p className="text-gray-700 whitespace-pre-wrap mt-1">{p.content}</p>
+              {p.scheduled_at && (
                 <p className="text-sm text-gray-500 mt-1">
-                  Scheduled: {format(new Date(p.scheduledAt), "EEE, MMM d p")}
+                  Scheduled: {format(new Date(p.scheduled_at), "EEE, MMM d p")}
                 </p>
               )}
             </div>
@@ -71,7 +61,7 @@ export function ContentList({ posts, onUpdate, onDelete }: { posts: Post[]; onUp
               <button className="btn-outline" onClick={() => onUpdate({ ...p, status: p.status === "draft" ? "scheduled" : "draft" })}>
                 {p.status === "draft" ? "Schedule" : "Unschedule"}
               </button>
-              <button className="btn-outline" onClick={() => onDelete(p.id)}>Delete</button>
+              <button className="btn-outline" onClick={() => onDelete(p._id)}>Delete</button>
               <button className="btn-outline" onClick={() => postNow(p)}>Post Now</button>
             </div>
           </div>

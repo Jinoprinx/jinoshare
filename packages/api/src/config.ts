@@ -5,6 +5,7 @@ export const config = {
   clientOrigin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
   mongoUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/social_backend",
   defaultUserId: process.env.DEFAULT_USER_ID || "dev-user",
+  workerSecret: process.env.WORKER_SECRET || "dev-worker-secret",
   providers: {
     x: {
       clientId: process.env.X_CLIENT_ID!,

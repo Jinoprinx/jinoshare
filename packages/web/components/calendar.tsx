@@ -1,44 +1,133 @@
-"use client";
-import { addDays, eachDayOfInterval, endOfWeek, format, startOfWeek } from "date-fns";
-import { Post } from "@jino/common";
-import { useMemo } from "react";
+import React, { useState, useEffect, useCallback } from 'react';
+import { Calendar as BigCalendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { ISharedPost } from '@jino/common';
+import { Editor } from './editor';
 
-export function Calendar({ posts, onChange }: { posts: Post[]; onChange: (p: Post)=>void }) {
-  const start = startOfWeek(new Date(), { weekStartsOn: 1 });
-  const end = endOfWeek(new Date(), { weekStartsOn: 1 });
-  const days = useMemo(() => eachDayOfInterval({ start, end }), [start, end]);
+const localizer = momentLocalizer(moment);
 
-  function move(p: Post, deltaDays: number) {
-    const when = p.scheduledAt ? new Date(p.scheduledAt) : new Date();
-    const next = addDays(when, deltaDays);
-    onChange({ ...p, scheduledAt: next.toISOString(), status: "scheduled" });
-  }
+interface CalendarEvent {
+  id: string;
+  title: string;
+  start: Date;
+  end: Date;
+  resource: ISharedPost;
+}
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+
+export function Calendar() {
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<Partial<ISharedPost> | null>(null);
+
+  const fetchEvents = useCallback(async () => {
+    setLoading(true);
+    try {
+      const start = moment().startOf('month').toISOString();
+      const end = moment().endOf('month').toISOString();
+      const query = new URLSearchParams({ startDate: start, endDate: end });
+      const response = await fetch(`${API_URL}/api/scheduled-posts?${query}`);
+      if (!response.ok) throw new Error('Failed to fetch posts');
+      
+      const posts: ISharedPost[] = await response.json();
+      
+      const calendarEvents = posts
+        .filter(p => p.scheduled_at)
+        .map(post => ({
+          id: post._id,
+          title: post.content.substring(0, 40) + '...',
+          start: new Date(post.scheduled_at!),
+          end: moment(post.scheduled_at!).add(30, 'minutes').toDate(),
+          resource: post,
+        }));
+
+      setEvents(calendarEvents);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
+
+  const handleSelectSlot = useCallback((slotInfo: { start: Date }) => {
+    setSelectedPost({ content: '', status: 'draft', scheduled_at: slotInfo.start.toISOString() });
+    setModalOpen(true);
+  }, []);
+
+  const handleSelectEvent = useCallback((event: CalendarEvent) => {
+    setSelectedPost(event.resource);
+    setModalOpen(true);
+  }, []);
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedPost(null);
+  };
+
+  const handleSave = async () => {
+    if (!selectedPost) return;
+
+    const method = selectedPost._id ? 'PUT' : 'POST';
+    const url = selectedPost._id ? `${API_URL}/api/scheduled-posts/${selectedPost._id}` : `${API_URL}/api/scheduled-posts`;
+
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(selectedPost),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.detail || 'Failed to save post');
+      }
+
+      closeModal();
+      fetchEvents();
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        alert(`Error: ${error.message}`);
+      } else {
+        alert('An unknown error occurred');
+      }
+    }
+  };
 
   return (
-    <div className="grid grid-cols-7 gap-2">
-      {days.map(d => {
-        const dayPosts = posts.filter(p => p.scheduledAt && format(new Date(p.scheduledAt), "yyyy-MM-dd") === format(d, "yyyy-MM-dd"));
-        return (
-          <div key={d.toISOString()} className="card min-h-[140px]">
-            <div className="flex items-center justify-between">
-              <div className="font-semibold">{format(d, "EEE d")}</div>
-            </div>
-            <div className="mt-2 space-y-2">
-              {dayPosts.map(p => (
-                <div key={p.id} className="border rounded p-2 text-sm">
-                  <div className="font-medium">{p.title || p.content.split('\n')[0].slice(0, 50) || "Untitled"}</div>
-                  <div className="text-gray-600 line-clamp-3">{p.content}</div>
-                  <div className="flex gap-2 mt-2">
-                    <button className="btn-outline" onClick={() => move(p, -1)}>←</button>
-                    <button className="btn-outline" onClick={() => move(p, 1)}>→</button>
-                  </div>
-                </div>
-              ))}
-              {dayPosts.length === 0 && <div className="text-gray-400 text-sm">No posts</div>}
+    <div className="relative">
+      <div className="h-[700px] bg-white p-4 rounded-lg shadow">
+        <BigCalendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: '100%' }}
+          onSelectEvent={handleSelectEvent}
+          onSelectSlot={handleSelectSlot}
+          selectable
+        />
+      </div>
+
+      {isModalOpen && selectedPost && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6">
+            <h2 className="text-xl font-bold mb-4">{selectedPost._id ? 'Edit Post' : 'Schedule New Post'}</h2>
+            <Editor value={selectedPost} onChange={(p) => setSelectedPost(p)} />
+            <div className="flex justify-end gap-4 mt-6">
+              <button onClick={closeModal} className="btn-secondary">Cancel</button>
+              <button onClick={handleSave} className="btn-primary">{selectedPost._id ? 'Update Schedule' : 'Schedule Post'}</button>
             </div>
           </div>
-        );
-      })}
+        </div>
+      )}
     </div>
   );
 }

@@ -15,6 +15,9 @@ import { aiTagsRouter } from "./routes/ai-tags";
 import { aiModerateRouter } from "./routes/ai-moderate";
 import { aiForecastRouter } from "./routes/ai-forecast";
 import { aiBestTimeRouter } from "./routes/ai-best-time";
+import { scheduledPost } from "./routes/scheduled-post";
+import { user } from "./routes/user";
+import { worker } from "./routes/worker";
 
 async function main() {
   await connectDb();
@@ -53,6 +56,9 @@ async function main() {
   app.use("/api/ai/moderate/", aiModerateRouter);
   app.use("/api/ai/forecast/", aiForecastRouter);
   app.use("/api/ai/best-time/", aiBestTimeRouter);
+  app.use("/api/scheduled-posts", scheduledPost);
+  app.use("/api/user", user);
+  app.use("/api/worker", worker);
   app.use("/api", post);
   app.use("/api/upload", uploadRouter);
   app.use("/api/media-storage", mediaStorageRouter);
