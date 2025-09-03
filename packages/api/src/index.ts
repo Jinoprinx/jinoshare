@@ -21,7 +21,24 @@ async function main() {
 
   const app = express();
 
-  app.use(cors({ origin: config.clientOrigin, credentials: true }));
+  app.use(cors({ 
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        config.clientOrigin,
+        "https://jinoshare.vercel.app",
+        /^https:\/\/jinoshare-.*\.vercel\.app$/
+      ];
+      
+      if (!origin || allowedOrigins.some(allowed => 
+        typeof allowed === 'string' ? allowed === origin : allowed.test(origin)
+      )) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }, 
+    credentials: true 
+  }));
   app.use(express.json({ limit: "1mb" }));
   app.use(cookieParser());
 
