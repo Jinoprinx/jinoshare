@@ -9,7 +9,7 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDirs": ["src", "../common/src"],
     "resolveJsonModule": true,
     "types": ["node", "jest"]
   },
