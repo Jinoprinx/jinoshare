@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { aiGenerate, stripJsonFences } from "@jino/ai";
+import { buildGeneratePostsPrompt } from "@jino/ai/src/prompts"
 
 export const aiGenerateRouter = Router();
 
@@ -17,9 +18,11 @@ aiGenerateRouter.post("/", async (req, res) => {
       generic: "clear, concise, actionable"
     };
 
-    const prompt = `Generate ${count} distinct ${platform} posts about "${topic}".
-Tone: ${tone}. Style: ${platformHints[platform] || platformHints.generic}.
-Output as a JSON array of strings only.`;
+    const prompt = buildGeneratePostsPrompt(topic, platform, tone, count);
+
+//     const prompt = `Generate ${count} distinct ${platform} posts about "${topic}".
+// Tone: ${tone}. Style: ${platformHints[platform] || platformHints.generic}.
+// Output as a JSON array of strings only.`;
 
     const raw = await aiGenerate(prompt, { maxTokens: 800 });
     let posts: string[];
@@ -34,23 +37,3 @@ Output as a JSON array of strings only.`;
     res.status(400).json({ ok: false, error: err.message });
   }
 });
-
-//////////////////////////////////////////////////////
-
-// import { Router } from "express";
-// import { aiGenerate } from "@jino/ai";
-// import { AIGenerateRequest, AIGenerateResponse } from "@jino/common";
-
-// export const aiGenerateRouter = Router();
-
-// aiGenerateRouter.post<{}, AIGenerateResponse, AIGenerateRequest>("/", async (req, res) => {
-//   try {
-//     const { topic, platform, tone = "concise", count = 5 } = req.body;
-//     const prompt = `Generate ${count} ${platform} posts about "${topic}". Tone: ${tone}. Output JSON array.`;
-//     const raw = await aiGenerate(prompt, { maxTokens: 600 });
-//     const posts = JSON.parse(raw.replace(/```json|```/g, ""));
-//     res.json({ ok: true, posts });
-//   } catch (err: any) {
-//     res.status(400).json({ ok: false, error: err.message });
-//   }
-// });
