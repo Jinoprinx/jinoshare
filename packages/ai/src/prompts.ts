@@ -1,16 +1,5 @@
 // // packages/ai/src/prompts.ts
 
-// /**
-//  * Highly‑tuned prompt builders for JinoShare AI features.
-//  * Keep all prompts here so they can be optimized and iterated in one place.
-//  *
-//  * Principles used:
-//  * - Clear task definition
-//  * - Role assignment to the model
-//  * - Platform‑specific constraints & tone guidance
-//  * - Explicit output format instructions (JSON where needed)
-//  * - Minimal ambiguity to improve determinism
-//  */
 //////////////////////////////////////////////////
 
 // packages/ai/src/prompts.ts
