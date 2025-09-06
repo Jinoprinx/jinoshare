@@ -103,7 +103,7 @@ export function Calendar() {
 
   return (
     <div className="relative">
-      <div className="h-[700px] bg-white p-4 rounded-lg shadow">
+      <div className="h-[700px] bg-black/20 p-4 rounded-lg border border-white/10">
         <BigCalendar
           localizer={localizer}
           events={events}
@@ -117,13 +117,13 @@ export function Calendar() {
       </div>
 
       {isModalOpen && selectedPost && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl p-6">
+        <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center">
+          <div className="bg-black/50 border border-white/10 rounded-lg shadow-xl w-full max-w-2xl p-6">
             <h2 className="text-xl font-bold mb-4">{selectedPost._id ? 'Edit Post' : 'Schedule New Post'}</h2>
             <Editor value={selectedPost} onChange={(p) => setSelectedPost(p)} />
             <div className="flex justify-end gap-4 mt-6">
-              <button onClick={closeModal} className="btn-secondary">Cancel</button>
-              <button onClick={handleSave} className="btn-primary">{selectedPost._id ? 'Update Schedule' : 'Schedule Post'}</button>
+              <button onClick={closeModal} className="rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10">Cancel</button>
+              <button onClick={handleSave} className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">{selectedPost._id ? 'Update Schedule' : 'Schedule Post'}</button>
             </div>
           </div>
         </div>

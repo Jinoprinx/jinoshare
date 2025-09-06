@@ -1,20 +1,33 @@
-import "./../styles/globals.css";
-import type { Metadata } from "next";
-import { Navbar } from "@/components/navbar";
-import AuthProvider from "@/components/AuthProvider";
+import './../styles/globals.css';
+import AuthProvider from "@components/AuthProvider";
 
-export const metadata: Metadata = {
-  title: "Jino Share",
-  description: "A simple content engine JinoShare built with Next.js"
+export const metadata = {
+  title: 'JinoShare — Create Once, Share Everywhere',
+  description:
+    'JinoShare generates on‑brand text, images, and videos, schedules them, and publishes to all your social channels in a single click—complete with smart captions, hashtags, and UTM tracking.',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className="dark">
-      <body className="bg-dark-background text-dark-text">
+    <html lang="en">
+      <body className="h-full bg-[#000000] text-white antialiased font-text overflow-x-hidden">
         <AuthProvider>
-          <Navbar />
-          <main className="container-narrow py-8">{children}</main>
+        {/* Gradient Background */}
+        <div className="homepage-gradient">
+          <div className="gradient-circle circle-blue"></div>
+          <div className="gradient-circle circle-purple"></div>
+          <div className="gradient-circle circle-green"></div>
+          <div className="overlay-gradients"></div>
+        </div>
+
+        {/* Existing Glow Light */}
+        <div className="glow-light"></div>
+
+        {children}
         </AuthProvider>
       </body>
     </html>

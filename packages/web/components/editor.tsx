@@ -47,9 +47,9 @@ export function Editor({ value, onChange }: { value: Partial<ISharedPost>; onCha
   };
 
   return (
-    <div className="p-4 bg-gray-50 rounded-lg">
+    <div className="p-4 rounded-lg bg-black/20 border-white/10">
       <textarea 
-        className="input min-h-[150px] w-full p-2 border rounded-md" 
+        className="input min-h-[150px] w-full p-2 border rounded-md bg-white/5 border-white/10 text-white placeholder-gray-400"
         placeholder="Write your post..."
         value={localPost.content ?? ''} 
         onChange={handleTextChange}
