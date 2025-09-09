@@ -91,3 +91,16 @@ export interface AIVideoGenerateResponse {
   videoUrl?: string;
   error?: string;
 }
+
+export interface AITagsRequest {
+  text: string;
+  platform: string;
+}
+
+export interface AITagsResponse {
+  ok: boolean;
+  caption?: string;
+  hashtags?: string[];
+  error?: string;
+}
+

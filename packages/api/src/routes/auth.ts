@@ -6,7 +6,29 @@ import { config } from "../config";
 import { Connection } from "../models/Connection";
 import { Channel } from "../../../common/src/index";
 
+import { User } from "../models/User";
+import bcrypt from "bcryptjs";
+
 export const auth = Router();
+
+auth.post("/credentials", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ message: "Email and password are required." });
+  }
+
+  const user = await User.findOne({ email });
+
+  if (user && user.password) {
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (isPasswordCorrect) {
+      return res.status(200).json(user);
+    }
+  }
+
+  return res.status(401).json({ message: "Invalid credentials." });
+});
 
 // GET /auth/:provider/login
 auth.get("/:provider/login", async (req, res) => {

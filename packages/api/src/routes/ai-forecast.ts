@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { aiGenerate, stripJsonFences } from "@jino/ai";
+import { buildForecastPrompt } from "@jino/ai/src/prompts";
+
 
 export const aiForecastRouter = Router();
 
@@ -9,11 +11,7 @@ aiForecastRouter.post("/", async (req, res) => {
     if (!text || !platform) {
       return res.status(400).json({ ok: false, error: "text and platform are required" });
     }
-    const prompt = `Estimate engagement for this ${platform} post scheduled at ${scheduledFor || "unspecified"}.
-Return JSON {"risk":"low|medium|high","estImpressions":number,"notes":string}.
-
-${text}`;
-
+    const prompt = buildForecastPrompt(text, platform, scheduledFor);
     const raw = await aiGenerate(prompt, { maxTokens: 400 });
     let forecast;
     try {

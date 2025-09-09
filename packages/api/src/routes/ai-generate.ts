@@ -12,7 +12,7 @@ aiGenerateRouter.post("/", async (req, res) => {
     }
 
     const platformHints: Record<string, string> = {
-      x: "max 280 chars, punchy hook, 1 emoji max",
+      x: "max 280 chars, punchy hook, no emoji max",
       linkedin: "value-forward, 3–6 lines, no emoji spam",
       instagram: "friendly, 1–2 emojis, up to 5 hashtags",
       generic: "clear, concise, actionable"

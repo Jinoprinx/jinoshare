@@ -6,6 +6,7 @@ const nextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       "@common": require("path").resolve(__dirname, "../common/src"),
+      "@": require("path").resolve(__dirname, "./"),
     };
     return config;
   },

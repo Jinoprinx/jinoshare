@@ -81,7 +81,8 @@ const AnalyticsSection = () => {
                 grid: { color: 'rgba(255,255,255,0.08)' },
               },
               y: {
-                ticks: { color: 'rgba(255,255,255,0.6)', beginAtZero: true },
+                ticks: { color: 'rgba(255,255,255,0.6)' },
+                beginAtZero: true,
                 grid: { color: 'rgba(255,255,255,0.08)' },
               },
             },

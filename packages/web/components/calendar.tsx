@@ -15,7 +15,7 @@ interface CalendarEvent {
   resource: ISharedPost;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
 
 export function Calendar() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
@@ -29,7 +29,7 @@ export function Calendar() {
       const start = moment().startOf('month').toISOString();
       const end = moment().endOf('month').toISOString();
       const query = new URLSearchParams({ startDate: start, endDate: end });
-      const response = await fetch(`${API_URL}/api/scheduled-posts?${query}`);
+      const response = await fetch(`/api/scheduled-posts?${query}`);
       if (!response.ok) throw new Error('Failed to fetch posts');
       
       const posts: ISharedPost[] = await response.json();
@@ -75,7 +75,7 @@ export function Calendar() {
     if (!selectedPost) return;
 
     const method = selectedPost._id ? 'PUT' : 'POST';
-    const url = selectedPost._id ? `${API_URL}/api/scheduled-posts/${selectedPost._id}` : `${API_URL}/api/scheduled-posts`;
+    const url = selectedPost._id ? `/api/scheduled-posts/${selectedPost._id}` : `/api/scheduled-posts`;
 
     try {
       const response = await fetch(url, {

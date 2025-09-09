@@ -1,5 +1,11 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@api/*": ["src/*"],
+      "@common/*": ["../common/src/*"]
+    },
     "target": "ES2022",
     "module": "CommonJS",
     "moduleResolution": "node",

@@ -5,9 +5,9 @@ import { Channels } from "@components/channels";
 import { ContentList } from "@components/list";
 import { Calendar } from "@components/calendar";
 import { toast, Toasts } from "@components/toast";
-import { generateBatch } from "@/../lib/generator";
-import { ISharedPost, Channel } from "@jino/common";
-import { ConnectedModal } from "@components/connected";
+import { generateBatch } from "@/lib/generator";
+import { ISharedPost, Channel, IConnection } from "@jino/common";
+
 import AIPage from "./ai/page";
 import {
   PlusIcon,
@@ -21,6 +21,7 @@ import {
   ChevronDownIcon,
   FilterIcon,
 } from "lucide-react";
+import { useSession, signIn } from "next-auth/react";
 
 type ProviderId = "x" | "linkedin" | "facebook" | "instagram";
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
@@ -80,15 +81,18 @@ async function postMediaToProvider(
   return data as { ok: true; url: string };
 }
 
-export default function Dashboard() {
+import { withAuth } from "@components/withAuth";
+
+function Dashboard() {
+  const { data: session, status, update } = useSession();
+
   const [posts, setPosts] = useState<ISharedPost[]>([]);
   const [draft, setDraft] = useState<Partial<ISharedPost>>({});
   const [mediaFile, setMediaFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [posting, setPosting] = useState<ProviderId | "all" | null>(null);
-  const [tab, setTab] =
-    useState<"write" | "batch" | "calendar" | "library" | "ai">("write");
-  const [justConnected, setJustConnected] = useState<ProviderId | null>(null);
+  const [tab, setTab] = useState<string>("write");
+  
 
   const [autoPostEnabled, setAutoPostEnabled] = useState(false);
 
@@ -96,14 +100,20 @@ export default function Dashboard() {
     (p) => p.status === "scheduled" || p.status === "draft"
   ).length;
 
+  const connections = useMemo(() => {
+    return (session?.user as any)?.connections as IConnection[] ?? [];
+  }, [session]);
+
   async function fetchPosts() {
     const res = await fetch("/api/posts");
     const data = await res.json();
     setPosts(data.posts);
   }
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    if (status === "authenticated") {
+      fetchPosts();
+    }
+  }, [status]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -112,8 +122,8 @@ export default function Dashboard() {
     for (const p of PROVIDERS) {
       const v = url.searchParams.get(p.id);
       if (v === "connected") {
-        setJustConnected(p.id);
         toast.success(`${p.label} connected`);
+        update();
         showed = true;
       } else if (v === "error") {
         toast.error(`${p.label} connection failed`);
@@ -169,7 +179,26 @@ export default function Dashboard() {
   }
 
   function connect(provider: ProviderId) {
-    window.location.href = `${BACKEND}/auth/${provider}/login`;
+    window.location.href = `${BACKEND}/auth/${provider}/login?userId=${(session?.user as any)?.id}`;
+  }
+
+  async function disconnect(provider: ProviderId) {
+    if (!confirm(`Are you sure you want to disconnect ${provider}?`)) return;
+
+    try {
+      const res = await fetch(`/api/connections/${provider}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        toast.success(`Disconnected from ${provider}`);
+        update();
+      } else {
+        const error = await res.json();
+        toast.error(error.message || `Failed to disconnect from ${provider}`);
+      }
+    } catch (error: any) {
+      toast.error(error.message || `Failed to disconnect from ${provider}`);
+    }
   }
 
   async function postDraftTo(provider: ProviderId) {
@@ -265,7 +294,12 @@ export default function Dashboard() {
             { key: "ai-video", label: "Generate Videos", path: "/dashboard/ai/video" },
           ]
         },
-      ] as const,
+      ] as Array<{
+        key: string; 
+        label: string; 
+        icon: any; 
+        children?: Array<{key: string; label: string; path: string}>
+      }>,
     []
   );
 
@@ -283,16 +317,15 @@ export default function Dashboard() {
     };
   }, [aiDropdownRef]);
 
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="homepage-gradient" />
       <Toasts />
-      {justConnected && (
-        <ConnectedModal
-          provider={justConnected}
-          onClose={() => setJustConnected(null)}
-        />
-      )}
+      
 
       <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-white/10 bg-black/50 px-4 backdrop-blur-sm sm:px-6 lg:px-8">
         <div className="flex items-center gap-4">
@@ -309,11 +342,17 @@ export default function Dashboard() {
             <BellIcon className="h-5 w-5" />
           </button>
           <button className="flex items-center gap-2 rounded-full p-2 hover:bg-white/10">
-            <img
-              src="https://pbs.twimg.com/profile_images/1786050308585394176/i_v6a2sN_400x400.jpg"
-              alt="User"
-              className="h-6 w-6 rounded-full"
-            />
+            {session?.user?.image ? (
+              <img
+                src={session.user.image}
+                alt="User"
+                className="h-6 w-6 rounded-full"
+              />
+            ) : (
+              <div className="h-6 w-6 rounded-full bg-gray-600 flex items-center justify-center text-xs">
+                {session?.user?.name?.[0]?.toUpperCase() || "U"}
+              </div>
+            )}
             <ChevronDownIcon className="h-4 w-4" />
           </button>
         </div>
@@ -463,15 +502,26 @@ export default function Dashboard() {
               <div className="rounded-lg border border-white/10 bg-black/20 p-4">
                 <h3 className="font-semibold">Connect Accounts</h3>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {PROVIDERS.map((p) => (
-                    <button
-                      key={p.id}
-                      className="flex-1 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm hover:bg-white/10"
-                      onClick={() => connect(p.id)}
-                    >
-                      Connect {p.label}
-                    </button>
-                  ))}
+                  {PROVIDERS.map((p) => {
+                    const isConnected = connections?.some((c) => c.provider === p.id);
+                    return isConnected ? (
+                      <button
+                        key={p.id}
+                        className="flex-1 rounded-md border border-transparent bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-700"
+                        onClick={() => disconnect(p.id)}
+                      >
+                        Disconnect {p.label}
+                      </button>
+                    ) : (
+                      <button
+                        key={p.id}
+                        className="flex-1 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm hover:bg-white/10"
+                        onClick={() => connect(p.id)}
+                      >
+                        Connect {p.label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
               <div className="rounded-lg border border-white/10 bg-black/20 p-4">
@@ -514,6 +564,8 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export default withAuth(Dashboard);
 
 function BatchForm({
   onGenerate,

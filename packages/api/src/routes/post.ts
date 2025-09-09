@@ -4,22 +4,23 @@ import { Connection } from "../models/Connection";
 import { PublishLog } from "../models/PublishLog";
 import { config } from "../config";
 import { Channel } from "../../../common/src/index";
+import { protect } from "../middleware/auth";
 
 export const post = Router();
 
 /**
  * POST /api/:provider/post
- * body: { text: string, userId?: string }
+ * body: { text: string }
  */
-post.post("/:provider/post", async (req, res) => {
+post.post("/:provider/post", protect, async (req, res) => {
   const providerId = (req.params.provider || "").toLowerCase() as Channel;
   const provider = getProvider(providerId);
   if (!provider) return res.status(404).json({ error: "Unknown provider" });
 
-  const { text, userId } = req.body as { text?: string; userId?: string };
+  const { text } = req.body as { text?: string; };
   if (!text || !text.trim()) return res.status(400).json({ error: "Missing text" });
 
-  const uid = userId || config.defaultUserId;
+  const uid = (req as any).user.id;
 
   try {
     const conn = await Connection.findOne({ userId: uid, provider: providerId });

@@ -12,6 +12,8 @@ export default function AuthPage() {
   const router = useRouter();
 
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -20,15 +22,36 @@ export default function AuthPage() {
   const handleEmailAuth = async () => {
     setIsSubmitting(true);
     try {
-      if (mode === 'signup' && password !== confirm) {
-        alert('Passwords do not match');
-        return;
+      if (mode === 'signup') {
+        if (password !== confirm) {
+          alert('Passwords do not match');
+          return;
+        }
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signup`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password, firstName, lastName }),
+        });
+
+        if (res.ok) {
+          await signIn('credentials', {
+            email,
+            password,
+            callbackUrl: '/dashboard',
+          });
+        } else {
+          const data = await res.json();
+          alert(data.message || 'Something went wrong');
+        }
+      } else {
+        await signIn('credentials', {
+          email,
+          password,
+          callbackUrl: '/dashboard',
+        });
       }
-      await signIn('credentials', {
-        email,
-        password,
-        callbackUrl: '/dashboard',
-      });
     } catch (err) {
       console.error(err);
     } finally {
@@ -117,6 +140,24 @@ export default function AuthPage() {
 
         {/* Email form */}
         <div className="space-y-4">
+          {mode === 'signup' && (
+            <input
+              type="text"
+              placeholder="First Name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="w-full rounded-md border border-white/20 bg-black/60 text-white p-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+            />
+          )}
+          {mode === 'signup' && (
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="w-full rounded-md border border-white/20 bg-black/60 text-white p-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+            />
+          )}
           <input
             type="email"
             placeholder="Email"

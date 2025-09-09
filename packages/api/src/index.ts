@@ -1,9 +1,10 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { config } from "./config";
-import { connectDb } from "./db";
+import { connectDb } from "@common/db";
+import { config } from "@common/config";
 import { auth } from "./routes/auth";
+import { signup } from "./routes/signup";
 import { post } from "./routes/post";
 import { uploadRouter } from "./routes/upload";
 import { mediaStorageRouter } from "./routes/media-storage";
@@ -18,6 +19,9 @@ import { aiBestTimeRouter } from "./routes/ai-best-time";
 import { scheduledPost } from "./routes/scheduled-post";
 import { user } from "./routes/user";
 import { worker } from "./routes/worker";
+import { connections } from "./routes/connections";
+
+import { protect } from "./middleware/auth";
 
 async function main() {
   await connectDb();
@@ -29,7 +33,8 @@ async function main() {
       const allowedOrigins = [
         config.clientOrigin,
         "https://jinoshare.vercel.app",
-        /^https:\/\/jinoshare-.*\.vercel\.app$/
+        /^https:\/\/jinoshare-.*\.vercel\.app$/,
+        "http://localhost:3000/"
       ];
       
       if (!origin || allowedOrigins.some(allowed => 
@@ -48,6 +53,7 @@ async function main() {
   app.get("/health", (_, res) => res.json({ ok: true }));
 
   app.use("/auth", auth);
+  app.use("/signup", signup);
   app.use("/api/ai/generate/", aiGenerateRouter);
   app.use("/api/ai/image-generate/", aiImageGenerateRouter);
   app.use("/api/ai/video-generate/", aiVideoGenerateRouter);
@@ -56,12 +62,13 @@ async function main() {
   app.use("/api/ai/moderate/", aiModerateRouter);
   app.use("/api/ai/forecast/", aiForecastRouter);
   app.use("/api/ai/best-time/", aiBestTimeRouter);
-  app.use("/api/scheduled-posts", scheduledPost);
-  app.use("/api/user", user);
+  app.use("/api/scheduled-posts", protect, scheduledPost);
+  app.use("/api/user", protect, user);
+  app.use("/api/connections", protect, connections);
   app.use("/api/worker", worker);
-  app.use("/api", post);
-  app.use("/api/upload", uploadRouter);
-  app.use("/api/media-storage", mediaStorageRouter);
+    app.use("/api/post", protect, post);
+  app.use("/api/upload", protect, uploadRouter);
+  app.use("/api/media-storage", protect, mediaStorageRouter);
 
   app.listen(config.port, () => {
     console.log(`Backend running on http://localhost:${config.port}`);

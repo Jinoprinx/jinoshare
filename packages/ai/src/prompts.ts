@@ -70,16 +70,16 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 // 2. Rewrite/Remix
 export function buildRewritePrompt(
   text: string,
-  targetPlatform: string,
+  platform: string,
   tone: string,
   objective: string
 ) {
   return `You are an expert at adapting social media content.
-Rewrite the following post so that it is optimized for ${targetPlatform}.
+Rewrite the following post so that it is optimized for ${platform}.
 Maintain the original intent but improve it for ${objective}.
 Tone: ${tone}.
 Platform style guide:
-${PLATFORM_GUIDES[targetPlatform] || PLATFORM_GUIDES.generic}
+${PLATFORM_GUIDES[platform] || PLATFORM_GUIDES.generic}
 
 Rules:
 - Preserve mentions, hashtags, and links unless they conflict with platform norms.

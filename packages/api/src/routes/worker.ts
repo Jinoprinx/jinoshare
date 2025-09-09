@@ -18,7 +18,7 @@ worker.post("/publish-due-posts", async (req, res) => {
 
   try {
     const users = await User.find({ is_auto_posting_enabled: true });
-    const userIds = users.map(u => u.userId);
+    const userIds = users.map(u => u._id);
 
     const duePosts = await Post.find({
       userId: { $in: userIds },
