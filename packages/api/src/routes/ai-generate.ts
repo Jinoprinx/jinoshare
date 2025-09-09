@@ -11,12 +11,7 @@ aiGenerateRouter.post("/", async (req, res) => {
       return res.status(400).json({ ok: false, error: "topic and platform are required" });
     }
 
-    const platformHints: Record<string, string> = {
-      x: "max 280 chars, punchy hook, no emoji max",
-      linkedin: "value-forward, 3–6 lines, no emoji spam",
-      instagram: "friendly, 1–2 emojis, up to 5 hashtags",
-      generic: "clear, concise, actionable"
-    };
+    
 
     const prompt = buildGeneratePostsPrompt(topic, platform, tone, count);
 

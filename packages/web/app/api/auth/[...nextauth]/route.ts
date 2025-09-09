@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -6,9 +6,28 @@ import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
 import { IConnection } from "@jino/common";
 
-const handler = NextAuth({
-  adapter: MongoDBAdapter(clientPromise),
-  providers: [
+const providers = [];
+
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  providers.push(
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    })
+  );
+}
+
+if (process.env.GITHUB_ID && process.env.GITHUB_SECRET) {
+  providers.push(
+    GitHub({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    })
+  );
+}
+
+if (process.env.NEXT_PUBLIC_BACKEND_URL) {
+  providers.push(
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -35,16 +54,13 @@ const handler = NextAuth({
 
         return null;
       },
-    }),
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
-    GitHub({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
-    }),
-  ],
+    })
+  );
+}
+
+const handler = NextAuth({
+  adapter: MongoDBAdapter(clientPromise),
+  providers,
   session: { strategy: "jwt" },
   callbacks: {
     async jwt({ token, user }) {
