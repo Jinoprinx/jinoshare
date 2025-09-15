@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ISharedPost } from '@jino/common';
 import { Editor } from './editor';
+import { useSession } from 'next-auth/react';
 
 const localizer = momentLocalizer(moment);
 
@@ -18,19 +19,29 @@ interface CalendarEvent {
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
 
 export function Calendar() {
+  const { data: session } = useSession();
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Partial<ISharedPost> | null>(null);
 
   const fetchEvents = useCallback(async () => {
+    if (!session) {
+      console.log('No session in calendar, skipping fetch');
+      return;
+    }
+    console.log('Calendar session:', session);
     setLoading(true);
     try {
       const start = moment().startOf('month').toISOString();
       const end = moment().endOf('month').toISOString();
       const query = new URLSearchParams({ startDate: start, endDate: end });
+      console.log('Fetching with user ID:', (session.user as any).id);
       const response = await fetch(`/api/scheduled-posts?${query}`);
-      if (!response.ok) throw new Error('Failed to fetch posts');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Failed to fetch posts (${response.status})`);
+      }
       
       const posts: ISharedPost[] = await response.json();
       
@@ -50,7 +61,7 @@ export function Calendar() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [session]);
 
   useEffect(() => {
     fetchEvents();
@@ -72,7 +83,7 @@ export function Calendar() {
   };
 
   const handleSave = async () => {
-    if (!selectedPost) return;
+    if (!selectedPost || !session) return;
 
     const method = selectedPost._id ? 'PUT' : 'POST';
     const url = selectedPost._id ? `/api/scheduled-posts/${selectedPost._id}` : `/api/scheduled-posts`;
@@ -80,7 +91,10 @@ export function Calendar() {
     try {
       const response = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${(session.user as any).id}`
+        },
         body: JSON.stringify(selectedPost),
       });
 

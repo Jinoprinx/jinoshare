@@ -1,14 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
 
+interface RouteContext {
+  params: Promise<{
+    id: string;
+  }>;
+}
+
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: RouteContext,
 ) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     
     if (!session) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
@@ -21,6 +28,7 @@ export async function PUT(
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${(session.user as any).id}`
       },
       body: JSON.stringify(body),
     });
@@ -41,10 +49,10 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: RouteContext,
 ) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     
     if (!session) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
@@ -56,6 +64,7 @@ export async function DELETE(
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${(session.user as any).id}`
       },
     });
 

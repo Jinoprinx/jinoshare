@@ -10,6 +10,7 @@ export const worker = Router();
 
 // POST /worker/publish-due-posts
 worker.post("/publish-due-posts", async (req, res) => {
+  console.log("Scheduler triggered publish-due-posts");
   // Security: Ensure the request comes from a trusted source (e.g., Heroku Scheduler)
   const authHeader = req.headers.authorization;
   if (authHeader !== `Bearer ${config.workerSecret}`) {

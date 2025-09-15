@@ -1,3 +1,4 @@
+import Image from "next/image";
 const TestimonialsSection = () => {
   return (
     <section className="relative py-20 lg:py-32">
@@ -20,7 +21,7 @@ const TestimonialsSection = () => {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=320&auto=format&fit=crop" alt="Ava" className="h-12 w-12 rounded-full ring-2 ring-white/20 object-cover"/>
+              <Image src="https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=320&auto=format&fit=crop" alt="Ava" width={48} height={48} className="h-12 w-12 rounded-full ring-2 ring-white/20 object-cover"/>
               <div>
                 <div className="font-semibold text-white">Ava Patel</div>
                 <div className="text-sm text-white/60">Head of Growth, SaaS</div>
@@ -35,7 +36,7 @@ const TestimonialsSection = () => {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=320&auto=format&fit=crop" alt="Diego" className="h-12 w-12 rounded-full ring-2 ring-white/20 object-cover"/>
+              <Image src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=320&auto=format&fit=crop" alt="Diego" width={48} height={48} className="h-12 w-12 rounded-full ring-2 ring-white/20 object-cover"/>
               <div>
                 <div className="font-semibold text-white">Diego Santos</div>
                 <div className="text-sm text-white/60">Content Lead, Ecommerce</div>
@@ -50,7 +51,7 @@ const TestimonialsSection = () => {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=320&auto=format&fit=crop" alt="Maya" className="h-12 w-12 rounded-full ring-2 ring-white/20 object-cover"/>
+              <Image src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=320&auto=format&fit=crop" alt="Maya" width={48} height={48} className="h-12 w-12 rounded-full ring-2 ring-white/20 object-cover"/>
               <div>
                 <div className="font-semibold text-white">Maya Kramer</div>
                 <div className="text-sm text-white/60">Founder, DTC</div>

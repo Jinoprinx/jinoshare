@@ -23,7 +23,18 @@ auth.post("/credentials", async (req, res) => {
   if (user && user.password) {
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (isPasswordCorrect) {
-      return res.status(200).json(user);
+      return res.status(200).json({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        image: user.image,
+        role: user.role,
+        is_auto_posting_enabled: user.is_auto_posting_enabled,
+        emailVerified: user.emailVerified?.toISOString(),
+        createdAt: user.createdAt.toISOString(),
+        updatedAt: user.updatedAt.toISOString(),
+      });
     }
   }
 

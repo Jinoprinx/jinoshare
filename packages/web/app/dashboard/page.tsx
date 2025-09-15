@@ -22,6 +22,7 @@ import {
   FilterIcon,
 } from "lucide-react";
 import { useSession, signIn } from "next-auth/react";
+import Image from "next/image";
 
 type ProviderId = "x" | "linkedin" | "facebook" | "instagram";
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
@@ -132,7 +133,7 @@ function Dashboard() {
       url.searchParams.delete(p.id);
     }
     if (showed) window.history.replaceState({}, "", url.toString());
-  }, []);
+  }, [update]);
 
   async function saveDraft() {
     setLoading(true);
@@ -343,9 +344,11 @@ function Dashboard() {
           </button>
           <button className="flex items-center gap-2 rounded-full p-2 hover:bg-white/10">
             {session?.user?.image ? (
-              <img
+              <Image
                 src={session.user.image}
                 alt="User"
+                width={24}
+                height={24}
                 className="h-6 w-6 rounded-full"
               />
             ) : (

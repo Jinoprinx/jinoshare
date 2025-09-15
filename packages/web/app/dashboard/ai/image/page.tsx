@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeftIcon } from "lucide-react";
+import Image from "next/image";
 
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
@@ -100,9 +101,11 @@ export default function GenerateImagePage() {
 
             {generatedImage && (
               <div className="mt-4">
-                <img
+                <Image
                   src={generatedImage}
                   alt="AI Generated"
+                  width={1024}
+                  height={1024}
                   className="max-w-full h-auto rounded-lg"
                 />
                 <button

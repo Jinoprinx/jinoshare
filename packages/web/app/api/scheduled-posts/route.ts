@@ -1,15 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession();
-    
-    if (!session) {
+    const session = await getServerSession(authOptions);
+    console.log('[SCHEDULED-POSTS] Session:', JSON.stringify(session, null, 2));
+    console.log('[SCHEDULED-POSTS] User ID:', session?.user ? (session.user as any).id : 'No user');
+
+    if (!session || !session.user) {
+      console.log('[SCHEDULED-POSTS] No session or user found, returning 401');
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
+
+    const userId = (session.user as any).id || (session.user as any).sub;
+    if (!userId) {
+      console.log('[SCHEDULED-POSTS] No user ID found, returning 401');
+      return NextResponse.json({ error: 'No user ID available' }, { status: 401 });
+    }
+
+    console.log('[SCHEDULED-POSTS] Proceeding with user ID:', userId);
 
     const { searchParams } = new URL(request.url);
     const startDate = searchParams.get('startDate');
@@ -19,9 +31,12 @@ export async function GET(request: NextRequest) {
     if (startDate) query.append('startDate', startDate);
     if (endDate) query.append('endDate', endDate);
 
-    const response = await fetch(`${BACKEND_URL}/api/scheduled-posts?${query}`, {
+    console.log('[SCHEDULED-POSTS] Making request to backend:', `${BACKEND_URL}/api/scheduled-posts?${query}`);
+    const response = await fetch(`${BACKEND_URL}/api/scheduled-posts?${query}`,
+    {
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userId}`
       },
     });
 
@@ -41,7 +56,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     
     if (!session) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
@@ -53,6 +68,7 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${(session.user as any).id}`
       },
       body: JSON.stringify(body),
     });

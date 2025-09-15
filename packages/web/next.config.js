@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ["common"],
+  images: {
+    domains: ["images.unsplash.com", "lh3.googleusercontent.com"],
+  },
   webpack(config) {
     config.resolve.alias = {
       ...config.resolve.alias,

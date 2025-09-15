@@ -1,3 +1,4 @@
+import Image from "next/image";
 const TemplatesSection = () => {
   return (
     <section id="templates" className="relative py-20 lg:py-32">
@@ -14,7 +15,7 @@ const TemplatesSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
           <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] border border-white/10 ring-1 ring-white/5">
-            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop" alt="Product Launch" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+            <Image src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop" alt="Product Launch" width={1200} height={800} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="bg-black/40 backdrop-blur-xl rounded-xl p-4 ring-1 ring-white/10">
@@ -25,7 +26,7 @@ const TemplatesSection = () => {
           </div>
 
           <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] border border-white/10 ring-1 ring-white/5">
-            <img src="https://images.unsplash.com/photo-1519336555923-59661f41bb22?q=80&w=1200&auto=format&fit=crop" alt="Sale" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+            <Image src="https://images.unsplash.com/photo-1519336555923-59661f41bb22?q=80&w=1200&auto=format&fit=crop" alt="Sale" width={1200} height={800} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="bg-black/40 backdrop-blur-xl rounded-xl p-4 ring-1 ring-white/10">
@@ -36,7 +37,7 @@ const TemplatesSection = () => {
           </div>
 
           <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] border border-white/10 ring-1 ring-white/5">
-            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1200&auto=format&fit=crop" alt="Tutorial" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+            <Image src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1200&auto=format&fit=crop" alt="Tutorial" width={1200} height={800} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="bg-black/40 backdrop-blur-xl rounded-xl p-4 ring-1 ring-white/10">
@@ -47,7 +48,7 @@ const TemplatesSection = () => {
           </div>
 
           <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] border border-white/10 ring-1 ring-white/5 md:col-span-2">
-            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop" alt="Event" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+            <Image src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop" alt="Event" width={1600} height={900} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute bottom-6 left-6 right-6 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="bg-black/40 backdrop-blur-xl rounded-xl p-6 ring-1 ring-white/10">
@@ -58,7 +59,7 @@ const TemplatesSection = () => {
           </div>
 
           <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] border border-white/10 ring-1 ring-white/5">
-            <img src="https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=1200&auto=format&fit=crop" alt="Blog to Thread" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+            <Image src="https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=1200&auto=format&fit=crop" alt="Blog to Thread" width={1200} height={800} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="bg-black/40 backdrop-blur-xl rounded-xl p-4 ring-1 ring-white/10">

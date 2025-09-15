@@ -21,7 +21,7 @@ import { user } from "./routes/user";
 import { worker } from "./routes/worker";
 import { connections } from "./routes/connections";
 
-import { protect } from "./middleware/auth";
+import { protect, protectBearer } from "./middleware/auth";
 
 async function main() {
   await connectDb();
@@ -34,7 +34,10 @@ async function main() {
         config.clientOrigin,
         "https://jinoshare.vercel.app",
         /^https:\/\/jinoshare-.*\.vercel\.app$/,
-        "http://localhost:3000/"
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:3002",
+        "http://localhost:3003"
       ];
       
       if (!origin || allowedOrigins.some(allowed => 
@@ -62,7 +65,7 @@ async function main() {
   app.use("/api/ai/moderate/", aiModerateRouter);
   app.use("/api/ai/forecast/", aiForecastRouter);
   app.use("/api/ai/best-time/", aiBestTimeRouter);
-  app.use("/api/scheduled-posts", protect, scheduledPost);
+  app.use("/api/scheduled-posts", protectBearer, scheduledPost);
   app.use("/api/user", protect, user);
   app.use("/api/connections", protect, connections);
   app.use("/api/worker", worker);

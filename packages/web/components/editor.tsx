@@ -4,6 +4,7 @@ import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
+import Image from "next/image";
 
 export function Editor({ value, onChange }: { value: Partial<ISharedPost>; onChange: (p: Partial<ISharedPost>, file?: File) => void }) {
 
@@ -60,7 +61,7 @@ export function Editor({ value, onChange }: { value: Partial<ISharedPost>; onCha
         {mediaPreview && (
           <div className="mt-2">
             {mediaFile?.type.startsWith("image") ? (
-              <img src={mediaPreview} alt="Preview" className="max-w-full h-auto" />
+              <Image src={mediaPreview} alt="Preview" width={300} height={300} className="max-w-full h-auto" />
             ) : (
               <video src={mediaPreview} controls className="max-w-full h-auto" />
             )}

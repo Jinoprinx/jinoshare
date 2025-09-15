@@ -9,6 +9,8 @@ export interface IUser extends Document {
   emailVerified?: Date;
   is_auto_posting_enabled: boolean;
   role: 'user' | 'admin';
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const UserSchema: Schema = new Schema(
