@@ -34,11 +34,11 @@ export default function AIPage() {
         {aiFeatures.map((feature) => (
           <div
             key={feature.title}
-            className="p-4 border rounded-lg cursor-pointer hover:shadow-lg transition-shadow"
+            className="rounded-lg border border-white/10 bg-black/20 p-6 cursor-pointer hover:bg-white/5 transition-colors"
             onClick={() => router.push(feature.path)}
           >
             <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-            <p className="text-gray-600">{feature.description}</p>
+            <p className="text-gray-400">{feature.description}</p>
           </div>
         ))}
       </div>

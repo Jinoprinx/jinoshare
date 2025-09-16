@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { aiGenerate, stripJsonFences } from "@jino/ai";
+import { buildTagsPrompt } from "@jino/ai/src/prompts"
 
 export const aiTagsRouter = Router();
 
@@ -9,11 +10,7 @@ aiTagsRouter.post("/", async (req, res) => {
     if (!text || !platform) {
       return res.status(400).json({ ok: false, error: "text and platform are required" });
     }
-    const prompt = `From the text below, propose up to 7 platform-appropriate hashtags and one engaging caption for ${platform}.
-Return JSON with { "hashtags": [string], "caption": string }.
-
-${text}`;
-
+    const prompt = buildTagsPrompt(text, platform);
     const raw = await aiGenerate(prompt, { maxTokens: 400 });
     let parsed: any;
     try {

@@ -6,5 +6,9 @@
   "types": "src/index.ts",
   "scripts": {
     "build": "echo 'Common package built'"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.5.0"
   }
 }

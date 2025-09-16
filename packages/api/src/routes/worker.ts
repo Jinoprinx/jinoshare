@@ -10,6 +10,7 @@ export const worker = Router();
 
 // POST /worker/publish-due-posts
 worker.post("/publish-due-posts", async (req, res) => {
+  console.log("Scheduler triggered publish-due-posts");
   // Security: Ensure the request comes from a trusted source (e.g., Heroku Scheduler)
   const authHeader = req.headers.authorization;
   if (authHeader !== `Bearer ${config.workerSecret}`) {
@@ -18,7 +19,7 @@ worker.post("/publish-due-posts", async (req, res) => {
 
   try {
     const users = await User.find({ is_auto_posting_enabled: true });
-    const userIds = users.map(u => u.userId);
+    const userIds = users.map(u => u._id);
 
     const duePosts = await Post.find({
       userId: { $in: userIds },

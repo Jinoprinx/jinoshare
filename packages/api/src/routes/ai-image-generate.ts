@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import { buildImagePrompt } from "@jino/ai/src/prompts";
 import axios from "axios";
 import fs from "fs/promises";
 import path from "path";
@@ -36,10 +37,12 @@ aiImageGenerateRouter.post("/", async (req: Request, res: Response) => {
       });
     }
 
+    const finalPrompt = buildImagePrompt(prompt, "generic", style, dimensions, quality);
+
     // Call DALL-E or other image generation API
     const response = await axios.post(`${apiUrl}/images/generations`, {
       model: "dall-e-3",
-      prompt: `${prompt}. Style: ${style}. High quality, ${dimensions} resolution.`,
+      prompt: finalPrompt,
       n: 1,
       size: dimensions,
       quality: quality,

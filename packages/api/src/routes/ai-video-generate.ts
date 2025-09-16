@@ -1,3 +1,4 @@
+import { buildVideoPrompt } from "@jino/ai/src/prompts";
 import { Router, Request, Response } from "express";
 import axios from "axios";
 import fs from "fs/promises";
@@ -37,44 +38,18 @@ aiVideoGenerateRouter.post("/", async (req: Request, res: Response) => {
       });
     }
 
-    // For video generation, we might use services like RunwayML, Stability AI, or similar
-    // This is a generic implementation that can be adapted to various video generation APIs
-
-    let videoGenerationPayload;
-    let videoApiEndpoint;
-
-    // Example implementation for a hypothetical video generation service
-    if (apiUrl.includes('runwayml')) {
-      // Runway ML API format
-      videoGenerationPayload = {
-        text: prompt,
-        duration: duration,
-        width: parseInt(dimensions.split('x')[0]) || 1024,
-        height: parseInt(dimensions.split('x')[1]) || 1024,
-        motion_score: style === 'dynamic' ? 8 : 4
-      };
-      videoApiEndpoint = `${apiUrl}/generate`;
-    } else if (apiUrl.includes('stability')) {
-      // Stability AI Video format
-      videoGenerationPayload = {
-        prompt: `${prompt}. Style: ${style}. Duration: ${duration} seconds.`,
-        aspect_ratio: dimensions,
-        duration: duration
-      };
-      videoApiEndpoint = `${apiUrl}/video/generate`;
-    } else {
-      // Generic format
-      videoGenerationPayload = {
-        prompt: prompt,
-        style: style,
-        duration: duration,
-        resolution: dimensions
-      };
-      videoApiEndpoint = `${apiUrl}/generate-video`;
-    }
+    const videoApiEndpoint = `${apiUrl}/generate-video`;
+    const [width, height] = dimensions.split('x').map(Number);
+    const format = width > height ? 'horizontal' : height > width ? 'vertical' : 'square';
+    const finalPrompt = buildVideoPrompt(prompt, "generic", duration, format, style);
 
     // Make the video generation request
-    const response = await axios.post(videoApiEndpoint, videoGenerationPayload, {
+    const response = await axios.post(videoApiEndpoint, {
+      prompt: finalPrompt,
+      duration,
+      width,
+      height
+    }, {
       headers: {
         "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json"

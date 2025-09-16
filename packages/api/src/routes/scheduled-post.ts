@@ -7,7 +7,7 @@ export const scheduledPost = Router();
 // GET /scheduled-posts?startDate=...&endDate=...
 scheduledPost.get("/", async (req, res) => {
   const { startDate, endDate } = req.query;
-  const userId = config.defaultUserId; // Assuming a default user for now
+  const userId = (req as any).userId || config.defaultUserId;
 
   const query: any = { userId };
   if (startDate && endDate) {
@@ -25,7 +25,7 @@ scheduledPost.get("/", async (req, res) => {
 // POST /scheduled-posts
 scheduledPost.post("/", async (req, res) => {
   const { content, channels, scheduled_at } = req.body;
-  const userId = config.defaultUserId;
+  const userId = (req as any).userId || config.defaultUserId;
 
   if (!content || !channels || channels.length === 0) {
     return res.status(400).json({ error: "Missing required fields: content and channels." });
@@ -49,15 +49,16 @@ scheduledPost.post("/", async (req, res) => {
 scheduledPost.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { content, channels, scheduled_at, status } = req.body;
+  const userId = (req as any).userId || config.defaultUserId;
 
   try {
-    const post = await Post.findByIdAndUpdate(
-      id,
+    const post = await Post.findOneAndUpdate(
+      { _id: id, userId },
       { content, channels, scheduled_at: scheduled_at ? new Date(scheduled_at) : null, status },
       { new: true } // Return the updated document
     );
 
-    if (!post) return res.status(404).json({ error: "Post not found" });
+    if (!post) return res.status(404).json({ error: "Post not found or you do not have permission to edit it" });
 
     res.json(post);
   } catch (err: any) {
@@ -68,10 +69,11 @@ scheduledPost.put("/:id", async (req, res) => {
 // DELETE /scheduled-posts/:id
 scheduledPost.delete("/:id", async (req, res) => {
   const { id } = req.params;
+  const userId = (req as any).userId || config.defaultUserId;
 
   try {
-    const post = await Post.findByIdAndDelete(id);
-    if (!post) return res.status(404).json({ error: "Post not found" });
+    const post = await Post.findOneAndDelete({ _id: id, userId });
+    if (!post) return res.status(404).json({ error: "Post not found or you do not have permission to delete it" });
     res.status(204).send(); // No content
   } catch (err: any) {
     res.status(500).json({ error: "Failed to delete post", detail: err.message });

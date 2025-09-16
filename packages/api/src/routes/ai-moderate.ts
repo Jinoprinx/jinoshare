@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { aiGenerate, stripJsonFences } from "@jino/ai";
+import { buildModerationPrompt } from "@jino/ai/src/prompts";
+
 
 export const aiModerateRouter = Router();
 
@@ -9,12 +11,7 @@ aiModerateRouter.post("/", async (req, res) => {
     if (!text || !platform) {
       return res.status(400).json({ ok: false, error: "text and platform are required" });
     }
-    const prompt = `Moderate the following text for ${platform}.
-Check for slurs, harassment, disallowed claims, or platform policy risks.
-Return JSON {"severity":"none|low|medium|high","issues":[string],"suggestedFix":string}.
-
-${text}`;
-
+    const prompt = buildModerationPrompt(text, platform);
     const raw = await aiGenerate(prompt, { maxTokens: 400 });
     let moderation;
     try {

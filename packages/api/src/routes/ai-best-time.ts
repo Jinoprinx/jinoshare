@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { aiGenerate, stripJsonFences } from "@jino/ai";
 import { PublishLog } from "../models/PublishLog";
+import { buildBestTimePrompt } from "@jino/ai/src/prompts";
 
 export const aiBestTimeRouter = Router();
 
@@ -19,11 +20,7 @@ aiBestTimeRouter.get("/", async (req, res) => {
       return { dow: d.getDay(), hour: d.getHours(), impressions: 0, likes: 0 };
     });
 
-    const prompt = `Given historical performance entries (dayOfWeek, hour, impressions, likes), recommend top 3 posting hours for ${platform}.
-Return JSON [{"dow":number,"hour":number,"reason":string}].
-
-Data:
-${JSON.stringify(examples)}`;
+    const prompt = buildBestTimePrompt(examples, platform, "UTC", "engagementRate");
 
     const raw = await aiGenerate(prompt, { maxTokens: 400 });
     let recs;

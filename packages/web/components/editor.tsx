@@ -4,6 +4,7 @@ import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
+import Image from "next/image";
 
 export function Editor({ value, onChange }: { value: Partial<ISharedPost>; onChange: (p: Partial<ISharedPost>, file?: File) => void }) {
 
@@ -47,9 +48,9 @@ export function Editor({ value, onChange }: { value: Partial<ISharedPost>; onCha
   };
 
   return (
-    <div className="p-4 bg-gray-50 rounded-lg">
+    <div className="p-4 rounded-lg bg-black/20 border-white/10">
       <textarea 
-        className="input min-h-[150px] w-full p-2 border rounded-md" 
+        className="input min-h-[150px] w-full p-2 border rounded-md bg-white/5 border-white/10 text-white placeholder-gray-400"
         placeholder="Write your post..."
         value={localPost.content ?? ''} 
         onChange={handleTextChange}
@@ -60,7 +61,7 @@ export function Editor({ value, onChange }: { value: Partial<ISharedPost>; onCha
         {mediaPreview && (
           <div className="mt-2">
             {mediaFile?.type.startsWith("image") ? (
-              <img src={mediaPreview} alt="Preview" className="max-w-full h-auto" />
+              <Image src={mediaPreview} alt="Preview" width={300} height={300} className="max-w-full h-auto" />
             ) : (
               <video src={mediaPreview} controls className="max-w-full h-auto" />
             )}
