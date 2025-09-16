@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeftIcon } from "lucide-react";
 import Image from "next/image";
 
-const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "https://jinoshare-api-59028d83893a.herokuapp.com";
 
 export default function GenerateImagePage() {
   const [imagePrompt, setImagePrompt] = useState("");

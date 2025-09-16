@@ -9,7 +9,7 @@ import PricingSection from '@components/PricingSection';
 import TemplatesSection from '@components/TemplatesSection';
 import TestimonialsSection from '@components/TestimonialsSection';
 
-const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "https://jinoshare-api-59028d83893a.herokuapp.com";
 
 export default function Page() {
   return (

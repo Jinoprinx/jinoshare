@@ -1,6 +1,6 @@
 import type { AIGenerateRequest, AIGenerateResponse, AIRewriteRequest, AIRewriteResponse } from "@jino/common";
 
-const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4001";
+const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
 export async function generatePosts(req: AIGenerateRequest) {
   const res = await fetch(`${API_BASE}/api/ai/generate/`, {

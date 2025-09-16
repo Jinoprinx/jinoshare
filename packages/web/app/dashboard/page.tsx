@@ -25,7 +25,7 @@ import { useSession, signIn } from "next-auth/react";
 import Image from "next/image";
 
 type ProviderId = "x" | "linkedin" | "facebook" | "instagram";
-const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
+const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "https://jinoshare-api-59028d83893a.herokuapp.com";
 
 const PROVIDERS: { id: ProviderId; label: string }[] = [
   { id: "x", label: "X" },
