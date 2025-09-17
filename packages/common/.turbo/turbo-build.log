@@ -1,5 +1,4 @@
 
-> @jino/common@1.0.0 build
-> echo 'Common package built'
+> @jino/common@* build
+> tsc
 
-'Common package built'

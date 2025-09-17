@@ -1,4 +1,4 @@
-import { IConnection } from "@jino/common";
+import { IConnection } from "@common/types";
 import { Schema, model } from "mongoose";
 
 const ConnectionSchema = new Schema<IConnection>(

@@ -1,4 +1,4 @@
-import { IPublishLog } from "@jino/common";
+import { IPublishLog } from "@common/types";
 import { Schema, model } from "mongoose";
 
 const PublishLogSchema = new Schema<IPublishLog>(

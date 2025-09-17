@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { aiGenerate, stripJsonFences } from "@jino/ai";
-import { buildTagsPrompt } from "@jino/ai/src/prompts"
+import { buildTagsPrompt } from "@jino/ai"
 
 export const aiTagsRouter = Router();
 

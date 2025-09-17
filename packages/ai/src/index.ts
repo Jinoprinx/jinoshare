@@ -58,3 +58,6 @@ export async function aiGenerate(
 export function stripJsonFences(s: string): string {
   return s.replace(/```json\s*|\s*```/gi, "").trim();
 }
+
+// Re-export all prompts functions
+export * from "./prompts";

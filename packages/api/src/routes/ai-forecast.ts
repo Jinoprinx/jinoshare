@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { aiGenerate, stripJsonFences } from "@jino/ai";
-import { buildForecastPrompt } from "@jino/ai/src/prompts";
+import { buildForecastPrompt } from "@jino/ai";
 
 
 export const aiForecastRouter = Router();

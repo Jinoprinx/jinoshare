@@ -1,10 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@api/*": ["src/*"],
-      "@common/*": ["../common/src/*"]
+      "@api/*": ["./*"],
+      "@common/*": ["../../common/dist/*"]
     },
     "target": "ES2022",
     "module": "CommonJS",
@@ -15,10 +15,11 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "dist",
+    "rootDir": "src",
     "resolveJsonModule": true,
     "types": ["node", "jest"],
     "noEmit": false
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "src/**/*.test.ts"]
+  "exclude": ["node_modules", "dist", "src/**/*.test.ts", "../common/**/*"]
 }

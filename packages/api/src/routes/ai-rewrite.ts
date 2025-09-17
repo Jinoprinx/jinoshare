@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { aiGenerate } from "@jino/ai";
-import { buildRewritePrompt } from "@jino/ai/src/prompts"
+import { buildRewritePrompt } from "@jino/ai"
 
 export const aiRewriteRouter = Router();
 

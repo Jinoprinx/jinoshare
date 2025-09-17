@@ -1,4 +1,4 @@
-import { buildVideoPrompt } from "@jino/ai/src/prompts";
+import { buildVideoPrompt } from "@jino/ai";
 import { Router, Request, Response } from "express";
 import axios from "axios";
 import fs from "fs/promises";

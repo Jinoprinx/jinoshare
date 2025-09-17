@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { aiGenerate, stripJsonFences } from "@jino/ai";
-import { buildModerationPrompt } from "@jino/ai/src/prompts";
+import { buildModerationPrompt } from "@jino/ai";
 
 
 export const aiModerateRouter = Router();

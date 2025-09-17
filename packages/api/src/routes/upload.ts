@@ -3,7 +3,7 @@ import { Router, Request, Response } from "express";
 import { getProvider } from "../providers/index";
 import { Connection } from "../models/Connection";
 import { config } from "../config";
-import { Channel } from "../../../common/src/index";
+import { Channel } from "@common/types";
 import multer from "multer";
 
 const upload = multer({ storage: multer.memoryStorage() });

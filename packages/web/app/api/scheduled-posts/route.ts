@@ -7,21 +7,14 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://jinoshare-ap
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    console.log('[SCHEDULED-POSTS] Session:', JSON.stringify(session, null, 2));
-    console.log('[SCHEDULED-POSTS] User ID:', session?.user ? (session.user as any).id : 'No user');
-
     if (!session || !session.user) {
-      console.log('[SCHEDULED-POSTS] No session or user found, returning 401');
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
     const userId = (session.user as any).id || (session.user as any).sub;
     if (!userId) {
-      console.log('[SCHEDULED-POSTS] No user ID found, returning 401');
       return NextResponse.json({ error: 'No user ID available' }, { status: 401 });
     }
-
-    console.log('[SCHEDULED-POSTS] Proceeding with user ID:', userId);
 
     const { searchParams } = new URL(request.url);
     const startDate = searchParams.get('startDate');
@@ -31,7 +24,6 @@ export async function GET(request: NextRequest) {
     if (startDate) query.append('startDate', startDate);
     if (endDate) query.append('endDate', endDate);
 
-    console.log('[SCHEDULED-POSTS] Making request to backend:', `${BACKEND_URL}/api/scheduled-posts?${query}`);
     const response = await fetch(`${BACKEND_URL}/api/scheduled-posts?${query}`,
     {
       headers: {

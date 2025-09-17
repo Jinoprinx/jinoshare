@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { aiGenerate, stripJsonFences } from "@jino/ai";
 import { PublishLog } from "../models/PublishLog";
-import { buildBestTimePrompt } from "@jino/ai/src/prompts";
+import { buildBestTimePrompt } from "@jino/ai";
 
 export const aiBestTimeRouter = Router();
 

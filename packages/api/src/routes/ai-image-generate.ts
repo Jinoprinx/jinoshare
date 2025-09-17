@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import { buildImagePrompt } from "@jino/ai/src/prompts";
+import { buildImagePrompt } from "@jino/ai";
 import axios from "axios";
 import fs from "fs/promises";
 import path from "path";
