@@ -1,14 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
-import { getSession } from 'next-auth/react';
+import { getToken } from 'next-auth/jwt';
+import { config } from '../config';
 
 export const protect = async (req: Request, res: Response, next: NextFunction) => {
-  const session = await getSession({ req });
+  const token = await getToken({ req, secret: config.nextAuthSecret });
 
-  if (!session) {
+  if (!token) {
     return res.status(401).json({ message: 'Not authorized' });
   }
 
-  (req as any).user = session.user;
+  (req as any).user = token;
   next();
 };
 

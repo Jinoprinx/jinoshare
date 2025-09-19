@@ -6,6 +6,7 @@ export const config = {
   mongoUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/social_backend",
   defaultUserId: process.env.DEFAULT_USER_ID || "dev-user",
   workerSecret: process.env.WORKER_SECRET || "dev-worker-secret",
+  nextAuthSecret: process.env.NEXTAUTH_SECRET || "dev-nextauth-secret",
   providers: {
     x: {
       clientId: process.env.X_CLIENT_ID!,
