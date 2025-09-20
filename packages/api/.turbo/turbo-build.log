@@ -1,25 +1,4 @@
 
 > api@0.2.0 build
-> run-s build:common build:api
+> tsc
 
-
-> api@0.2.0 build:common
-> cp -r ../common/dist ./dist/common
-
-'cp' is not recognized as an internal or external command,
-operable program or batch file.
-npm error Lifecycle script `build:common` failed with error:
-npm error code 1
-npm error path C:\Users\JinoPrinx\jino\packages\api
-npm error workspace api@0.2.0
-npm error location C:\Users\JinoPrinx\jino\packages\api
-npm error command failed
-npm error command C:\WINDOWS\system32\cmd.exe /d /s /c cp -r ../common/dist ./dist/common
-ERROR: "build:common" exited with 1.
-npm error Lifecycle script `build` failed with error:
-npm error code 1
-npm error path C:\Users\JinoPrinx\jino\packages\api
-npm error workspace api@0.2.0
-npm error location C:\Users\JinoPrinx\jino\packages\api
-npm error command failed
-npm error command C:\WINDOWS\system32\cmd.exe /d /s /c run-s build:common build:api
