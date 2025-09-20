@@ -7,7 +7,7 @@ import { Calendar } from "@components/calendar";
 import { toast, Toasts } from "@components/toast";
 import { generateBatch } from "@/lib/generator";
 import { ISharedPost, Channel, IConnection } from "@jino/common";
-
+//look into reusing using this AIPage
 import AIPage from "./ai/page";
 import {
   PlusIcon,
