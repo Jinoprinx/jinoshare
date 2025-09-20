@@ -14,6 +14,7 @@ export function Editor({ value, onChange }: { value: Partial<ISharedPost>; onCha
   const [mediaPreview, setMediaPreview] = useState<string | null>(null);
 
   useEffect(() => {
+    //Enter local post
     setLocalPost(value);
   }, [value]);
 
