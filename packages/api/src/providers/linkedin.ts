@@ -64,7 +64,7 @@ export const linkedinProvider: Provider = {
         "Authorization": `Bearer ${accessToken}`,
         "Content-Type": "application/json",
         "X-Restli-Protocol-Version": "2.0.0",
-        "LinkedIn-Version": "2024.08"
+        "LinkedIn-Version": "2025.09"
       }
     });
     return { id: res.headers["x-restli-id"], url: `https://www.linkedin.com/feed/update/${res.headers["x-restli-id"]}` };
@@ -86,7 +86,7 @@ export const linkedinProvider: Provider = {
         "Authorization": `Bearer ${accessToken}`,
         "Content-Type": "application/json",
         "X-Restli-Protocol-Version": "2.0.0",
-        "LinkedIn-Version": "2024.08"
+        "LinkedIn-Version": "2025.09"
       }
     });
     const uploadUrl = initRes.data.value.uploadUrl;
@@ -117,7 +117,7 @@ export const linkedinProvider: Provider = {
         "Authorization": `Bearer ${accessToken}`,
         "Content-Type": "application/json",
         "X-Restli-Protocol-Version": "2.0.0",
-        "LinkedIn-Version": "2024.08"
+        "LinkedIn-Version": "2025.09"
       }
     });
 
