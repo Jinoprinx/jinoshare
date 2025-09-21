@@ -1,44 +1,43 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { Collection, FindOptions } from "mongodb";
+import clientPromise from "./mongodb";
 import { ISharedPost } from "@jino/common";
 
-const DATA = path.join(process.cwd(), "data");
-const FILE = path.join(DATA, "db.json");
+const DB_NAME = "jino-social";
+const COLLECTION = "posts";
 
-async function ensure() {
-  try { await fs.mkdir(DATA, { recursive: true }); } catch {}
-  try { await fs.access(FILE); } catch {
-    await fs.writeFile(FILE, JSON.stringify({ posts: [] }, null, 2), "utf-8");
-  }
+async function getCollection(): Promise<Collection<ISharedPost>> {
+  const client = await clientPromise;
+  const db = client.db(DB_NAME);
+  return db.collection<ISharedPost>(COLLECTION);
 }
 
 export async function getAll(): Promise<ISharedPost[]> {
-  await ensure();
-  const raw = await fs.readFile(FILE, "utf-8");
-  const data = JSON.parse(raw) as { posts: ISharedPost[] };
-  return data.posts.sort((a, b) => (b.createdAt.localeCompare(a.createdAt)));
-}
-
-export async function saveAll(posts: ISharedPost[]) {
-  await ensure();
-  await fs.writeFile(FILE, JSON.stringify({ posts }, null, 2), "utf-8");
+  const collection = await getCollection();
+  // sort by createdAt descending
+  const options: FindOptions<ISharedPost> = {
+    sort: { createdAt: -1 },
+  };
+  const posts = await collection.find({}, options).toArray();
+  return posts;
 }
 
 export async function upsert(post: ISharedPost) {
-  const posts = await getAll();
-  const idx = posts.findIndex(p => p._id === post._id);
-  if (idx >= 0) posts[idx] = { ...post, updatedAt: new Date().toISOString() };
-  else posts.unshift({ ...post, updatedAt: new Date().toISOString() });
-  await saveAll(posts);
+  const collection = await getCollection();
+  await collection.updateOne(
+    { _id: post._id as any },
+    { $set: post },
+    { upsert: true }
+  );
   return post;
 }
 
 export async function remove(id: string) {
-  const posts = await getAll();
-  await saveAll(posts.filter(p => p._id !== id));
+  const collection = await getCollection();
+  await collection.deleteOne({ _id: id as any });
 }
 
-export async function get(id: string) {
-  const posts = await getAll();
-  return posts.find(p => p._id === id) || null;
+export async function get(id:string) {
+  const collection = await getCollection();
+  const post = await collection.findOne({ _id: id as any });
+  return post;
 }

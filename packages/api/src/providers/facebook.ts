@@ -18,11 +18,11 @@ export const facebookProvider: Provider = {
       scope: (config.providers.facebook.scopes || []).join(","),
       state
     });
-    return `https://www.facebook.com/v18.0/dialog/oauth?${params.toString()}`;
+    return `https://www.facebook.com/v20.0/dialog/oauth?${params.toString()}`;
   },
 
   async exchangeCodeForToken({ code, redirectUri }): Promise<TokenResponse> {
-    const res = await axios.post("https://graph.facebook.com/v18.0/oauth/access_token", null, {
+    const res = await axios.post("https://graph.facebook.com/v20.0/oauth/access_token", null, {
       params: {
         client_id: config.providers.facebook.clientId,
         client_secret: config.providers.facebook.clientSecret,
@@ -42,14 +42,14 @@ export const facebookProvider: Provider = {
 
   async postText(accessToken: string, { text }: { text: string }) {
     // Get pages and use first one
-    const pagesRes = await axios.get("https://graph.facebook.com/v18.0/me/accounts", {
+    const pagesRes = await axios.get("https://graph.facebook.com/v20.0/me/accounts", {
       params: { access_token: accessToken }
     });
     
     const page = pagesRes.data.data[0];
     if (!page) throw new Error("No Facebook page connected");
     
-    const res = await axios.post(`https://graph.facebook.com/v18.0/${page.id}/feed`, null, {
+    const res = await axios.post(`https://graph.facebook.com/v20.0/${page.id}/feed`, null, {
       params: {
         message: text,
         access_token: page.access_token
@@ -61,7 +61,7 @@ export const facebookProvider: Provider = {
 
   async postMedia(accessToken: string, { file, text }: { file: any, text?: string }) {
     // Get pages and use first one
-    const pagesRes = await axios.get("https://graph.facebook.com/v18.0/me/accounts", {
+    const pagesRes = await axios.get("https://graph.facebook.com/v20.0/me/accounts", {
       params: { access_token: accessToken }
     });
     
@@ -80,7 +80,7 @@ export const facebookProvider: Provider = {
     if (text) formData.append(isVideo ? 'description' : 'message', text);
     formData.append('access_token', page.access_token);
     
-    const res = await axios.post(`https://graph.facebook.com/v18.0/${page.id}/${endpoint}`, formData, {
+    const res = await axios.post(`https://graph.facebook.com/v20.0/${page.id}/${endpoint}`, formData, {
       headers: formData.getHeaders()
     });
     
