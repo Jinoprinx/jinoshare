@@ -100,6 +100,9 @@ export const xProvider: Provider = {
   },
 
   async postMedia(accessToken: string, { file, text }: { file: any, text?: string }) {
+    if (!file || !file.mimetype) {
+      throw new Error("Invalid file or mimetype for X post");
+    }
     // 1. Upload media first
     const formData = new FormData();
     formData.append("media", file.buffer, {

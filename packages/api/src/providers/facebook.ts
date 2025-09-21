@@ -60,6 +60,9 @@ export const facebookProvider: Provider = {
   },
 
   async postMedia(accessToken: string, { file, text }: { file: any, text?: string }) {
+    if (!file || !file.mimetype) {
+      throw new Error("Invalid file or mimetype for Facebook post");
+    }
     // Get pages and use first one
     const pagesRes = await axios.get("https://graph.facebook.com/v20.0/me/accounts", {
       params: { access_token: accessToken }

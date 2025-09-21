@@ -71,6 +71,9 @@ export const linkedinProvider: Provider = {
   },
 
   async postMedia(accessToken: string, { file, text }: { file: any, text?: string }) {
+    if (!file || !file.mimetype) {
+      throw new Error("Invalid file or mimetype for LinkedIn post");
+    }
     const user = await axios.get("https://api.linkedin.com/v2/userinfo", {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
