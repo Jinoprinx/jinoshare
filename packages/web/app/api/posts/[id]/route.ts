@@ -3,14 +3,14 @@ import { get, remove, upsert } from "@/lib/db";
 import { ISharedPost } from "@jino/common";
 
 interface RouteContext {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function PUT(req: NextRequest, { params }: RouteContext) {
   const body = (await req.json()) as ISharedPost;
-  const { id } = params;
+  const { id } = await params;
   const existing = await get(id);
   if (!existing) return NextResponse.json({ error: "Not found" }, { status: 404 });
   const updated: ISharedPost = { ...existing, ...body, _id: id, updatedAt: new Date().toISOString() };
@@ -19,7 +19,7 @@ export async function PUT(req: NextRequest, { params }: RouteContext) {
 }
 
 export async function DELETE(_: NextRequest, { params }: RouteContext) {
-  const { id } = params;
+  const { id } = await params;
   await remove(id);
   return NextResponse.json({ ok: true });
 }
