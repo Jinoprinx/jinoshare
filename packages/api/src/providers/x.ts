@@ -2,6 +2,7 @@ import "multer";
 import axios from "axios";
 import FormData from "form-data";
 import { config } from "../config";
+import { Connection } from "../models/Connection";
 import { Provider, TokenResponse } from "./types";
 
 const AUTH_URL = "https://twitter.com/i/oauth2/authorize";
@@ -77,11 +78,14 @@ export const xProvider: Provider = {
     if (needRefresh && this.refreshAccessToken) {
       const t = await this.refreshAccessToken(conn.refreshToken!);
       const expiresAt = t.expires_in ? new Date(Date.now() + t.expires_in * 1000) : undefined;
-      conn.accessToken = t.access_token;
-      conn.refreshToken = t.refresh_token;
-      conn.scope = t.scope;
-      conn.expiresAt = expiresAt;
-      await conn.save();
+      const connection = await Connection.findOne({ provider: "x", userId: conn.userId });
+      if (connection) {
+        connection.accessToken = t.access_token;
+        connection.refreshToken = t.refresh_token;
+        connection.scope = t.scope;
+        connection.expiresAt = expiresAt;
+        await connection.save();
+      }
       return t.access_token;
     }
 
