@@ -1,6 +1,7 @@
 "use client";
 import { format } from "date-fns";
 import { ISharedPost } from "@jino/common";
+import { toast } from "@/components/toast";
 import { useSession } from "next-auth/react";
 
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
