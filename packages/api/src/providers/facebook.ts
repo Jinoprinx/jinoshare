@@ -65,11 +65,13 @@ export const facebookProvider: Provider = {
   },
 
   async postText(accessToken: string, { text }: { text: string }) {
+    console.log("Facebook postText - accessToken:", accessToken ? 'Present' : 'Missing');
     // Get pages and use first one
     const pagesRes = await axios.get("https://graph.facebook.com/v20.0/me/accounts", {
       params: { access_token: accessToken }
     });
-    
+
+    console.log("Facebook pages response:", pagesRes.data);
     const page = pagesRes.data.data[0];
     console.log("Facebook page:", page);
     if (!page) throw new Error("No Facebook page connected");

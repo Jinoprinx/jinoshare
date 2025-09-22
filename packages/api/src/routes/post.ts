@@ -20,10 +20,13 @@ post.post("/:provider/post", protect, async (req, res) => {
   const { text } = req.body as { text?: string; };
   if (!text || !text.trim()) return res.status(400).json({ error: "Missing text" });
 
-  const uid = (req as any).user.id;
+  const uid = (req as any).user.id || (req as any).user.sub;
+  console.log('Post route - user object:', (req as any).user);
+  console.log('Post route - extracted uid:', uid);
 
   try {
     const conn = await Connection.findOne({ userId: uid, provider: providerId });
+    console.log('Found connection:', conn ? 'Yes' : 'No', conn?.provider);
     if (!conn) return res.status(400).json({ error: `No connected ${provider.displayName} account` });
 
     const accessToken = await provider.ensureValidAccessToken({
@@ -79,10 +82,13 @@ post.post("/:provider/media", protect, async (req, res) => {
 
   if (!file) return res.status(400).json({ error: "Missing media file" });
 
-  const uid = (req as any).user.id;
+  const uid = (req as any).user.id || (req as any).user.sub;
+  console.log('Media route - user object:', (req as any).user);
+  console.log('Media route - extracted uid:', uid);
 
   try {
     const conn = await Connection.findOne({ userId: uid, provider: providerId });
+    console.log('Found connection for media:', conn ? 'Yes' : 'No', conn?.provider);
     if (!conn) return res.status(400).json({ error: `No connected ${provider.displayName} account` });
 
     const accessToken = await provider.ensureValidAccessToken({

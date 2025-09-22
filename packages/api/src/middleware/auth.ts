@@ -14,6 +14,7 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
 
     try {
       const decoded = jwt.verify(token, config.nextAuthSecret!);
+      console.log('Bearer token decoded user:', decoded);
       (req as any).user = decoded;
       next();
     } catch (error) {
@@ -26,6 +27,7 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
       return res.status(401).json({ message: 'Not authorized' });
     }
 
+    console.log('NextAuth token user:', token);
     (req as any).user = token;
     next();
   }

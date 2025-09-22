@@ -82,6 +82,19 @@ export const authOptions: AuthOptions = {
         (session.user as any).role = token.role;
         (session.user as any).firstName = token.firstName;
         (session.user as any).lastName = token.lastName;
+        // Create a JWT token that the backend can verify
+        const jwt = require('jsonwebtoken');
+        const accessToken = jwt.sign(
+          {
+            id: token.id || token.sub,
+            sub: token.id || token.sub,
+            role: token.role,
+            firstName: token.firstName,
+            lastName: token.lastName
+          },
+          process.env.NEXTAUTH_SECRET!
+        );
+        (session as any).accessToken = accessToken;
       }
       return session;
     },
