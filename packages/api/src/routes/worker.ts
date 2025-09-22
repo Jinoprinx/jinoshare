@@ -56,7 +56,7 @@ worker.post("/publish-due-posts", async (req, res) => {
               conn.set(tokens);
               await conn.save();
             }
-          });
+          }, post.userId);
 
           const result = await provider.postText(accessToken, { text: post.content });
 

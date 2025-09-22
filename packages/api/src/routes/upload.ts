@@ -35,7 +35,7 @@ uploadRouter.post("/:provider/upload", upload.single("file"), async (req: Reques
         conn.set(tokens);
         await conn.save();
       }
-    });
+    }, uid);
 
     if (!provider.postMedia) {
       return res.status(501).json({ error: "Provider does not support media uploads" });
