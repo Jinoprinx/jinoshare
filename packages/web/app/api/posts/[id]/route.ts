@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { get, remove, upsert } from "@/lib/db";
 import { ISharedPost } from "@jino/common";
 
+export async function GET(_: NextRequest, { params }: any) {
+  const { id } = params;
+  const post = await get(id);
+  if (!post) return NextResponse.json({ error: "Not found" }, { status: 404 });
+  return NextResponse.json({ post });
+}
+
 export async function PUT(req: NextRequest, { params }: any) {
   const body = (await req.json()) as ISharedPost;
   const { id } = params;
