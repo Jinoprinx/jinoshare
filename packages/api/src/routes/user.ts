@@ -1,11 +1,17 @@
 import { Router } from "express";
+import { z } from "zod";
+import { protectBearer } from "../middleware/auth";
 import { User } from "../models/User";
 import { config } from "../config";
 
-export const user = Router();
+export const userRoutes = Router();
+
+const userSchema = z.object({
+  connections: z.array(z.string()),
+});
 
 // GET /user/settings
-user.get("/settings", async (req, res) => {
+userRoutes.get("/settings", async (req, res) => {
   const userId = config.defaultUserId; // Assuming a default user for now
 
   try {
@@ -18,17 +24,6 @@ user.get("/settings", async (req, res) => {
   } catch (err: any) {
     res.status(500).json({ error: "Failed to get user settings", detail: err.message });
   }
-});
-
-import { Router } from "express";
-import { z } from "zod";
-import { validate } from "../middleware/auth";
-import { User } from "../models/User";
-
-export const userRoutes = Router();
-
-const userSchema = z.object({
-  connections: z.array(z.string()),
 });
 
 userRoutes.get("/user", async (req, res) => {
@@ -48,7 +43,7 @@ userRoutes.get("/user", async (req, res) => {
   }
 });
 
-userRoutes.put("/user", validate, async (req, res) => {
+userRoutes.put("/user", protectBearer, async (req, res) => {
   const { success } = userSchema.safeParse(req.body);
   if (!success) return res.status(400).send({ message: "Invalid request body" });
 
