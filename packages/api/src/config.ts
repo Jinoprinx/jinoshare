@@ -24,7 +24,7 @@ export const config = {
       clientId: process.env.FB_CLIENT_ID,
       clientSecret: process.env.FB_CLIENT_SECRET,
       redirectUri: process.env.FB_REDIRECT_URI,
-      scopes: ["public_profile", "pages_manage_posts", "pages_read_engagement", "pages_show_list", "email", "pages_messaging"]
+      scopes: ["public_profile", "pages_manage_posts", "pages_read_engagement", "pages_show_list", "email"]
     },
     instagram: {
       clientId: process.env.IG_CLIENT_ID,
