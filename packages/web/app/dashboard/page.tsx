@@ -50,6 +50,7 @@ async function postToProvider(
   const res = await fetch(`${BACKEND}/api/post/${provider}/post`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(userId ? { text, userId } : { text }),
   });
   const data = await res.json().catch(() => ({}));
