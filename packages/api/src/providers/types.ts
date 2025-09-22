@@ -38,7 +38,7 @@ export interface Provider {
     refreshToken?: string;
     expiresAt?: Date;
     update(tokens: Partial<{ accessToken: string; refreshToken: string; scope: string; expiresAt: Date }>): Promise<void>;
-  }): Promise<string>;
+  }, userId: string): Promise<string>;
 
   // Minimal posting interface (text). Providers can expand later.
   postText(accessToken: string, payload: { text: string }): Promise<{ id: string, url: string }>;

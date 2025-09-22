@@ -69,7 +69,7 @@ export const xProvider: Provider = {
     return res.data;
   },
 
-  async ensureValidAccessToken(conn, userId: string) {
+  async ensureValidAccessToken(conn: { accessToken: string; refreshToken?: string; expiresAt?: Date; update(tokens: Partial<{ accessToken: string; refreshToken: string; scope: string; expiresAt: Date; }>): Promise<void>; }, userId: string) {
     const needRefresh =
       !!conn.refreshToken &&
       !!conn.expiresAt &&
