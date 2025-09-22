@@ -38,7 +38,7 @@ post.post("/:provider/post", protect, async (req, res) => {
         conn.set(tokens);
         await conn.save();
       }
-    });
+    }, uid);
 
     const result = await provider.postText(accessToken, { text: text.trim() });
 
@@ -100,7 +100,7 @@ post.post("/:provider/media", protect, async (req, res) => {
         conn.set(tokens);
         await conn.save();
       }
-    });
+    }, uid);
 
     const result = await provider.postMedia(accessToken, { file, text: text?.trim() });
 

@@ -69,7 +69,7 @@ export const xProvider: Provider = {
     return res.data;
   },
 
-  async ensureValidAccessToken(conn) {
+  async ensureValidAccessToken(conn, userId: string) {
     const needRefresh =
       !!conn.refreshToken &&
       !!conn.expiresAt &&
@@ -78,7 +78,7 @@ export const xProvider: Provider = {
     if (needRefresh && this.refreshAccessToken) {
       const t = await this.refreshAccessToken(conn.refreshToken!);
       const expiresAt = t.expires_in ? new Date(Date.now() + t.expires_in * 1000) : undefined;
-      const connection = await Connection.findOne({ provider: "x", userId: conn.userId });
+      const connection = await Connection.findOne({ provider: "x", userId: userId });
       if (connection) {
         connection.accessToken = t.access_token;
         connection.refreshToken = t.refresh_token;
