@@ -3,9 +3,9 @@ import { get, remove, upsert } from "@/lib/db";
 import { ISharedPost } from "@jino/common";
 
 interface RouteContext {
-  params: Promise<{
+  params: {
     id: string;
-  }>;
+  };
 }
 
 export async function PUT(req: NextRequest, { params }: RouteContext) {
