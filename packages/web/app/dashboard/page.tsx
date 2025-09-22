@@ -45,11 +45,15 @@ function providersFromChannels(channels: Channel[]): ProviderId[] {
 async function postToProvider(
   provider: ProviderId,
   text: string,
+  token: string,
   userId?: string
 ) {
   const res = await fetch(`${BACKEND}/api/post/${provider}/post`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
     credentials: "include",
     body: JSON.stringify(userId ? { text, userId } : { text }),
   });
@@ -223,7 +227,7 @@ function Dashboard() {
       if (!text) return toast.info("Write something first");
       try {
         setPosting(provider);
-        const res = await postToProvider(provider, text);
+        const res = await postToProvider(provider, text, (session as any).accessToken);
         toast.success(`Posted to ${provider.toUpperCase()} (id: ${res.id})`);
       } catch (e: any) {
         toast.error(e.message || `Failed to post to ${provider}`);
@@ -264,7 +268,7 @@ function Dashboard() {
         setPosting("all");
         for (const p of targets) {
           try {
-            const res = await postToProvider(p, text);
+            const res = await postToProvider(p, text, (session as any).accessToken);
             toast.success(`Posted to ${p.toUpperCase()} (id: ${res.id})`);
           } catch (err: any) {
             toast.error(`${p.toUpperCase()}: ${err.message || "Failed"}`);

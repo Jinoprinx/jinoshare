@@ -1,7 +1,7 @@
 "use client";
 import { format } from "date-fns";
 import { ISharedPost } from "@jino/common";
-import { toast } from "@/components/toast";
+import { useSession } from "next-auth/react";
 
 const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 const SUPPORTED_PROVIDERS = ["x", "linkedin", "facebook", "instagram"] as const;
@@ -10,10 +10,10 @@ function getProvidersFromChannels(channels: string[]) {
   return SUPPORTED_PROVIDERS.filter(p => channels.includes(p));
 }
 
-async function postToProvider(provider: string, text: string) {
+async function postToProvider(provider: string, text: string, token: string) {
   const res = await fetch(`${BACKEND}/api/post/${provider}/post`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
     credentials: "include",
     body: JSON.stringify({ text })
   });
@@ -23,6 +23,7 @@ async function postToProvider(provider: string, text: string) {
 }
 
 export function ContentList({ posts, onUpdate, onDelete }: { posts: ISharedPost[]; onUpdate: (p: ISharedPost)=>void; onDelete: (id: string)=>void }) {
+  const { data: session } = useSession();
 
   async function postNow(p: ISharedPost) {
     const text = p.content.trim();
@@ -31,7 +32,7 @@ export function ContentList({ posts, onUpdate, onDelete }: { posts: ISharedPost[
     if (targets.length === 0) return toast.info("No supported providers selected");
     for (const provider of targets) {
       try {
-        const res = await postToProvider(provider, text);
+        const res = await postToProvider(provider, text, (session as any).accessToken);
         toast.success(`Posted to ${provider.toUpperCase()} (id: ${res.id})`);
       } catch (err: any) {
         toast.error(`${provider.toUpperCase()}: ${err.message || "Failed"}`);
