@@ -30,6 +30,7 @@ export const facebookProvider: Provider = {
         code
       }
     });
+    console.log("Facebook token exchange response:", res.data);
     return {
       access_token: res.data.access_token,
       expires_in: res.data.expires_in
@@ -37,7 +38,30 @@ export const facebookProvider: Provider = {
   },
 
   async ensureValidAccessToken(conn) {
-    return conn.accessToken;
+    if (conn.expiresAt && conn.expiresAt.getTime() > Date.now()) {
+      return conn.accessToken;
+    }
+
+    // Exchange for a long-lived token
+    const res = await axios.get("https://graph.facebook.com/v20.0/oauth/access_token", {
+      params: {
+        grant_type: "fb_exchange_token",
+        client_id: config.providers.facebook.clientId,
+        client_secret: config.providers.facebook.clientSecret,
+        fb_exchange_token: conn.accessToken
+      }
+    });
+
+    const newAccessToken = res.data.access_token;
+    const newExpiresIn = res.data.expires_in;
+
+    conn.accessToken = newAccessToken;
+    conn.expiresAt = new Date(Date.now() + newExpiresIn * 1000);
+
+    // Here you would typically save the updated connection to your database
+    // For example: await db.updateConnection(conn.id, { accessToken: newAccessToken, expiresAt: conn.expiresAt });
+
+    return newAccessToken;
   },
 
   async postText(accessToken: string, { text }: { text: string }) {
@@ -47,6 +71,7 @@ export const facebookProvider: Provider = {
     });
     
     const page = pagesRes.data.data[0];
+    console.log("Facebook page:", page);
     if (!page) throw new Error("No Facebook page connected");
     
     const res = await axios.post(`https://graph.facebook.com/v20.0/${page.id}/feed`, null, {
@@ -69,6 +94,7 @@ export const facebookProvider: Provider = {
     });
     
     const page = pagesRes.data.data[0];
+    console.log("Facebook page:", page);
     if (!page) throw new Error("No Facebook page connected");
     
     const isVideo = file.mimetype.startsWith('video/');

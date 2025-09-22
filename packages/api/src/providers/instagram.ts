@@ -37,7 +37,30 @@ export const instagramProvider: Provider = {
   },
 
   async ensureValidAccessToken(conn) {
-    return conn.accessToken;
+    if (conn.expiresAt && conn.expiresAt.getTime() > Date.now()) {
+      return conn.accessToken;
+    }
+
+    // Exchange for a long-lived token
+    const res = await axios.get("https://graph.facebook.com/v18.0/oauth/access_token", {
+      params: {
+        grant_type: "fb_exchange_token",
+        client_id: config.providers.instagram.clientId,
+        client_secret: config.providers.instagram.clientSecret,
+        fb_exchange_token: conn.accessToken
+      }
+    });
+
+    const newAccessToken = res.data.access_token;
+    const newExpiresIn = res.data.expires_in;
+
+    conn.accessToken = newAccessToken;
+    conn.expiresAt = new Date(Date.now() + newExpiresIn * 1000);
+
+    // Here you would typically save the updated connection to your database
+    // For example: await db.updateConnection(conn.id, { accessToken: newAccessToken, expiresAt: conn.expiresAt });
+
+    return newAccessToken;
   },
 
   async postText() {

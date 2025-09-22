@@ -18,19 +18,19 @@ export const config = {
       clientId: process.env.LINKEDIN_CLIENT_ID,
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
       redirectUri: process.env.LINKEDIN_REDIRECT_URI,
-      scopes: ["openid", "profile", "w_member_social", "email"]
+      scopes: ["openid", "profile", "w_member_social", "email", "offline_access"]
     },
     facebook: {
       clientId: process.env.FB_CLIENT_ID,
       clientSecret: process.env.FB_CLIENT_SECRET,
       redirectUri: process.env.FB_REDIRECT_URI,
-      scopes: ["public_profile", "pages_manage_posts", "pages_read_engagement", "pages_show_list"]
+      scopes: ["public_profile", "pages_manage_posts", "pages_read_engagement", "pages_show_list", "email", "pages_messaging"]
     },
     instagram: {
       clientId: process.env.IG_CLIENT_ID,
       clientSecret: process.env.IG_CLIENT_SECRET,
       redirectUri: process.env.IG_REDIRECT_URI,
-      scopes: ["instagram_basic", "pages_show_list", "instagram_content_publish"]
+      scopes: ["instagram_basic", "pages_show_list", "instagram_content_publish", "instagram_manage_messages"]
     }
   }
 };

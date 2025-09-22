@@ -37,12 +37,47 @@ export const linkedinProvider: Provider = {
     });
     return {
       access_token: res.data.access_token,
-      expires_in: res.data.expires_in
+      expires_in: res.data.expires_in,
+      refresh_token: res.data.refresh_token
+    };
+  },
+
+  async refreshAccessToken(refreshToken: string): Promise<TokenResponse> {
+    const body = new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token: refreshToken,
+      client_id: config.providers.linkedin.clientId!,
+      client_secret: config.providers.linkedin.clientSecret!
+    });
+
+    const res = await axios.post(TOKEN_URL, body.toString(), {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    });
+
+    return {
+      access_token: res.data.access_token,
+      expires_in: res.data.expires_in,
+      refresh_token: res.data.refresh_token
     };
   },
 
   async ensureValidAccessToken(conn) {
-    // LinkedIn refresh tokens are limited/optional; implement when enabling offline access.
+    if (conn.expiresAt && conn.expiresAt.getTime() > Date.now()) {
+      return conn.accessToken;
+    }
+
+    if (conn.refreshToken && this.refreshAccessToken) {
+      const t = await this.refreshAccessToken(conn.refreshToken);
+      const expiresAt = t.expires_in ? new Date(Date.now() + t.expires_in * 1000) : undefined;
+      await conn.update({
+        accessToken: t.access_token,
+        refreshToken: t.refresh_token,
+        scope: t.scope,
+        expiresAt
+      });
+      return t.access_token;
+    }
+
     return conn.accessToken;
   },
 
