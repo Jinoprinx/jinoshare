@@ -11,7 +11,7 @@ function getProvidersFromChannels(channels: string[]) {
 }
 
 async function postToProvider(provider: string, text: string) {
-  const res = await fetch(`${BACKEND}/api/${provider}/post`, {
+  const res = await fetch(`${BACKEND}/api/post/${provider}/post`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text })
