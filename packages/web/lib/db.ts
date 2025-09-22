@@ -1,12 +1,12 @@
 import { Collection, FindOptions } from "mongodb";
-import clientPromise from "./mongodb";
+import getClientPromise from "./mongodb";
 import { ISharedPost } from "@jino/common";
 
 const DB_NAME = "jino-social";
 const COLLECTION = "posts";
 
 async function getCollection(): Promise<Collection<ISharedPost>> {
-  const client = await clientPromise;
+  const client = await getClientPromise();
   const db = client.db(DB_NAME);
   return db.collection<ISharedPost>(COLLECTION);
 }
