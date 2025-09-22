@@ -77,12 +77,11 @@ export const xProvider: Provider = {
     if (needRefresh && this.refreshAccessToken) {
       const t = await this.refreshAccessToken(conn.refreshToken!);
       const expiresAt = t.expires_in ? new Date(Date.now() + t.expires_in * 1000) : undefined;
-      await conn.update({
-        accessToken: t.access_token,
-        refreshToken: t.refresh_token,
-        scope: t.scope,
-        expiresAt
-      });
+      conn.accessToken = t.access_token;
+      conn.refreshToken = t.refresh_token;
+      conn.scope = t.scope;
+      conn.expiresAt = expiresAt;
+      await conn.save();
       return t.access_token;
     }
 

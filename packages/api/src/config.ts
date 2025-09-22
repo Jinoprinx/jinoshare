@@ -18,7 +18,7 @@ export const config = {
       clientId: process.env.LINKEDIN_CLIENT_ID,
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
       redirectUri: process.env.LINKEDIN_REDIRECT_URI,
-      scopes: ["openid", "profile", "w_member_social", "email", "offline_access"]
+      scopes: ["openid", "profile", "w_member_social", "email"]
     },
     facebook: {
       clientId: process.env.FB_CLIENT_ID,
