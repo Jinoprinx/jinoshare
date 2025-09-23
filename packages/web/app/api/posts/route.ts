@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     createdAt: body.createdAt || now,
     updatedAt: now,
     content: body.content || '',
-    scheduled_at: body.scheduled_at || null,
+    scheduledAt: body.scheduledAt || null,
   };
   await upsert(post);
   return NextResponse.json({ post });

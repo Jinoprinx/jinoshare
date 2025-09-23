@@ -34,7 +34,7 @@ export interface ISharedPost {
   content: string;
   channels: Channel[];
   status: "draft" | "scheduled" | "publishing" | "published" | "failed";
-  scheduled_at: string | null;
+  scheduledAt: string | null;
   createdAt: string;
   updatedAt: string;
 }

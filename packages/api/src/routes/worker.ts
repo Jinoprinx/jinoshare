@@ -24,7 +24,7 @@ worker.post("/publish-due-posts", async (req, res) => {
     const duePosts = await Post.find({
       userId: { $in: userIds },
       status: "scheduled",
-      scheduled_at: { $lte: new Date() },
+      scheduledAt: { $lte: new Date() },
     });
 
     if (duePosts.length === 0) {
@@ -84,7 +84,7 @@ worker.post("/publish-due-posts", async (req, res) => {
       }
 
       post.status = isSuccessful ? "published" : "failed";
-      post.publish_logs = logIds;
+      post.publishLogs = logIds;
       await post.save();
     }
 

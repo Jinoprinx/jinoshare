@@ -1,6 +1,17 @@
 import { Router } from "express";
 import { Post } from "../models/Post";
 import { config } from "../config";
+import { postQueue } from "../scheduler";
+
+// Helper to remove a job if it exists
+const removeJob = async (jobId: string) => {
+  if (jobId) {
+    const job = await postQueue.getJob(jobId);
+    if (job) {
+      await job.remove();
+    }
+  }
+};
 
 export const scheduledPost = Router();
 
@@ -9,13 +20,13 @@ scheduledPost.get("/", async (req, res) => {
   const { startDate, endDate } = req.query;
   const userId = (req as any).userId || config.defaultUserId;
 
-  const query: any = { userId };
+  const query: any = { userId, isDeleted: { $ne: true } };
   if (startDate && endDate) {
-    query.scheduled_at = { $gte: new Date(startDate as string), $lte: new Date(endDate as string) };
+    query.scheduledAt = { $gte: new Date(startDate as string), $lte: new Date(endDate as string) };
   }
 
   try {
-    const posts = await Post.find(query).sort({ scheduled_at: 1 });
+    const posts = await Post.find(query).sort({ scheduledAt: 1 });
     res.json(posts);
   } catch (err: any) {
     res.status(500).json({ error: "Failed to retrieve posts", detail: err.message });
@@ -24,21 +35,31 @@ scheduledPost.get("/", async (req, res) => {
 
 // POST /scheduled-posts
 scheduledPost.post("/", async (req, res) => {
-  const { content, channels, scheduled_at } = req.body;
+  const { content, connections, scheduled_at, scheduledAt } = req.body;
+  const scheduleDate = scheduled_at || scheduledAt;
   const userId = (req as any).userId || config.defaultUserId;
 
-  if (!content || !channels || channels.length === 0) {
-    return res.status(400).json({ error: "Missing required fields: content and channels." });
+  if (!content || !connections || connections.length === 0) {
+    return res.status(400).json({ error: "Missing required fields: content and connections." });
   }
 
   try {
-    const post = await Post.create({
+    const post = new Post({
       userId,
       content,
-      channels,
-      scheduled_at: scheduled_at ? new Date(scheduled_at) : null,
-      status: scheduled_at ? "scheduled" : "draft",
+      connections,
+      scheduledAt: scheduleDate ? new Date(scheduleDate) : null,
+      status: scheduleDate ? "scheduled" : "draft",
     });
+
+    if (post.status === 'scheduled' && post.scheduledAt) {
+        const delay = post.scheduledAt.getTime() - Date.now();
+        if (delay > 0) {
+            const job = await postQueue.add('process-post', { postId: post._id }, { delay });
+            post.jobId = job.id;
+        }
+    }
+    await post.save();
     res.status(201).json(post);
   } catch (err: any) {
     res.status(500).json({ error: "Failed to create post", detail: err.message });
@@ -48,18 +69,38 @@ scheduledPost.post("/", async (req, res) => {
 // PUT /scheduled-posts/:id
 scheduledPost.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { content, channels, scheduled_at, status } = req.body;
+  const { content, connections, scheduled_at, scheduledAt, status } = req.body;
+  const scheduleDate = scheduled_at || scheduledAt;
   const userId = (req as any).userId || config.defaultUserId;
 
   try {
-    const post = await Post.findOneAndUpdate(
-      { _id: id, userId },
-      { content, channels, scheduled_at: scheduled_at ? new Date(scheduled_at) : null, status },
-      { new: true } // Return the updated document
-    );
+    const post = await Post.findOne({ _id: id, userId });
+    if (!post) return res.status(404).json({ error: "Post not found" });
 
-    if (!post) return res.status(404).json({ error: "Post not found or you do not have permission to edit it" });
+    // Remove old job if it exists
+    if (post.jobId) {
+      await removeJob(post.jobId);
+    }
 
+    post.content = content;
+    post.connections = connections;
+    post.status = status;
+    post.scheduledAt = scheduleDate ? new Date(scheduleDate) : null;
+
+    if (post.status === 'scheduled' && post.scheduledAt) {
+        const delay = post.scheduledAt.getTime() - Date.now();
+        if (delay > 0) {
+            const job = await postQueue.add('process-post', { postId: post._id }, { delay });
+            post.jobId = job.id;
+        } else {
+            post.status = 'draft'; // Time is in the past
+            post.jobId = undefined;
+        }
+    } else {
+        post.jobId = undefined;
+    }
+
+    await post.save();
     res.json(post);
   } catch (err: any) {
     res.status(500).json({ error: "Failed to update post", detail: err.message });
@@ -72,9 +113,17 @@ scheduledPost.delete("/:id", async (req, res) => {
   const userId = (req as any).userId || config.defaultUserId;
 
   try {
-    const post = await Post.findOneAndDelete({ _id: id, userId });
-    if (!post) return res.status(404).json({ error: "Post not found or you do not have permission to delete it" });
-    res.status(204).send(); // No content
+    const post = await Post.findOne({ _id: id, userId });
+    if (!post) return res.status(404).json({ error: "Post not found" });
+
+    if (post.jobId) {
+        await removeJob(post.jobId);
+    }
+    
+    post.isDeleted = true;
+    await post.save();
+
+    res.status(204).send();
   } catch (err: any) {
     res.status(500).json({ error: "Failed to delete post", detail: err.message });
   }

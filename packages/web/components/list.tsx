@@ -54,9 +54,9 @@ export function ContentList({ posts, onUpdate, onDelete }: { posts: ISharedPost[
                 </div>
               </div>
               <p className="text-gray-700 whitespace-pre-wrap mt-1">{p.content}</p>
-              {p.scheduled_at && (
+              {p.scheduledAt && (
                 <p className="text-sm text-gray-500 mt-1">
-                  Scheduled: {format(new Date(p.scheduled_at), "EEE, MMM d p")}
+                  Scheduled: {format(new Date(p.scheduledAt), "EEE, MMM d p")}
                 </p>
               )}
             </div>

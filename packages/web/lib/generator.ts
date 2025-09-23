@@ -49,7 +49,7 @@ export function generateBatch(seed: string, count = 8, tone = "concise", preset:
       content,
       channels: preset === "generic" ? [] : [preset],
       status: "draft",
-      scheduled_at: null,
+      scheduledAt: null,
       createdAt: now,
       updatedAt: now
     });

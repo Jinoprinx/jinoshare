@@ -1,9 +1,12 @@
 import "dotenv/config";
 
 export const config = {
+  databaseUrl: process.env.DATABASE_URL,
+  appSecret: process.env.APP_SECRET,
   port: parseInt(process.env.PORT || "4000", 10),
   clientOrigin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
   mongoUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/social_backend",
+  redisUrl: process.env.REDIS_URL,
   defaultUserId: process.env.DEFAULT_USER_ID || "dev-user",
   workerSecret: process.env.WORKER_SECRET || "dev-worker-secret",
   nextAuthSecret: process.env.NEXTAUTH_SECRET || "dev-nextauth-secret",

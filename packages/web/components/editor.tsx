@@ -25,7 +25,7 @@ export function Editor({ value, onChange }: { value: Partial<ISharedPost>; onCha
   };
 
   const handleDateChange = (date: Date | null) => {
-    const newPost = { ...localPost, scheduled_at: date ? date.toISOString() : null };
+    const newPost = { ...localPost, scheduledAt: date ? date.toISOString() : null };
     setLocalPost(newPost);
     handleChange(newPost, mediaFile || undefined);
   };
@@ -75,7 +75,7 @@ export function Editor({ value, onChange }: { value: Partial<ISharedPost>; onCha
         <label className="block text-sm font-medium text-gray-700 mb-1">Schedule Post</label>
         <DateTimePicker
           onChange={handleDateChange}
-          value={localPost.scheduled_at ? new Date(localPost.scheduled_at) : null}
+          value={localPost.scheduledAt ? new Date(localPost.scheduledAt) : null}
           className="w-full"
         />
       </div>

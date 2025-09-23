@@ -46,12 +46,12 @@ export function Calendar() {
       const posts: ISharedPost[] = await response.json();
       
       const calendarEvents = posts
-        .filter(p => p.scheduled_at)
+        .filter(p => p.scheduledAt)
         .map(post => ({
           id: post._id,
           title: post.content.substring(0, 40) + '...',
-          start: new Date(post.scheduled_at!),
-          end: moment(post.scheduled_at!).add(30, 'minutes').toDate(),
+          start: new Date(post.scheduledAt!),
+          end: moment(post.scheduledAt!).add(30, 'minutes').toDate(),
           resource: post,
         }));
 
@@ -68,7 +68,7 @@ export function Calendar() {
   }, [fetchEvents]);
 
   const handleSelectSlot = useCallback((slotInfo: { start: Date }) => {
-    setSelectedPost({ content: '', status: 'draft', scheduled_at: slotInfo.start.toISOString() });
+    setSelectedPost({ content: '', status: 'draft', scheduledAt: slotInfo.start.toISOString() });
     setModalOpen(true);
   }, []);
 
