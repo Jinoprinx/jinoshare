@@ -86,6 +86,15 @@ export const linkedinProvider: Provider = {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
     const urn = `urn:li:person:${user.data.sub}`
+    const body = {
+      "author": urn,
+      "commentary": text,
+      "visibility": "PUBLIC",
+      "distribution": {
+        "feedDistribution": "MAIN_FEED",
+      },
+      "lifecycleState": "PUBLISHED",
+    };
     const res = await axios.post("https://api.linkedin.com/rest/posts", body, {
       headers: {
         "Authorization": `Bearer ${accessToken}`,
