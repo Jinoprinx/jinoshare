@@ -86,21 +86,12 @@ export const linkedinProvider: Provider = {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
     const urn = `urn:li:person:${user.data.sub}`
-    const body = {
-      "author": urn,
-      "commentary": text,
-      "visibility": "PUBLIC",
-      "distribution": {
-        "feedDistribution": "MAIN_FEED",
-      },
-      "lifecycleState": "PUBLISHED",
-    };
     const res = await axios.post("https://api.linkedin.com/rest/posts", body, {
       headers: {
         "Authorization": `Bearer ${accessToken}`,
         "Content-Type": "application/json",
         "X-Restli-Protocol-Version": "2.0.0",
-        "LinkedIn-Version": "2025.09"
+        "LinkedIn-Version": "202509"
       }
     });
     return { id: res.headers["x-restli-id"], url: `https://www.linkedin.com/feed/update/${res.headers["x-restli-id"]}` };
@@ -125,7 +116,7 @@ export const linkedinProvider: Provider = {
         "Authorization": `Bearer ${accessToken}`,
         "Content-Type": "application/json",
         "X-Restli-Protocol-Version": "2.0.0",
-        "LinkedIn-Version": "2025.09"
+        "LinkedIn-Version": "202509"
       }
     });
     const uploadUrl = initRes.data.value.uploadUrl;
@@ -157,7 +148,7 @@ export const linkedinProvider: Provider = {
         "Authorization": `Bearer ${accessToken}`,
         "Content-Type": "application/json",
         "X-Restli-Protocol-Version": "2.0.0",
-        "LinkedIn-Version": "2025.09"
+        "LinkedIn-Version": "202509"
       }
     });
 
