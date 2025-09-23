@@ -93,6 +93,7 @@ export const linkedinProvider: Provider = {
       "distribution": {
         "feedDistribution": "MAIN_FEED",
       },
+      "lifecycleState": "PUBLISHED",
     };
     const res = await axios.post("https://api.linkedin.com/rest/posts", body, {
       headers: {
@@ -147,7 +148,8 @@ export const linkedinProvider: Provider = {
         "media": {
           "id": imageUrn
         }
-      }
+      },
+      "lifecycleState": "PUBLISHED",
     };
 
     const res = await axios.post("https://api.linkedin.com/rest/posts", body, {
