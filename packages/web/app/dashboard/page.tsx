@@ -258,10 +258,17 @@ function Dashboard() {
         },
         body: formData,
       });
-      const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.detail || data.error || "Failed to upload media");
+        const errorText = await res.text();
+        let errorData;
+        try {
+          errorData = JSON.parse(errorText);
+        } catch {
+          errorData = { error: errorText || "Failed to upload media" };
+        }
+        throw new Error(errorData.detail || errorData.error || "Failed to upload media");
       }
+      const data = await res.json();
       media = { url: data.mediaUrl, type: data.mediaType };
     }
 
@@ -280,10 +287,17 @@ function Dashboard() {
       body: JSON.stringify(payload),
     });
   
-    const data = await res.json();
     if (!res.ok) {
-      throw new Error(data.detail || data.error || "Failed to schedule post");
+      const errorText = await res.text();
+      let errorData;
+      try {
+        errorData = JSON.parse(errorText);
+      } catch {
+        errorData = { error: errorText || "Failed to schedule post" };
+      }
+      throw new Error(errorData.detail || errorData.error || "Failed to schedule post");
     }
+    const data = await res.json();
     return data;
   }
 
