@@ -67,15 +67,22 @@ async function postMediaToProvider(
   provider: ProviderId,
   file: File,
   text?: string,
-  userId?: string
+  userId?: string,
+  token?: string
 ) {
   const formData = new FormData();
   formData.append("file", file);
   if (text) formData.append("text", text);
   if (userId) formData.append("userId", userId);
 
-  const res = await fetch(`${BACKEND}/api/${provider}/upload`, {
+  const headers: Record<string, string> = {};
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(`${BACKEND}/api/upload/${provider}/upload`, {
     method: "POST",
+    headers,
     body: formData,
   });
 
@@ -237,7 +244,39 @@ function Dashboard() {
     }
   }
 
+  async function schedulePost(post: Partial<ISharedPost>, token: string, file?: File | null) {
+    const res = await fetch("/api/scheduled-posts", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(post),
+    });
+  
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.detail || data.error || "Failed to schedule post");
+    }
+    return data;
+  }
+
   async function postDraftToSelected() {
+    if (draft.scheduledAt) {
+      try {
+        setPosting("all");
+        await schedulePost(draft, (session as any).accessToken, mediaFile);
+        toast.success("Post scheduled successfully!");
+        setDraft({});
+        setMediaFile(null);
+      } catch (e: any) {
+        toast.error(e.message || "Failed to schedule post");
+      } finally {
+        setPosting(null);
+      }
+      return;
+    }
+
     const targets = providersFromChannels(draft.channels || []);
     if (targets.length === 0)
       return toast.info("Select at least one supported provider in Channels");
@@ -250,7 +289,9 @@ function Dashboard() {
             const res = await postMediaToProvider(
               p,
               mediaFile,
-              (draft.content || "").trim()
+              (draft.content || "").trim(),
+              (session?.user as any)?.id,
+              (session as any).accessToken
             );
             toast.success(`Posted to ${p.toUpperCase()} (url: ${res.url})`);
           } catch (err: any) {
