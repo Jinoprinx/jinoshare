@@ -245,13 +245,37 @@ function Dashboard() {
   }
 
   async function schedulePost(post: Partial<ISharedPost>, token: string, file?: File | null) {
+    let media = null;
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch(`/api/media-storage/store`, {
+        method: "POST",
+        headers: { 
+          "Authorization": `Bearer ${token}`
+        },
+        body: formData,
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.detail || data.error || "Failed to upload media");
+      }
+      media = { url: data.mediaUrl, type: data.mediaType };
+    }
+
+    const payload = {
+      ...post,
+      connections: post.channels,
+      media,
+    };
+
     const res = await fetch("/api/scheduled-posts", {
       method: "POST",
       headers: { 
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       },
-      body: JSON.stringify(post),
+      body: JSON.stringify(payload),
     });
   
     const data = await res.json();

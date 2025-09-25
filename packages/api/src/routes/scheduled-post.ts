@@ -35,7 +35,7 @@ scheduledPost.get("/", async (req, res) => {
 
 // POST /scheduled-posts
 scheduledPost.post("/", async (req, res) => {
-  const { content, connections, scheduled_at, scheduledAt } = req.body;
+  const { content, connections, scheduled_at, scheduledAt, media } = req.body;
   const scheduleDate = scheduled_at || scheduledAt;
   const userId = (req as any).userId || config.defaultUserId;
 
@@ -50,6 +50,7 @@ scheduledPost.post("/", async (req, res) => {
       connections,
       scheduledAt: scheduleDate ? new Date(scheduleDate) : null,
       status: scheduleDate ? "scheduled" : "draft",
+      media,
     });
 
     if (post.status === 'scheduled' && post.scheduledAt) {

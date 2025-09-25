@@ -21,6 +21,10 @@ const PostSchema: Schema = new Schema(
     scheduledAt: { type: Date },
     isDeleted: { type: Boolean, default: false },
     publishLogs: [{ type: Schema.Types.ObjectId, ref: "PublishLog" }],
+    media: { 
+      url: { type: String },
+      type: { type: String, enum: ['image', 'video'] }
+    },
   },
   { timestamps: true }
 );
