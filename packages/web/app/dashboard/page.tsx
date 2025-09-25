@@ -221,7 +221,9 @@ function Dashboard() {
         const res = await postMediaToProvider(
           provider,
           mediaFile,
-          (draft.content || "").trim()
+          (draft.content || "").trim(),
+          (session?.user as any)?.id,
+          (session as any).accessToken
         );
         toast.success(`Posted to ${provider.toUpperCase()} (url: ${res.url})`);
       } catch (e: any) {
