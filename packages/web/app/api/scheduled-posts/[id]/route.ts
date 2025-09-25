@@ -28,7 +28,7 @@ export async function PUT(
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${(session.user as any).id}`
+        'Authorization': request.headers.get('Authorization') || `Bearer ${(session.user as any).id}`
       },
       body: JSON.stringify(body),
     });
@@ -64,7 +64,7 @@ export async function DELETE(
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${(session.user as any).id}`
+        'Authorization': request.headers.get('Authorization') || `Bearer ${(session.user as any).id}`
       },
     });
 

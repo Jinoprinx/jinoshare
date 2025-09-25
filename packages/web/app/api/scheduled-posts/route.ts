@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${userId}`
+        'Authorization': request.headers.get('Authorization') || `Bearer ${userId}`
       },
     });
 
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${(session.user as any).id}`
+        'Authorization': request.headers.get('Authorization') || `Bearer ${(session.user as any).id}`
       },
       body: JSON.stringify(body),
     });

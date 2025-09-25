@@ -37,7 +37,11 @@ export function Calendar() {
       const end = moment().endOf('month').toISOString();
       const query = new URLSearchParams({ startDate: start, endDate: end });
       console.log('Fetching with user ID:', (session.user as any).id);
-      const response = await fetch(`/api/scheduled-posts?${query}`);
+      const response = await fetch(`/api/scheduled-posts?${query}`, {
+        headers: {
+          'Authorization': `Bearer ${(session.user as any).id}`,
+        },
+      });
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.error || `Failed to fetch posts (${response.status})`);
