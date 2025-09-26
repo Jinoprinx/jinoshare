@@ -29,25 +29,11 @@ async function main() {
   const app = express();
 
   app.use(cors({ 
-    origin: (origin, callback) => {
-      const allowedOrigins = [
-        config.clientOrigin,
-        "https://jinoshare.vercel.app",
-        /^https:\/\/jinoshare-.*\.vercel\.app$/,
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:3002",
-        "http://localhost:3003"
-      ];
-      
-      if (!origin || allowedOrigins.some(allowed => 
-        typeof allowed === 'string' ? allowed === origin : allowed.test(origin)
-      )) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    }, 
+    origin: [
+      "https://jinoshare.vercel.app",
+      "https://jinoshare-api-59028d83893a.herokuapp.com",
+      "http://localhost:3000"
+    ],
     credentials: true 
   }));
   app.use(express.json({ limit: "1mb" }));
