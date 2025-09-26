@@ -4,6 +4,7 @@ export const config = {
   databaseUrl: process.env.DATABASE_URL,
   appSecret: process.env.APP_SECRET,
   port: parseInt(process.env.PORT || "4000", 10),
+  appUrl: process.env.APP_URL || "http://localhost:4000",
   clientOrigin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
   mongoUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/social_backend",
   redisUrl: process.env.REDIS_URL,

@@ -8,6 +8,10 @@ export interface IPost extends Omit<ISharedPost, '_id' | 'scheduledAt' | 'create
   connections: mongoose.Types.ObjectId[];
   jobId?: string;
   isDeleted?: boolean;
+  media?: {
+    url?: string;
+    type?: 'image' | 'video';
+  };
 }
 
 const PostSchema: Schema = new Schema(

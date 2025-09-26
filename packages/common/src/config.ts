@@ -3,6 +3,7 @@ import "dotenv/config";
 export const config = {
   port: parseInt(process.env.PORT || "4000", 10),
   clientOrigin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
+  appUrl: process.env.APP_URL || "http://localhost:3000",
   mongoUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/jinoshareDB",
   defaultUserId: process.env.DEFAULT_USER_ID || "dev-user",
   workerSecret: process.env.WORKER_SECRET || "dev-worker-secret",
