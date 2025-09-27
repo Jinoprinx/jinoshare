@@ -6,7 +6,7 @@ import { connectDb } from "@common/db";
 export const signup = Router();
 
 signup.post("/", async (req, res) => {
-  await connectDb();
+
 
   const { email, password, firstName, lastName } = req.body;
 
