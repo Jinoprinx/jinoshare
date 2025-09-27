@@ -3,7 +3,7 @@ import { getProvider } from "../providers/index";
 import { Connection } from "../models/Connection";
 import { PublishLog } from "../models/PublishLog";
 import { config } from "../config";
-import { Channel } from "@common/types";
+import { Channel } from "../../../common/dist/types";
 import { protect } from "../middleware/auth";
 
 export const post = Router();

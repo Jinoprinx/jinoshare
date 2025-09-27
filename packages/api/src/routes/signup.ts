@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { User } from "../models/User";
 import bcrypt from "bcryptjs";
-import { connectDb } from "@common/db";
+import { connectDb } from "../../../common/dist/db";
 
 export const signup = Router();
 

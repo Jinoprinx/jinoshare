@@ -1,4 +1,4 @@
-import { IPublishLog } from "@common/types";
+import { IPublishLog } from "../../../common/dist/types";
 import { Schema, model } from "mongoose";
 
 const PublishLogSchema = new Schema<IPublishLog>(

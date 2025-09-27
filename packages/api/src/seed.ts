@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import { User } from './models/User';
-import { connectDb } from '@common/db';
+import { connectDb } from '../../common/dist/db';
 
 const seedAdmin = async () => {
   await connectDb();

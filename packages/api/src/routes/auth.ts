@@ -4,7 +4,7 @@ import { getProvider } from "../providers/index";
 import { generateVerifier, challengeFromVerifier } from "../utils/pkce";
 import { config } from "../config";
 import { Connection } from "../models/Connection";
-import { Channel } from "@common/types";
+import { Channel } from "../../../common/dist/types";
 
 import { User } from "../models/User";
 import bcrypt from "bcryptjs";

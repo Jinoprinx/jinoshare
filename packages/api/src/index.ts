@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { connectDb } from "@common/db";
-import { config } from "@common/config";
+import { connectDb } from "../../common/dist/db";
+import { config } from "../../common/dist/config";
 import { auth } from "./routes/auth";
 import { signup } from "./routes/signup";
 import { post } from "./routes/post";

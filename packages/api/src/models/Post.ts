@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
-import { ISharedPost, Channel } from "@common/types";
+import { ISharedPost, Channel } from "../../../common/dist/types";
 
 // Mongoose document interface
 export interface IPost extends Omit<ISharedPost, '_id' | 'scheduledAt' | 'createdAt' | 'updatedAt'>, Document {

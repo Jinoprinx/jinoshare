@@ -1,4 +1,4 @@
 
 > api@0.2.0 build
-> tsc
+> tsc && tsc-alias
 
