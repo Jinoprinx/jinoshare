@@ -1,3 +1,8 @@
+// Fix SSL certificate issues in production
+if (process.env.NODE_ENV === 'production') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
+
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";

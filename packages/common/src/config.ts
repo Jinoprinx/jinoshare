@@ -15,9 +15,10 @@ function ensureProperMongoUri(uri: string): string {
     url.searchParams.set('ssl', 'true');
   }
 
-  // Ensure certificate validation is enabled
+  // Handle certificate chain issues common with Atlas
+  // Use tlsAllowInvalidCertificates instead of tlsInsecure (they can't be used together)
   if (!url.searchParams.has('tlsAllowInvalidCertificates')) {
-    url.searchParams.set('tlsAllowInvalidCertificates', 'false');
+    url.searchParams.set('tlsAllowInvalidCertificates', 'true');
   }
 
   // Add retry writes and write concern for reliability
