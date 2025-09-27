@@ -49,6 +49,19 @@ signup.post("/", async (req, res) => {
     res.status(201).json({ message: "User created successfully." });
   } catch (error) {
     console.error("Signup error:", error);
+
+    // Handle MongoDB duplicate key errors specifically
+    if (error instanceof Error && error.message.includes('E11000 duplicate key error')) {
+      if (error.message.includes('email')) {
+        return res.status(409).json({ message: "Email already exists" });
+      }
+      if (error.message.includes('userId')) {
+        console.error("userId index error - this should be fixed by running npm run fix-indexes");
+        return res.status(500).json({ message: "Database configuration error - please contact support" });
+      }
+      return res.status(409).json({ message: "User already exists" });
+    }
+
     return res.status(500).json({ message: "Internal server error", error: error instanceof Error ? error.message : String(error) });
   }
 });

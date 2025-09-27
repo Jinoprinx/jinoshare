@@ -10,7 +10,8 @@
     "heroku-postbuild": "npm run build",
     "lint": "eslint .",
     "test": "jest",
-    "seed": "ts-node src/seed.ts"
+    "seed": "ts-node src/seed.ts",
+    "fix-indexes": "ts-node src/scripts/fix-user-index.ts"
   },
   "dependencies": {
     "@jino/ai": "file:../ai",

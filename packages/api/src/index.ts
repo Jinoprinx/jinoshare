@@ -27,6 +27,28 @@ import { worker } from "./routes/worker";
 import { connections } from "./routes/connections";
 
 import { protect, protectBearer } from "./middleware/auth";
+import { User } from "./models/User";
+
+// Function to fix problematic userId indexes
+async function fixUserIndexes() {
+  try {
+    const collection = User.collection;
+    const indexes = await collection.listIndexes().toArray();
+
+    const userIdIndex = indexes.find(index =>
+      index.name === 'userId_1' ||
+      (index.key && index.key.userId)
+    );
+
+    if (userIdIndex) {
+      console.log("Found problematic userId index, removing it...");
+      await collection.dropIndex(userIdIndex.name);
+      console.log(`Dropped problematic index: ${userIdIndex.name}`);
+    }
+  } catch (error) {
+    console.log("Index fix attempt completed (may have already been fixed)");
+  }
+}
 
 async function main() {
   try {
@@ -37,6 +59,9 @@ async function main() {
 
     await connectDb();
     console.log("Database connected successfully");
+
+    // Auto-fix problematic userId index if it exists
+    await fixUserIndexes();
   } catch (error) {
     console.error("Database connection failed:", error);
     process.exit(1);
