@@ -25,7 +25,13 @@ import { protect, protectBearer } from "./middleware/auth";
 
 async function main() {
   try {
+    console.log("Starting application...");
+    console.log("Environment:", process.env.NODE_ENV);
+    console.log("Port:", config.port);
+    console.log("MongoDB URI:", config.mongoUri.replace(/\/\/.*@/, "//***:***@"));
+
     await connectDb();
+    console.log("Database connected successfully");
   } catch (error) {
     console.error("Database connection failed:", error);
     process.exit(1);

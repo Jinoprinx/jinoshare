@@ -11,19 +11,37 @@ import bcrypt from "bcryptjs";
 
 export const auth = Router();
 
+// Handle preflight OPTIONS request for credentials
+auth.options("/credentials", (req, res) => {
+  console.log("OPTIONS request received for /auth/credentials");
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.status(200).send();
+});
+
 auth.post("/credentials", async (req, res) => {
   try {
+    console.log("Auth request received:", { email: req.body.email, hasPassword: !!req.body.password });
     const { email, password } = req.body;
 
     if (!email || !password) {
+      console.log("Missing email or password");
       return res.status(400).json({ message: "Email and password are required." });
     }
 
+    console.log("Looking for user with email:", email);
     const user = await User.findOne({ email });
+    console.log("User found:", { userExists: !!user, hasPassword: !!user?.password });
 
     if (user && user.password) {
+      console.log("Comparing passwords");
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
+      console.log("Password comparison result:", isPasswordCorrect);
+
       if (isPasswordCorrect) {
+        console.log("Authentication successful for user:", user.id);
         return res.status(200).json({
           id: user.id,
           firstName: user.firstName,
@@ -39,10 +57,11 @@ auth.post("/credentials", async (req, res) => {
       }
     }
 
+    console.log("Authentication failed for email:", email);
     return res.status(401).json({ message: "Invalid credentials." });
   } catch (error) {
     console.error("Auth credentials error:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error", error: error instanceof Error ? error.message : String(error) });
   }
 });
 
