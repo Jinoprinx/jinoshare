@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { protect } from "../middleware/auth";
 import { Post } from "../models/Post";
 import { config } from "../config";
 import { postQueue } from "../scheduler";
@@ -16,9 +17,9 @@ const removeJob = async (jobId: string) => {
 export const scheduledPost = Router();
 
 // GET /scheduled-posts?startDate=...&endDate=...
-scheduledPost.get("/", async (req, res) => {
+scheduledPost.get("/", protect, async (req, res) => {
   const { startDate, endDate } = req.query;
-  const userId = (req as any).userId || config.defaultUserId;
+  const userId = (req as any).user.id;
 
   const query: any = { userId, isDeleted: { $ne: true } };
   if (startDate && endDate) {
@@ -34,10 +35,10 @@ scheduledPost.get("/", async (req, res) => {
 });
 
 // POST /scheduled-posts
-scheduledPost.post("/", async (req, res) => {
+scheduledPost.post("/", protect, async (req, res) => {
   const { content, connections, scheduled_at, scheduledAt, media } = req.body;
   const scheduleDate = scheduled_at || scheduledAt;
-  const userId = (req as any).userId || config.defaultUserId;
+  const userId = (req as any).user.id;
 
   if (!content || !connections || connections.length === 0) {
     return res.status(400).json({ error: "Missing required fields: content and connections." });
@@ -68,11 +69,11 @@ scheduledPost.post("/", async (req, res) => {
 });
 
 // PUT /scheduled-posts/:id
-scheduledPost.put("/:id", async (req, res) => {
+scheduledPost.put("/:id", protect, async (req, res) => {
   const { id } = req.params;
   const { content, connections, scheduled_at, scheduledAt, status } = req.body;
   const scheduleDate = scheduled_at || scheduledAt;
-  const userId = (req as any).userId || config.defaultUserId;
+  const userId = (req as any).user.id;
 
   try {
     const post = await Post.findOne({ _id: id, userId });
@@ -109,9 +110,9 @@ scheduledPost.put("/:id", async (req, res) => {
 });
 
 // DELETE /scheduled-posts/:id
-scheduledPost.delete("/:id", async (req, res) => {
+scheduledPost.delete("/:id", protect, async (req, res) => {
   const { id } = req.params;
-  const userId = (req as any).userId || config.defaultUserId;
+  const userId = (req as any).user.id;
 
   try {
     const post = await Post.findOne({ _id: id, userId });

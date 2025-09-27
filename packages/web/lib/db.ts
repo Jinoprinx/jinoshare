@@ -11,13 +11,13 @@ async function getCollection(): Promise<Collection<ISharedPost>> {
   return db.collection<ISharedPost>(COLLECTION);
 }
 
-export async function getAll(): Promise<ISharedPost[]> {
+export async function getAll(userId: string): Promise<ISharedPost[]> {
   const collection = await getCollection();
   // sort by createdAt descending
   const options: FindOptions<ISharedPost> = {
     sort: { createdAt: -1 },
   };
-  const posts = await collection.find({}, options).toArray();
+  const posts = await collection.find({ userId }, options).toArray();
   return posts;
 }
 
