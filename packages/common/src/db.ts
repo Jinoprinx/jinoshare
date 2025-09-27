@@ -15,7 +15,7 @@ const options = {
 export async function connectDb() {
   try {
     mongoose.set("strictQuery", true);
-    
+
     console.log("Attempting to connect to MongoDB...");
     await mongoose.connect(config.mongoUri, options);
     console.log("MongoDB connected successfully");

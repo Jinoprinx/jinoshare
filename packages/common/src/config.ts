@@ -1,10 +1,42 @@
 import "dotenv/config";
 
+// Helper function to ensure proper MongoDB Atlas SSL configuration
+function ensureProperMongoUri(uri: string): string {
+  // If it's a local connection, return as-is
+  if (!uri.includes('mongodb+srv://') && !uri.includes('mongodb.net')) {
+    return uri;
+  }
+
+  // For MongoDB Atlas, ensure SSL is enabled and configured properly
+  const url = new URL(uri);
+
+  // Set SSL parameters for Atlas
+  if (!url.searchParams.has('ssl') && !url.searchParams.has('tls')) {
+    url.searchParams.set('ssl', 'true');
+  }
+
+  // Ensure certificate validation is enabled
+  if (!url.searchParams.has('tlsAllowInvalidCertificates')) {
+    url.searchParams.set('tlsAllowInvalidCertificates', 'false');
+  }
+
+  // Add retry writes and write concern for reliability
+  if (!url.searchParams.has('retryWrites')) {
+    url.searchParams.set('retryWrites', 'true');
+  }
+
+  if (!url.searchParams.has('w')) {
+    url.searchParams.set('w', 'majority');
+  }
+
+  return url.toString();
+}
+
 export const config = {
   port: parseInt(process.env.PORT || "4000", 10),
   clientOrigin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
   appUrl: process.env.APP_URL || "http://localhost:3000",
-  mongoUri: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/jinoshareDB",
+  mongoUri: ensureProperMongoUri(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/jinoshareDB"),
   defaultUserId: process.env.DEFAULT_USER_ID || "dev-user",
   workerSecret: process.env.WORKER_SECRET || "dev-worker-secret",
   providers: {
