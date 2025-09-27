@@ -24,16 +24,29 @@ import { connections } from "./routes/connections";
 import { protect, protectBearer } from "./middleware/auth";
 
 async function main() {
-  await connectDb();
+  try {
+    await connectDb();
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    process.exit(1);
+  }
 
   const app = express();
 
 
 
-  app.use(cors({ 
-    origin: true, 
-    credentials: true, 
-    preflightContinue: true, 
+  app.use(cors({
+    origin: [
+      "https://jinoshare.vercel.app",
+      "https://jinoshare-api-59028d83893a.herokuapp.com",
+      "http://localhost:3000",
+      "http://localhost:4000",
+      "http://localhost:4001"
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+    optionsSuccessStatus: 200
   }));
   app.use(express.json({ limit: "1mb" }));
   app.use(cookieParser());
@@ -58,8 +71,28 @@ async function main() {
   app.use("/api/upload", protect, uploadRouter);
   app.use("/api/media-storage", protect, mediaStorageRouter);
 
-  app.listen(config.port, () => {
-    console.log(`Backend running on http://localhost:${config.port}`);
+  // Global error handler
+  app.use((err: any, req: any, res: any, next: any) => {
+    console.error("Unhandled error:", err);
+    res.status(500).json({ message: "Internal server error" });
+  });
+
+  // 404 handler
+  app.use("*", (req, res) => {
+    res.status(404).json({ message: "Route not found" });
+  });
+
+  const server = app.listen(config.port, () => {
+    console.log(`Backend running on port ${config.port}`);
+  });
+
+  // Handle graceful shutdown
+  process.on("SIGTERM", () => {
+    console.log("SIGTERM received. Shutting down gracefully...");
+    server.close(() => {
+      console.log("Process terminated");
+      process.exit(0);
+    });
   });
 }
 
