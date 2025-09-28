@@ -3,6 +3,11 @@ import { useRouter } from "next/navigation";
 
 const aiFeatures = [
   {
+    title: "Content Planner",
+    description: "Create a content plan for your brand.",
+    path: "/dashboard/ai/planner",
+  },
+  {
     title: "Generate Posts",
     description: "Create social media posts from a topic.",
     path: "/dashboard/ai/generate",
