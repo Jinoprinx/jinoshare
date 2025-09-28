@@ -21,6 +21,7 @@ import { aiTagsRouter } from "./routes/ai-tags";
 import { aiModerateRouter } from "./routes/ai-moderate";
 import { aiForecastRouter } from "./routes/ai-forecast";
 import { aiBestTimeRouter } from "./routes/ai-best-time";
+import { aiContentPlannerRouter } from "./routes/ai-content-planner";
 import { scheduledPost } from "./routes/scheduled-post";
 import { userRoutes } from "./routes/user";
 import { worker } from "./routes/worker";
@@ -99,6 +100,7 @@ async function main() {
   app.use("/api/ai/moderate/", aiModerateRouter);
   app.use("/api/ai/forecast/", aiForecastRouter);
   app.use("/api/ai/best-time/", aiBestTimeRouter);
+  app.use("/api/ai/content-planner/", aiContentPlannerRouter);
   app.use("/api/scheduled-posts", protectBearer, scheduledPost);
   app.use("/api/user", protect, userRoutes);
   app.use("/api/connections", protect, connections);

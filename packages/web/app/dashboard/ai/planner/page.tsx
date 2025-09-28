@@ -14,12 +14,36 @@ interface FormData {
 
 export default function ContentPlannerPage() {
   const [prompt, setPrompt] = useState<FormData | null>(null);
+  const [posts, setPosts] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
     setPrompt(data as unknown as FormData);
+
+    try {
+      const response = await fetch("/api/ai/content-planner", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate content");
+      }
+
+      const result = await response.json();
+      setPosts(result.posts);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,9 +92,28 @@ export default function ContentPlannerPage() {
             <label htmlFor="content_goals" className="font-semibold">What are your content goals?</label>
             <textarea name="content_goals" id="content_goals" className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
           </div>
-          <button type="submit" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700">Generate Content Plan</button>
+          <button type="submit" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700" disabled={loading}>
+            {loading ? "Generating..." : "Generate Content Plan"}
+          </button>
         </form>
-        {prompt && (
+        {loading && (
+          <div className="mt-4">
+            <p>Generating content...</p>
+          </div>
+        )}
+        {posts.length > 0 && (
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold">Generated Content:</h3>
+            <div className="grid gap-4 mt-2">
+              {posts.map((post, index) => (
+                <div key={index} className="p-4 bg-gray-800 rounded-md">
+                  <p>{post}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {prompt && !loading && posts.length === 0 && (
           <div className="mt-4">
             <h3 className="text-lg font-semibold">Generated JSON Prompt:</h3>
             <pre className="p-4 mt-2 bg-gray-100 rounded-md">

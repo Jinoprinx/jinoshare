@@ -230,133 +230,37 @@ Rules:
 Return a single, concise prompt string for a video generation model.`;
 }
 
+export function buildContentPlannerPrompt(formData: any) {
+  const { mission_vision, target_audience, core_values, tone_of_voice, products_services, competitors, unique_selling_proposition, content_goals } = formData;
 
-//////////////////////////////////////////////////
-// // 1. Post Generation
-// export function buildGeneratePostsPrompt(
-//   topic: string,
-//   platform: string,
-//   tone: string,
-//   count: number
-// ) {
-//   return `You are a skilled social media copywriter.
-// Generate ${count} distinct, high‑quality posts for the ${platform} platform about the topic "${topic}".
-// Tone: ${tone}.
-// Platform style guide:
-// ${
-//     {
-//       x: "Max 280 characters. One clear hook. Avoid hashtags except when essential. Optional: 1 emoji.",
-//       linkedin:
-//         "Professional yet engaging. Value‑forward, 3‑6 short sentences. Avoid slang. No more than 2 hashtags.",
-//       instagram:
-//         "Casual and warm. 1‑2 relevant emojis. Include up to 5 high‑impact hashtags at the end.",
-//       generic: "Clear, concise, actionable. Avoid filler and overused phrases."
-//     }[platform] || "Clear, concise, actionable."
-//   }
+  return `You are a world-class brand strategist and social media expert.
+Your task is to create a 15-day social media content plan based on the user's brand information.
 
-// Output a valid JSON array of strings. Do not include any explanations, markdown, or extra text.`;
-// }
+The goal is to build the business/brand into a trusted, likeable, authority, and relatable brand.
 
-// // 2. Rewrite/Remix
-// export function buildRewritePrompt(
-//   text: string,
-//   targetPlatform: string,
-//   tone: string,
-//   objective: string
-// ) {
-//   return `You are an expert at adapting social media content.
-// Rewrite the following post so that it is optimized for ${targetPlatform}.
-// Maintain the original intent but improve it for ${objective}.
-// Tone: ${tone}.
-// Respect ${targetPlatform} constraints (length, format, style).
-// Return only the rewritten text, with no commentary.
+**Brand Information:**
+- **Mission and Vision:** ${mission_vision}
+- **Target Audience:** ${target_audience}
+- **Core Values:** ${core_values}
+- **Tone of Voice:** ${tone_of_voice}
+- **Key Products/Services:** ${products_services}
+- **Main Competitors:** ${competitors}
+- **Unique Selling Proposition:** ${unique_selling_proposition}
+- **Content Goals:** ${content_goals}
 
-// Original post:
-// ${text}`;
-// }
+**Content Plan Requirements:**
+- Generate 15 high-quality, highly customized social media posts.
+- The posts should be natural-sounding and not salesy.
+- The posts should be aimed at growing the user's business or brand based on the provided answers.
+- The posts should be diverse and cover different content formats (e.g., educational, behind-the-scenes, user-generated content, etc.).
+- Each post should be unique and non-repetitive.
+- Avoid generic hooks like "Check this out".
+- Follow platform-specific length, tone, and style rules exactly.
+- Do not include links unless explicitly requested.
+- Avoid banned or irrelevant hashtags.
 
-// // 3. Hashtag + Caption Suggestions
-// export function buildTagsPrompt(text: string, platform: string) {
-//   return `You are a social media strategist.
-// From the text below, extract or create:
-// 1. A single engaging caption optimized for ${platform}.
-// 2. Up to 7 relevant, high‑impact hashtags for ${platform}.
-
-// Return valid JSON in the form:
-// {
-//   "caption": "string",
-//   "hashtags": ["#tag1", "#tag2", ...]
-// }
-
-// Text:
-// ${text}`;
-// }
-
-// // 4. Best Time to Post
-// export function buildBestTimePrompt(
-//   examples: Array<{ dow: number; hour: number; impressions: number; likes: number }>,
-//   platform: string
-// ) {
-//   return `You are a data analyst.
-// Given this historical performance dataset for ${platform}:
-// ${JSON.stringify(examples)}
-
-// Each object has:
-// - dow: day of week (0=Sunday...6=Saturday)
-// - hour: hour of day (0‑23)
-// - impressions: number
-// - likes: number
-
-// Analyze and recommend the top 3 posting slots (day+hour) that are likely to yield the highest engagement.
-// Return valid JSON array of objects:
-// [
-//   { "dow": number, "hour": number, "reason": "short justification" }
-// ]`;
-// }
-
-// // 5. Engagement Forecasting
-// export function buildForecastPrompt(
-//   text: string,
-//   platform: string,
-//   scheduledFor?: string
-// ) {
-//   return `You are an experienced social media growth analyst.
-// Estimate the engagement potential for the following ${platform} post ${
-//     scheduledFor ? `scheduled at ${scheduledFor}` : ""
-//   }.
-
-// Consider clarity, hook strength, CTA, hashtags, timing, and platform norms.
-
-// Return valid JSON:
-// {
-//   "risk": "low" | "medium" | "high",
-//   "estImpressions": number,
-//   "notes": "brief rationale"
-// }
-
-// Post text:
-// ${text}`};
-
-// // Content Moderation
-// export function buildModerationPrompt(
-//   text: String,
-//   platform: string,
-// ){
-//   return
-// }
-
-// // Image Genration Prompt
-// export function buildImagePrompt(
-//   text: String,
-//   platform: string,
-// ){
-//   return
-// }
-
-// // Video Generation Prompt
-// export function buildVideoPrompt(
-//   text: String,
-//   platform: string,
-// ){
-//   return
-// }
+**Output:**
+Return a valid JSON array of strings.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+}
