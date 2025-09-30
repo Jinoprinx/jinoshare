@@ -33,11 +33,7 @@ export function Calendar({ posts }: { posts: ISharedPost[] }) {
         <div className="relative h-full">
           {children}
           {dailyEvents.length > 0 && (
-            <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex items-center justify-center gap-1">
-              {dailyEvents.slice(0, 4).map((event, index) => (
-                <div key={index} className="w-1.5 h-1.5 bg-white rounded-full"></div>
-              ))}
-            </div>
+            <div style={{ position: 'absolute', bottom: '5px', left: '5px', width: '10px', height: '10px', backgroundColor: 'red', borderRadius: '50%', zIndex: 100 }}></div>
           )}
         </div>
       );
