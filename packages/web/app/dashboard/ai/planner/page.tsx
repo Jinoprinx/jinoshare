@@ -25,7 +25,7 @@ export default function ContentPlannerPage() {
     setPrompt(data as unknown as FormData);
 
     try {
-      const response = await fetch("/api/ai/content-planner", {
+      const response = await fetch("/api/ai/content-planner/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

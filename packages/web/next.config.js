@@ -5,6 +5,14 @@ const nextConfig = {
   images: {
     domains: ["images.unsplash.com", "lh3.googleusercontent.com"],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://jinoshare-api-59028d83893a.herokuapp.com/:path*",
+      },
+    ];
+  },
   webpack(config) {
     config.resolve.alias = {
       ...config.resolve.alias,
