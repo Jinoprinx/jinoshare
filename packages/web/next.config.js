@@ -6,10 +6,31 @@ const nextConfig = {
     domains: ["images.unsplash.com", "lh3.googleusercontent.com"],
   },
   async rewrites() {
+    const apiDestination = "https://jinoshare-api-59028d83893a.herokuapp.com/:path*";
     return [
       {
-        source: "/api/:path*",
-        destination: "https://jinoshare-api-59028d83893a.herokuapp.com/:path*",
+        source: "/api/ai/:path*",
+        destination: apiDestination,
+      },
+      {
+        source: "/api/user/:path*",
+        destination: apiDestination,
+      },
+      {
+        source: "/api/connections/:path*",
+        destination: apiDestination,
+      },
+      {
+        source: "/api/worker/:path*",
+        destination: apiDestination,
+      },
+      {
+        source: "/api/post/:path*",
+        destination: apiDestination,
+      },
+      {
+        source: "/api/upload/:path*",
+        destination: apiDestination,
       },
     ];
   },
