@@ -32,9 +32,7 @@ export function Calendar({ posts }: { posts: ISharedPost[] }) {
       return (
         <div className="relative h-full">
           {children}
-          {dailyEvents.length > 0 && (
-            <div style={{ position: 'absolute', bottom: '5px', left: '5px', width: '10px', height: '10px', backgroundColor: 'red', borderRadius: '50%', zIndex: 100 }}></div>
-          )}
+          <span style={{ color: 'white', fontSize: '10px' }}>({dailyEvents.length})</span>
         </div>
       );
     },
