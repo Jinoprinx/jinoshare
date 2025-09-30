@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { protect } from "../middleware/auth";
 import { Post } from "../models/Post";
+import { Connection } from "../models/Connection";
 import { config } from "../config";
 import { postQueue } from "../scheduler";
 
@@ -45,10 +46,20 @@ scheduledPost.post("/", protect, async (req, res) => {
   }
 
   try {
+    // Convert platform names to Connection ObjectIds
+    const connectionIds = [];
+    for (const platformName of connections) {
+      const connection = await Connection.findOne({ userId, provider: platformName });
+      if (!connection) {
+        return res.status(400).json({ error: `No connection found for platform: ${platformName}` });
+      }
+      connectionIds.push(connection._id);
+    }
+
     const post = new Post({
       userId,
       content,
-      connections,
+      connections: connectionIds,
       scheduledAt: scheduleDate ? new Date(scheduleDate) : null,
       status: scheduleDate ? "scheduled" : "draft",
       media,
@@ -98,8 +109,21 @@ scheduledPost.put("/:id", protect, async (req, res) => {
       await removeJob(post.jobId);
     }
 
+    // Convert platform names to Connection ObjectIds if connections are provided
+    let connectionIds = connections;
+    if (connections && Array.isArray(connections)) {
+      connectionIds = [];
+      for (const platformName of connections) {
+        const connection = await Connection.findOne({ userId, provider: platformName });
+        if (!connection) {
+          return res.status(400).json({ error: `No connection found for platform: ${platformName}` });
+        }
+        connectionIds.push(connection._id);
+      }
+    }
+
     post.content = content;
-    post.connections = connections;
+    post.connections = connectionIds;
     post.status = status;
     post.scheduledAt = scheduleDate ? new Date(scheduleDate) : null;
 
