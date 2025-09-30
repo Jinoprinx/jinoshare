@@ -22,7 +22,7 @@ scheduledPost.get("/", protect, async (req, res) => {
   const { startDate, endDate } = req.query;
   const userId = (req as any).user.id;
 
-  const query: any = { userId, isDeleted: { $ne: true } };
+  const query: any = { userId, isDeleted: { $ne: true }, status: 'scheduled' };
   if (startDate && endDate) {
     query.scheduledAt = { $gte: new Date(startDate as string), $lte: new Date(endDate as string) };
   }

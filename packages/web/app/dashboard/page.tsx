@@ -625,7 +625,7 @@ function Dashboard() {
 
 
 
-        {tab === "calendar" && <Calendar />}
+        {tab === "calendar" && <Calendar posts={posts} />}
 
         {tab === "library" && (
           <ContentList
