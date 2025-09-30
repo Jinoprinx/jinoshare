@@ -16,13 +16,13 @@ export default function ContentPlannerPage() {
   const [prompt, setPrompt] = useState<FormData | null>(null);
   const [posts, setPosts] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<string | null>(null);
+  const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
   const [isAdding, setIsAdding] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
-    setSelectedPost(null);
+    setSelectedPosts([]);
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
     setPrompt(data as unknown as FormData);
@@ -49,31 +49,46 @@ export default function ContentPlannerPage() {
     }
   };
 
-  const handleAddPost = async () => {
-    if (!selectedPost) return;
+  const handleAddPosts = async () => {
+    if (selectedPosts.length === 0) return;
 
     setIsAdding(true);
     try {
-      const response = await fetch("/api/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ content: selectedPost }),
-      });
+      await Promise.all(
+        selectedPosts.map((postContent) =>
+          fetch("/api/posts", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ content: postContent }),
+          })
+        )
+      );
 
-      if (!response.ok) {
-        throw new Error("Failed to add post");
-      }
-
-      // Optionally, show a success message or clear the selection
-      alert("Post added to your library as a draft!");
-      setSelectedPost(null);
+      alert(`${selectedPosts.length} post(s) added to your library as drafts!`);
+      setSelectedPosts([]);
     } catch (error) {
       console.error(error);
-      alert("Failed to add post.");
+      alert("Failed to add posts.");
     } finally {
       setIsAdding(false);
+    }
+  };
+
+  const handlePostSelect = (post: string) => {
+    setSelectedPosts((prev) =>
+      prev.includes(post)
+        ? prev.filter((p) => p !== post)
+        : [...prev, post]
+    );
+  };
+
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setSelectedPosts(posts);
+    } else {
+      setSelectedPosts([]);
     }
   };
 
@@ -85,6 +100,7 @@ export default function ContentPlannerPage() {
           Answer the following questions to generate a personalized content plan.
         </p>
         <form onSubmit={handleSubmit} className="grid gap-4">
+          {/* Form fields... */}
           <div className="grid gap-2">
             <label htmlFor="mission_vision" className="font-semibold">What is your brand&apos;s mission and vision?</label>
             <textarea name="mission_vision" id="mission_vision" className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
@@ -135,16 +151,26 @@ export default function ContentPlannerPage() {
         {posts.length > 0 && (
           <div className="mt-4">
             <h3 className="text-lg font-semibold">Generated Content:</h3>
+            <div className="flex items-center mt-2 mb-2">
+              <input
+                type="checkbox"
+                id="select-all"
+                onChange={handleSelectAll}
+                checked={selectedPosts.length === posts.length}
+                className="mr-4"
+              />
+              <label htmlFor="select-all">Select All</label>
+            </div>
             <div className="grid gap-4 mt-2">
               {posts.map((post, index) => (
                 <div key={index} className="flex items-center p-4 bg-gray-800 rounded-md">
                   <input
-                    type="radio"
+                    type="checkbox"
                     id={`post-${index}`}
-                    name="selectedPost"
+                    name="selectedPosts"
                     value={post}
-                    checked={selectedPost === post}
-                    onChange={(e) => setSelectedPost(e.target.value)}
+                    checked={selectedPosts.includes(post)}
+                    onChange={() => handlePostSelect(post)}
                     className="mr-4"
                   />
                   <label htmlFor={`post-${index}`} className="cursor-pointer w-full"><p>{post}</p></label>
@@ -152,11 +178,11 @@ export default function ContentPlannerPage() {
               ))}
             </div>
             <button
-              onClick={handleAddPost}
+              onClick={handleAddPosts}
               className="mt-4 px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 disabled:bg-gray-500"
-              disabled={!selectedPost || isAdding}
+              disabled={selectedPosts.length === 0 || isAdding}
             >
-              {isAdding ? "Adding..." : "Add Post to Library"}
+              {isAdding ? "Adding..." : `Add ${selectedPosts.length} Post(s) to Library`}
             </button>
           </div>
         )}
