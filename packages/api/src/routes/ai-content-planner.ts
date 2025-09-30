@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { aiGenerate, stripJsonFences } from "@jino/ai";
-import { buildContentPlannerPrompt } from "@jino/ai";
+import { buildContentPlannerPrompt } from "@jino/ai/src/prompts";
 
 export const aiContentPlannerRouter = Router();
 
