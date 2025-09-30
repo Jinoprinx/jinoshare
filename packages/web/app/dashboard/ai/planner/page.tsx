@@ -16,10 +16,13 @@ export default function ContentPlannerPage() {
   const [prompt, setPrompt] = useState<FormData | null>(null);
   const [posts, setPosts] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<string | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
+    setSelectedPost(null);
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
     setPrompt(data as unknown as FormData);
@@ -43,6 +46,34 @@ export default function ContentPlannerPage() {
       console.error(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAddPost = async () => {
+    if (!selectedPost) return;
+
+    setIsAdding(true);
+    try {
+      const response = await fetch("/api/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: selectedPost }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add post");
+      }
+
+      // Optionally, show a success message or clear the selection
+      alert("Post added to your library as a draft!");
+      setSelectedPost(null);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to add post.");
+    } finally {
+      setIsAdding(false);
     }
   };
 
@@ -106,11 +137,27 @@ export default function ContentPlannerPage() {
             <h3 className="text-lg font-semibold">Generated Content:</h3>
             <div className="grid gap-4 mt-2">
               {posts.map((post, index) => (
-                <div key={index} className="p-4 bg-gray-800 rounded-md">
-                  <p>{post}</p>
+                <div key={index} className="flex items-center p-4 bg-gray-800 rounded-md">
+                  <input
+                    type="radio"
+                    id={`post-${index}`}
+                    name="selectedPost"
+                    value={post}
+                    checked={selectedPost === post}
+                    onChange={(e) => setSelectedPost(e.target.value)}
+                    className="mr-4"
+                  />
+                  <label htmlFor={`post-${index}`} className="cursor-pointer w-full"><p>{post}</p></label>
                 </div>
               ))}
             </div>
+            <button
+              onClick={handleAddPost}
+              className="mt-4 px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 disabled:bg-gray-500"
+              disabled={!selectedPost || isAdding}
+            >
+              {isAdding ? "Adding..." : "Add Post to Library"}
+            </button>
           </div>
         )}
         {prompt && !loading && posts.length === 0 && (
