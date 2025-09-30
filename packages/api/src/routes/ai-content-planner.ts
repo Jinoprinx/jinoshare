@@ -18,8 +18,9 @@ aiContentPlannerRouter.post("/", async (req, res) => {
     try {
       posts = JSON.parse(stripJsonFences(raw));
       if (!Array.isArray(posts)) throw new Error();
+      posts = posts.slice(0, 5);
     } catch {
-      posts = raw.split(/\n+/).filter(Boolean).slice(0, 15);
+      posts = raw.split(/\n+/).filter(Boolean).slice(0, 5);
     }
     res.json({ ok: true, posts });
   } catch (err: any) {

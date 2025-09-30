@@ -233,71 +233,10 @@ Return a single, concise prompt string for a video generation model.`;
 export function buildContentPlannerPrompt(formData: any) {
   const { mission_vision, target_audience, core_values, tone_of_voice, products_services, competitors, unique_selling_proposition, content_goals } = formData;
 
-  return `Structured Prompt for AI Content Generation
-Role & Objective
-You are a leading expert in social media strategy to drive business growth. Your task is to create 3 high-quality social media posts designed to educate, motivate/inspire, and address pain points for small business owners, brand influencers and entrepreneurs.
+  return `You are a world-class brand strategist and social media expert.
+Your task is to create a 5-day social media content plan based on the user's brand information.
 
-Content Mix
-
-1 Educational Posts: Provide practical strategies, case studies, or recent insights for business or brand growth.
-
-1 Motivational/Inspirational Posts: Share thought-provoking, uplifting, or visionary perspectives on AI, innovation, entrepreneurship or anything related to the user ${target_audience}.
-
-1 Pain-Point Targeting Posts: Identify common struggles of small businesses and ${target_audience} (low sales, lack of time, limited marketing budget, customer retention, etc.) and show how AI offers solutions.
-
-Structure for Each Post
-
-Hook: Start with a relatable question, surprising stat, or bold statement.
-
-Key Insight/Message: Deliver the core value (educational fact, motivational perspective, or relatable pain point).
-
-Example/Analogy: Use a real-world business example, relatable analogy, or micro-case study.
-
-Call-to-Action (CTA): Non-salesy prompt to spark engagement (e.g., “Would you try this?”, “What’s your take?”).
-
-Hashtags (Optional): Include 3–5 relevant hashtags for reach (#SmallBusinessGrowth, #AIForBusiness, #FutureOfWork).
-
-Image Prompt: Provide a detailed text-to-image generator prompt for creating a scroll-stopping visual to match the post theme.
-
-Tone & Style
-
-Audience: 25–65-year-old small business owners and entrepreneurs.
-
-Tone: Professional yet approachable, relatable, forward-looking, ${tone_of_voice}
-
-Avoid jargon; focus on ROI, efficiency, creativity, and human connection.
-- Do not include links unless explicitly requested.
-- Avoid banned or irrelevant hashtags.
-- Each post should be unique and non-repetitive.
-- The posts should be natural-sounding and not salesy.
-
-Output Format
-Generate the 3 posts grouped into:
-
-Educational (1)
-
-Motivational/Inspirational (2)
-
-Pain Points Targeting (3)
-
-Each post should include:
-
-Hook
-
-Key Insight/Message
-
-Example/Analogy
-
-CTA
-
-Hashtags
-
-Image Prompt  
-  
-  You are a world-class brand strategist and social media expert.
-Your task is to create a 3-day social media content plan based on the user's brand information.
-
-The goal is to build the business/brand into a trusted, likeable, authority, and relatable brand.
+The goal is to build the business/brand into a trusted, likeable, authority, and relatable brand by creating 5 high-quality, distinct social media posts.
 
 **Brand Information:**
 - **Mission and Vision:** ${mission_vision}
@@ -309,8 +248,22 @@ The goal is to build the business/brand into a trusted, likeable, authority, and
 - **Unique Selling Proposition:** ${unique_selling_proposition}
 - **Content Goals:** ${content_goals}
 
+**Instructions for each post:**
+- **Hook:** Start with a relatable question, surprising stat, or bold statement.
+- **Key Insight/Message:** Deliver core value.
+- **Example/Analogy:** Use a real-world business example or relatable analogy.
+- **Call-to-Action (CTA):** Use a non-salesy prompt to spark engagement (e.g., “Would you try this?”, “What’s your take?”).
+- **Hashtags:** Include 3–5 relevant hashtags for reach.
+- **Image Prompt:** Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
+
+**General Rules:**
+- Each post must be unique and non-repetitive.
+- The posts should be natural-sounding and not salesy.
+- Avoid jargon; focus on ROI, efficiency, creativity, and human connection.
+- Do not include links.
+
 **Output:**
-Return a valid JSON array of strings.
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
 Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 }
