@@ -6,7 +6,7 @@ import { postQueue } from "../scheduler";
 
 // Helper to remove a job if it exists
 const removeJob = async (jobId: string) => {
-  if (jobId) {
+  if (jobId && postQueue) {
     const job = await postQueue.getJob(jobId);
     if (job) {
       await job.remove();
@@ -57,13 +57,27 @@ scheduledPost.post("/", protect, async (req, res) => {
     if (post.status === 'scheduled' && post.scheduledAt) {
         const delay = post.scheduledAt.getTime() - Date.now();
         if (delay > 0) {
-            const job = await postQueue.add('process-post', { postId: post._id }, { delay });
-            post.jobId = job.id;
+            if (postQueue) {
+                try {
+                    const job = await postQueue.add('process-post', { postId: post._id }, { delay });
+                    post.jobId = job.id;
+                } catch (queueErr: any) {
+                    console.error("Failed to add job to queue:", queueErr.message);
+                    // Continue without scheduling but mark as draft
+                    post.status = "draft";
+                    post.scheduledAt = null;
+                }
+            } else {
+                console.warn("PostQueue not available - Redis not configured. Saving as draft.");
+                post.status = "draft";
+                post.scheduledAt = null;
+            }
         }
     }
     await post.save();
     res.status(201).json(post);
   } catch (err: any) {
+    console.error("Failed to create post:", err.message);
     res.status(500).json({ error: "Failed to create post", detail: err.message });
   }
 });
@@ -92,8 +106,22 @@ scheduledPost.put("/:id", protect, async (req, res) => {
     if (post.status === 'scheduled' && post.scheduledAt) {
         const delay = post.scheduledAt.getTime() - Date.now();
         if (delay > 0) {
-            const job = await postQueue.add('process-post', { postId: post._id }, { delay });
-            post.jobId = job.id;
+            if (postQueue) {
+                try {
+                    const job = await postQueue.add('process-post', { postId: post._id }, { delay });
+                    post.jobId = job.id;
+                } catch (queueErr: any) {
+                    console.error("Failed to add job to queue:", queueErr.message);
+                    post.status = 'draft';
+                    post.scheduledAt = null;
+                    post.jobId = undefined;
+                }
+            } else {
+                console.warn("PostQueue not available - Redis not configured. Setting as draft.");
+                post.status = 'draft';
+                post.scheduledAt = null;
+                post.jobId = undefined;
+            }
         } else {
             post.status = 'draft'; // Time is in the past
             post.jobId = undefined;

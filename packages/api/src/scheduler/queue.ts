@@ -3,6 +3,14 @@ import { redisConnection } from './redis';
 
 export const POST_QUEUE_NAME = 'social-post-scheduler';
 
-export const postQueue = new Queue(POST_QUEUE_NAME, {
-  connection: redisConnection,
-});
+let postQueue: Queue | null = null;
+
+if (redisConnection) {
+  postQueue = new Queue(POST_QUEUE_NAME, {
+    connection: redisConnection,
+  });
+} else {
+  console.warn('PostQueue not initialized - Redis not available');
+}
+
+export { postQueue };
