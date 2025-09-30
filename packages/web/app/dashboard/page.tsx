@@ -5,7 +5,7 @@ import { Channels } from "@components/channels";
 import { ContentList } from "@components/list";
 import { Calendar } from "@components/calendar";
 import { toast, Toasts } from "@components/toast";
-import { generateBatch } from "@/lib/generator";
+
 import { ISharedPost, Channel, IConnection } from "@jino/common";
 //look into reusing using this AIPage
 import AIPage from "./ai/page";
@@ -181,15 +181,12 @@ function Dashboard() {
     await fetch(`/api/posts/${id}`, { method: "DELETE" });
   }
 
-  function onBatchGenerate(
-    seed: string,
-    count: number,
-    tone: string,
-    preset: Channel | "generic"
-  ) {
-    const items = generateBatch(seed, count, tone, preset);
-    toast.success(`Generated ${items.length} posts`);
+  function handleEditPost(post: ISharedPost) {
+    setDraft(post);
+    setTab("write");
   }
+
+
 
   function connect(provider: ProviderId) {
     window.location.href = `${BACKEND}/auth/${provider}/login?userId=${(session?.user as any)?.id}`;
@@ -367,7 +364,7 @@ function Dashboard() {
     () =>
       [
         { key: "write", label: "Write", icon: PenSquareIcon },
-        { key: "batch", label: "Batch", icon: LayoutGridIcon },
+
         { key: "calendar", label: "Calendar", icon: CalendarIcon },
         { key: "library", label: "Library", icon: SparklesIcon },
         { 
@@ -626,14 +623,7 @@ function Dashboard() {
           </div>
         )}
 
-        {tab === "batch" && (
-          <div className="rounded-lg border border-white/10 bg-black/20 p-4">
-            <BatchForm onGenerate={onBatchGenerate} />
-            <p className="mt-4 text-sm text-gray-500">
-              Generated posts appear in the library.
-            </p>
-          </div>
-        )}
+
 
         {tab === "calendar" && <Calendar />}
 
@@ -642,6 +632,7 @@ function Dashboard() {
             posts={posts}
             onUpdate={updatePost}
             onDelete={deletePost}
+            onEdit={handleEditPost}
           />
         )}
 
@@ -656,72 +647,3 @@ function Dashboard() {
 }
 
 export default withAuth(Dashboard);
-
-function BatchForm({
-  onGenerate,
-}: {
-  onGenerate: (
-    seed: string,
-    count: number,
-    tone: string,
-    preset: any
-  ) => void;
-}) {
-  const [seed, setSeed] = useState("");
-  const [count, setCount] = useState(8);
-  const [tone, setTone] = useState("concise");
-  const [preset, setPreset] = useState<
-    "generic" | "x" | "tiktok" | "instagram" | "youtube" | "linkedin"
-  >("generic");
-  return (
-    <div className="space-y-4">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <input
-          className="input rounded-md border border-white/20 bg-black/60 p-2 lg:col-span-2 focus:ring-2 focus:ring-purple-500/50"
-          placeholder="Seed idea (e.g., 'hooks for productivity')"
-          value={seed}
-          onChange={(e) => setSeed(e.target.value)}
-        />
-        <select
-          className="rounded-md border border-white/20 bg-black/60 text-white p-2 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
-          value={tone}
-          onChange={(e) => setTone(e.target.value)}
-        >
-          <option value="concise">Concise</option>
-          <option value="casual">Casual</option>
-          <option value="contrarian">Contrarian</option>
-          <option value="educational">Educational</option>
-        </select>
-        <select
-          className="rounded-md border border-white/20 bg-black/60 text-white p-2 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
-          value={preset}
-          onChange={(e) => setPreset(e.target.value as any)}
-        >
-          <option value="generic">Generic</option>
-          <option value="x">X/Twitter</option>
-          <option value="tiktok">TikTok</option>
-          <option value="instagram">Instagram</option>
-          <option value="youtube">YouTube Shorts</option>
-          <option value="linkedin">LinkedIn</option>
-        </select>
-      </div>
-      <div className="flex items-center gap-3">
-        <input
-          className="input w-28 rounded-md border-white/10 bg-white/5 p-2"
-          type="number"
-          min={1}
-          max={30}
-          value={count}
-          onChange={(e) => setCount(parseInt(e.target.value || "1"))}
-        />
-        <button
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-          onClick={() => onGenerate(seed, count, tone, preset)}
-          disabled={!seed}
-        >
-          Generate batch
-        </button>
-      </div>
-    </div>
-  );
-}

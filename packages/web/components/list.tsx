@@ -1,45 +1,8 @@
 "use client";
 import { format } from "date-fns";
 import { ISharedPost } from "@jino/common";
-import { toast } from "@/components/toast";
-import { useSession } from "next-auth/react";
 
-const BACKEND = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
-const SUPPORTED_PROVIDERS = ["x", "linkedin", "facebook", "instagram"] as const;
-
-function getProvidersFromChannels(channels: string[]) {
-  return SUPPORTED_PROVIDERS.filter(p => channels.includes(p));
-}
-
-async function postToProvider(provider: string, text: string, token: string) {
-  const res = await fetch(`${BACKEND}/api/post/${provider}/post`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
-    credentials: "include",
-    body: JSON.stringify({ text })
-  });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.detail || data.error || `Failed to post to ${provider}`);
-  return data;
-}
-
-export function ContentList({ posts, onUpdate, onDelete }: { posts: ISharedPost[]; onUpdate: (p: ISharedPost)=>void; onDelete: (id: string)=>void }) {
-  const { data: session } = useSession();
-
-  async function postNow(p: ISharedPost) {
-    const text = p.content.trim();
-    if (!text) return toast.info("Post has no content");
-    const targets = getProvidersFromChannels(p.channels);
-    if (targets.length === 0) return toast.info("No supported providers selected");
-    for (const provider of targets) {
-      try {
-        const res = await postToProvider(provider, text, (session as any).accessToken);
-        toast.success(`Posted to ${provider.toUpperCase()} (id: ${res.id})`);
-      } catch (err: any) {
-        toast.error(`${provider.toUpperCase()}: ${err.message || "Failed"}`);
-      }
-    }
-  }
+export function ContentList({ posts, onUpdate, onDelete, onEdit }: { posts: ISharedPost[]; onUpdate: (p: ISharedPost)=>void; onDelete: (id: string)=>void; onEdit: (p: ISharedPost) => void; }) {
 
   return (
     <div className="grid gap-3">
@@ -61,11 +24,11 @@ export function ContentList({ posts, onUpdate, onDelete }: { posts: ISharedPost[
               )}
             </div>
             <div className="flex flex-col gap-2">
-              <button className="btn-outline" onClick={() => onUpdate({ ...p, status: p.status === "draft" ? "scheduled" : "draft" })}>
-                {p.status === "draft" ? "Schedule" : "Unschedule"}
+              <button className="btn-outline" onClick={() => onEdit(p)}>
+                {p.status === "draft" ? "Schedule" : "Edit"}
               </button>
               <button className="btn-outline" onClick={() => onDelete(p._id)}>Delete</button>
-              <button className="btn-outline" onClick={() => postNow(p)}>Post Now</button>
+              <button className="btn-outline" onClick={() => onEdit(p)}>Post Now</button>
             </div>
           </div>
         </div>
