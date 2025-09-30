@@ -25,6 +25,25 @@ export function Calendar({ posts }: { posts: ISharedPost[] }) {
       resource: post,
     }));
 
+  const components = {
+    dateCellWrapper: ({ children, value }: { children: React.ReactNode, value: Date }) => {
+      const dailyEvents = events.filter(event => moment(event.start).isSame(value, 'day'));
+
+      return (
+        <div className="relative h-full">
+          {children}
+          {dailyEvents.length > 0 && (
+            <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex items-center justify-center gap-1">
+              {dailyEvents.slice(0, 4).map((event, index) => (
+                <div key={index} className="w-1.5 h-1.5 bg-white rounded-full"></div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    },
+  };
+
   return (
     <div className="relative">
       <div className="h-[700px] bg-black/20 p-4 rounded-lg border border-white/10">
@@ -34,6 +53,7 @@ export function Calendar({ posts }: { posts: ISharedPost[] }) {
           startAccessor="start"
           endAccessor="end"
           style={{ height: '100%' }}
+          components={components}
         />
       </div>
     </div>
