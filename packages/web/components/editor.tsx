@@ -25,9 +25,18 @@ export function Editor({ value, onChange }: { value: Partial<ISharedPost>; onCha
   };
 
   const handleDateChange = (date: Date | null) => {
-    const newPost = { ...localPost, scheduledAt: date ? date.toISOString() : null };
-    setLocalPost(newPost);
-    handleChange(newPost, mediaFile || undefined);
+    if (date) {
+      // Adjust for the timezone offset
+      const timezoneOffset = date.getTimezoneOffset() * 60000; // in milliseconds
+      const adjustedDate = new Date(date.getTime() - timezoneOffset);
+      const newPost = { ...localPost, scheduledAt: adjustedDate.toISOString().slice(0, -1) };
+      setLocalPost(newPost);
+      handleChange(newPost, mediaFile || undefined);
+    } else {
+      const newPost = { ...localPost, scheduledAt: null };
+      setLocalPost(newPost);
+      handleChange(newPost, mediaFile || undefined);
+    }
   };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

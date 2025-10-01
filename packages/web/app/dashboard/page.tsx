@@ -449,14 +449,8 @@ function Dashboard() {
         <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <h1 className="font-display text-3xl font-bold">Dashboard</h1>
           <div className="flex items-center gap-2">
-            <button className="flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10">
-              <FilterIcon className="h-4 w-4" />
-              Filter
-            </button>
-            <button className="flex items-center gap-2 bg-white text-black hover:bg-white/90 rounded-md px-4 py-2 text-sm font-medium">
-              <PlusIcon className="h-4 w-4" />
-              New Post
-            </button>
+            
+            
           </div>
         </div>
 

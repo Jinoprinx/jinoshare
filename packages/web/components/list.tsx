@@ -11,7 +11,7 @@ export function ContentList({ posts, onUpdate, onDelete, onEdit }: { posts: ISha
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <span className="text-xs uppercase text-gray-500">{p.status}</span>
+                <span className="text-xs uppercase font-bold text-gray-500">{p.status}</span>
                 <div className="flex gap-1">
                   {p.channels.map(c => <span key={c} className="badge">{c}</span>)}
                 </div>
