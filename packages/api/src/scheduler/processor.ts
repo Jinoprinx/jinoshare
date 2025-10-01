@@ -59,7 +59,9 @@ export const processPostJob = async (job: Job<PostJobData>) => {
         status: 'success',
       }).save();
       publishLogIds.push(log._id);
+      console.log('message scheduled by user has been successfully posted');
     } catch (error: any) {
+      console.error('an error occurred and a scheduled post could not be posted');
       console.error(`Failed to publish post ${postId} to ${connection.provider}`, error);
       const log = await new PublishLog({
         post: post._id,

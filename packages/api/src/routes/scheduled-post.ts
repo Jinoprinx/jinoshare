@@ -72,6 +72,7 @@ scheduledPost.post("/", protect, async (req, res) => {
                 try {
                     const job = await postQueue.add('process-post', { postId: post._id }, { delay });
                     post.jobId = job.id;
+                    console.log(`user schedule post to be posted at ${post.scheduledAt} from now`);
                 } catch (queueErr: any) {
                     console.error("Failed to add job to queue:", queueErr.message);
                     // Continue without scheduling but mark as draft
@@ -134,6 +135,7 @@ scheduledPost.put("/:id", protect, async (req, res) => {
                 try {
                     const job = await postQueue.add('process-post', { postId: post._id }, { delay });
                     post.jobId = job.id;
+                    console.log(`user schedule post to be posted at ${post.scheduledAt} from now`);
                 } catch (queueErr: any) {
                     console.error("Failed to add job to queue:", queueErr.message);
                     post.status = 'draft';
