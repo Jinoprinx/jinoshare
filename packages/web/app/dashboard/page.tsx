@@ -252,7 +252,7 @@ function Dashboard() {
       }
     } else {
       const text = (draft.content || "").trim();
-      if (!text) return toast.info("Write something first");
+      if (!text) return toast("Write something first");
       try {
         setPosting(provider);
         const res = await postToProvider(provider, text, (session as any).accessToken);
@@ -338,7 +338,7 @@ function Dashboard() {
 
     const targets = providersFromChannels(draft.channels || []);
     if (targets.length === 0)
-      return toast.info("Select at least one supported provider in Channels");
+      return toast("Select at least one supported provider in Channels");
 
     if (mediaFile) {
       try {
@@ -362,7 +362,7 @@ function Dashboard() {
       }
     } else {
       const text = (draft.content || "").trim();
-      if (!text) return toast.info("Write something first");
+      if (!text) return toast("Write something first");
 
       try {
         setPosting("all");
