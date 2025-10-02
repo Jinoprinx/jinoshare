@@ -5,7 +5,7 @@
     "paths": {
       "@/*": ["./*"],
       "@components/*": ["components/*"],
-      "@data/*": ["data/*"]
+      "@lib/*": ["lib/*"]
     },
     "typeRoots": ["./node_modules/@types"],
     

@@ -46,7 +46,6 @@ turbo/
 **/db.json
 **/data/
 **/dump/
-!data/templates.ts
 
 
 # Uploads or media
