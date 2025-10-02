@@ -60,11 +60,13 @@ export default function PlannerPageClient() {
   const [loading, setLoading] = useState(false);
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
   const [isAdding, setIsAdding] = useState(false);
+  const [error, setError] = useState<string>('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
     setSelectedPosts([]);
+    setError('');
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
 
@@ -78,13 +80,15 @@ export default function PlannerPageClient() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to generate content");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to generate content");
       }
 
       const result = await response.json();
       setPosts(result.posts);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      setError(error.message || "Failed to generate content");
     } finally {
       setLoading(false);
     }
@@ -156,6 +160,11 @@ export default function PlannerPageClient() {
         {loading && (
           <div className="mt-4">
             <p>Generating content...</p>
+          </div>
+        )}
+        {error && (
+          <div className="mt-4 p-4 bg-red-900/30 border border-red-600/50 rounded-md">
+            <p className="text-red-400">{error}</p>
           </div>
         )}
         {posts.length > 0 && (

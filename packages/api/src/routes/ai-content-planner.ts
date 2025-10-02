@@ -8,7 +8,12 @@ aiContentPlannerRouter.post("/", async (req, res) => {
   try {
     const { templateName, variables } = req.body || {};
     if (!templateName || !variables) {
-      return res.status(400).json({ ok: false, error: "templateName and variables are required" });
+      console.error("Missing required fields:", { templateName, variables });
+      return res.status(400).json({
+        ok: false,
+        error: "templateName and variables are required",
+        details: { hasTemplateName: !!templateName, hasVariables: !!variables }
+      });
     }
 
     const prompt = buildPromptFromTemplate(templateName, variables);
