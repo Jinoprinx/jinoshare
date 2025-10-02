@@ -24,6 +24,28 @@ const DynamicForm = ({ templateName }: { templateName: string }) => {
       { name: 'price', label: 'Price', type: 'text' },
       { name: 'discount', label: 'Discount', type: 'text' },
     ],
+    QuickTutorial: [
+      { name: 'tutorialTopic', label: 'Tutorial Topic', type: 'text' },
+      { name: 'tutorialDuration', label: 'Duration (e.g., 5 minutes)', type: 'text' },
+      { name: 'keyTakeaways', label: 'Key Takeaways', type: 'textarea' },
+    ],
+    CarouselPost: [
+      { name: 'carouselTopic', label: 'Carousel Topic', type: 'text' },
+      { name: 'numberOfSlides', label: 'Number of Slides', type: 'text' },
+    ],
+    PromoOffer: [
+      { name: 'offerDetails', label: 'Offer Details', type: 'textarea' },
+      { name: 'discountPercentage', label: 'Discount Percentage (e.g., 50%)', type: 'text' },
+      { name: 'expirationDate', label: 'Expiration Date', type: 'text' },
+    ],
+    ProductLaunch: [
+      { name: 'productName', label: 'Product Name', type: 'text' },
+      { name: 'productDescription', label: 'Product Description', type: 'textarea' },
+      { name: 'launchDate', label: 'Launch Date', type: 'text' },
+    ],
+    MondayMotivation: [
+      { name: 'motivationTheme', label: 'Motivation Theme (e.g., perseverance, growth)', type: 'text' },
+    ],
   };
 
   const fields = useMemo(() => {
