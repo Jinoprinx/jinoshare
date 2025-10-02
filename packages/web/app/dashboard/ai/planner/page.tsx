@@ -1,19 +1,61 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useSearchParams } from 'next/navigation';
 
-interface FormData {
-  mission_vision: string;
-  target_audience: string;
-  core_values: string;
-  tone_of_voice: string;
-  products_services: string;
-  competitors: string;
-  unique_selling_proposition: string;
-  content_goals: string;
-}
+const DynamicForm = ({ templateName }: { templateName: string }) => {
+  const commonFields = [
+    { name: 'mission_vision', label: 'What is your brand\'s mission and vision?', type: 'textarea' },
+    { name: 'target_audience', label: 'Who is your target audience?', type: 'textarea' },
+    { name: 'core_values', label: 'What are your brand\'s core values?', type: 'textarea' },
+    { name: 'tone_of_voice', label: 'What is your brand\'s tone of voice?', type: 'select', options: ['formal', 'informal', 'friendly', 'professional', 'humorous'] },
+    { name: 'products_services', label: 'What are your key products or services?', type: 'textarea' },
+    { name: 'competitors', label: 'Who are your main competitors?', type: 'textarea' },
+    { name: 'unique_selling_proposition', label: 'What makes your brand unique?', type: 'textarea' },
+    { name: 'content_goals', label: 'What are your content goals?', type: 'textarea' },
+  ];
+
+  const templateFields: { [key: string]: any[] } = {
+    FreebieAlert: [
+      { name: 'productName', label: 'Product Name', type: 'text' },
+      { name: 'benefit', label: 'Benefit', type: 'textarea' },
+    ],
+    PaidCourse: [
+      { name: 'courseName', label: 'Course Name', type: 'text' },
+      { name: 'price', label: 'Price', type: 'text' },
+      { name: 'discount', label: 'Discount', type: 'text' },
+    ],
+  };
+
+  const fields = useMemo(() => {
+    return [...commonFields, ...(templateFields[templateName] || [])];
+  }, [templateName]);
+
+  return (
+    <>
+      {fields.map((field) => (
+        <div key={field.name} className="grid gap-2">
+          <label htmlFor={field.name} className="font-semibold">{field.label}</label>
+          {field.type === 'textarea' ? (
+            <textarea name={field.name} id={field.name} className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
+          ) : field.type === 'select' ? (
+            <select name={field.name} id={field.name} className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md">
+              {field.options?.map((option) => (
+                <option key={option} value={option}>{option.charAt(0).toUpperCase() + option.slice(1)}</option>
+              ))}
+            </select>
+          ) : (
+            <input type={field.type} name={field.name} id={field.name} className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
+          )}
+        </div>
+      ))}
+    </>
+  );
+};
 
 export default function ContentPlannerPage() {
-  const [prompt, setPrompt] = useState<FormData | null>(null);
+  const searchParams = useSearchParams();
+  const templateName = searchParams.get('template') || '';
+
   const [posts, setPosts] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
@@ -25,7 +67,6 @@ export default function ContentPlannerPage() {
     setSelectedPosts([]);
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
-    setPrompt(data as unknown as FormData);
 
     try {
       const response = await fetch("/api/ai/content-planner/", {
@@ -33,7 +74,7 @@ export default function ContentPlannerPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ templateName, variables: data }),
       });
 
       if (!response.ok) {
@@ -100,45 +141,7 @@ export default function ContentPlannerPage() {
           Answer the following questions to generate a personalized content plan.
         </p>
         <form onSubmit={handleSubmit} className="grid gap-4">
-          {/* Form fields... */}
-          <div className="grid gap-2">
-            <label htmlFor="mission_vision" className="font-semibold">What is your brand&apos;s mission and vision?</label>
-            <textarea name="mission_vision" id="mission_vision" className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
-          </div>
-          <div className="grid gap-2">
-            <label htmlFor="target_audience" className="font-semibold">Who is your target audience?</label>
-            <textarea name="target_audience" id="target_audience" className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
-          </div>
-          <div className="grid gap-2">
-            <label htmlFor="core_values" className="font-semibold">What are your brand&apos;s core values?</label>
-            <textarea name="core_values" id="core_values" className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
-          </div>
-          <div className="grid gap-2">
-            <label htmlFor="tone_of_voice" className="font-semibold">What is your brand&apos;s tone of voice?</label>
-            <select name="tone_of_voice" id="tone_of_voice" className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md">
-              <option value="formal">Formal</option>
-              <option value="informal">Informal</option>
-              <option value="friendly">Friendly</option>
-              <option value="professional">Professional</option>
-              <option value="humorous">Humorous</option>
-            </select>
-          </div>
-          <div className="grid gap-2">
-            <label htmlFor="products_services" className="font-semibold">What are your key products or services?</label>
-            <textarea name="products_services" id="products_services" className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
-          </div>
-          <div className="grid gap-2">
-            <label htmlFor="competitors" className="font-semibold">Who are your main competitors?</label>
-            <textarea name="competitors" id="competitors" className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
-          </div>
-          <div className="grid gap-2">
-            <label htmlFor="unique_selling_proposition" className="font-semibold">What makes your brand unique?</label>
-            <textarea name="unique_selling_proposition" id="unique_selling_proposition" className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
-          </div>
-          <div className="grid gap-2">
-            <label htmlFor="content_goals" className="font-semibold">What are your content goals?</label>
-            <textarea name="content_goals" id="content_goals" className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
-          </div>
+          <DynamicForm templateName={templateName} />
           <button type="submit" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700" disabled={loading}>
             {loading ? "Generating..." : "Generate Content Plan"}
           </button>
@@ -184,14 +187,6 @@ export default function ContentPlannerPage() {
             >
               {isAdding ? "Adding..." : `Add ${selectedPosts.length} Post(s) to Library`}
             </button>
-          </div>
-        )}
-        {prompt && !loading && posts.length === 0 && (
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold">Generated JSON Prompt:</h3>
-            <pre className="p-4 mt-2 bg-gray-100 rounded-md">
-              {JSON.stringify(prompt, null, 2)}
-            </pre>
           </div>
         )}
       </div>

@@ -230,40 +230,12 @@ Rules:
 Return a single, concise prompt string for a video generation model.`;
 }
 
-export function buildContentPlannerPrompt(formData: any) {
-  const { mission_vision, target_audience, core_values, tone_of_voice, products_services, competitors, unique_selling_proposition, content_goals } = formData;
+import * as templatePrompts from './template-prompts';
 
-  return `You are a world-class brand strategist and social media expert.
-Your task is to create a 5-day social media content plan based on the user's brand information.
-
-The goal is to build the business/brand into a trusted, likeable, authority, and relatable brand by creating 5 high-quality, distinct social media posts.
-
-**Brand Information:**
-- **Mission and Vision:** ${mission_vision}
-- **Target Audience:** ${target_audience}
-- **Core Values:** ${core_values}
-- **Tone of Voice:** ${tone_of_voice}
-- **Key Products/Services:** ${products_services}
-- **Main Competitors:** ${competitors}
-- **Unique Selling Proposition:** ${unique_selling_proposition}
-- **Content Goals:** ${content_goals}
-
-**Instructions for each post:**
-- **Hook:** Start with a relatable question, surprising stat, or bold statement.
-- **Key Insight/Message:** Deliver core value.
-- **Example/Analogy:** Use a real-world business example or relatable analogy.
-- **Call-to-Action (CTA):** Use a non-salesy prompt to spark engagement (e.g., “Would you try this?”, “What’s your take?”).
-- **Hashtags:** Include 3–5 relevant hashtags for reach.
-- **Image Prompt:** Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
-
-**General Rules:**
-- Each post must be unique and non-repetitive.
-- The posts should be natural-sounding and not salesy.
-- Avoid jargon; focus on ROI, efficiency, creativity, and human connection.
-- Do not include links.
-
-**Output:**
-Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
-Ensure JSON is syntactically correct with no trailing commas.`;
+export function buildPromptFromTemplate(templateName: string, variables: any) {
+  const promptBuilder = (templatePrompts as any)[`build${templateName}Prompt`];
+  if (promptBuilder) {
+    return promptBuilder(variables);
+  }
+  throw new Error(`Prompt template not found: ${templateName}`);
 }
