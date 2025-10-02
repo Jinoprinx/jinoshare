@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import TemplateCard from '@components/TemplateCard';
-import { templates } from '../../data/templates';
+import { templates } from '../../../data/templates';
 
 const TemplatesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
