@@ -4,11 +4,12 @@ import { Editor } from "@components/editor";
 import { Channels } from "@components/channels";
 import { ContentList } from "@components/list";
 import { Calendar } from "@components/calendar";
-import { toast, Toasts } from "@components/toast";
+import { toast } from "react-hot-toast";
 
 import { ISharedPost, Channel, IConnection } from "@jino/common";
 //look into reusing using this AIPage
 import AIPage from "./ai/page";
+import TemplatesPage from "./templates/page";
 import {
   PlusIcon,
   CalendarIcon,
@@ -146,6 +147,27 @@ function Dashboard() {
     }
     if (showed) window.history.replaceState({}, "", url.toString());
   }, [update]);
+
+  useEffect(() => {
+    const draftPosts = posts.filter((p) => p.status === 'draft').length;
+    if (draftPosts > 5) {
+      toast('You have over 5 unattended posts in your library');
+    }
+  }, [posts]);
+
+  useEffect(() => {
+    const prevPosts = prevPostsRef.current;
+    const newlyPublishedPosts = posts.filter((post) => {
+      const prevPost = prevPosts.find((p) => p._id === post._id);
+      return prevPost && prevPost.status !== 'published' && post.status === 'published';
+    });
+
+    newlyPublishedPosts.forEach(() => {
+      toast.success('Your post has been published!');
+    });
+
+    prevPostsRef.current = posts;
+  }, [posts]);
 
   async function saveDraft() {
     setLoading(true);
@@ -359,6 +381,7 @@ function Dashboard() {
   }
 
   const [showAiDropdown, setShowAiDropdown] = useState(false);
+  const [showConnectDropdown, setShowConnectDropdown] = useState(false);
 
   const tabs = useMemo(
     () =>
@@ -367,6 +390,7 @@ function Dashboard() {
 
         { key: "calendar", label: "Calendar", icon: CalendarIcon },
         { key: "library", label: "Library", icon: SparklesIcon },
+        { key: "templates", label: "Templates", icon: LayoutGridIcon },
         { 
           key: "ai", 
           label: "AI", 
@@ -389,18 +413,23 @@ function Dashboard() {
   );
 
   const aiDropdownRef = useRef<HTMLDivElement>(null);
+  const connectDropdownRef = useRef<HTMLDivElement>(null);
+  const prevPostsRef = useRef<ISharedPost[]>([]);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (aiDropdownRef.current && !aiDropdownRef.current.contains(event.target as Node)) {
         setShowAiDropdown(false);
       }
+      if (connectDropdownRef.current && !connectDropdownRef.current.contains(event.target as Node)) {
+        setShowConnectDropdown(false);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [aiDropdownRef]);
+  }, [aiDropdownRef, connectDropdownRef]);
 
   if (status === "loading") {
     return <div>Loading...</div>;
@@ -409,7 +438,7 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="homepage-gradient" />
-      <Toasts />
+      
       
 
       <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-white/10 bg-black/50 px-4 backdrop-blur-sm sm:px-6 lg:px-8">
@@ -449,8 +478,41 @@ function Dashboard() {
         <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <h1 className="font-display text-3xl font-bold">Dashboard</h1>
           <div className="flex items-center gap-2">
-            
-            
+            <div className="relative" ref={connectDropdownRef}>
+              <button
+                onClick={() => setShowConnectDropdown(!showConnectDropdown)}
+                className="flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10"
+              >
+                Connect Accounts
+                <ChevronDownIcon className="h-4 w-4" />
+              </button>
+              {showConnectDropdown && (
+                <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-black/80 ring-1 ring-white/10 focus:outline-none z-20">
+                  <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                    {PROVIDERS.map((p) => {
+                      const isConnected = connections?.some((c) => c.provider === p.id);
+                      return isConnected ? (
+                        <button
+                          key={p.id}
+                          className="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white"
+                          onClick={() => disconnect(p.id)}
+                        >
+                          Disconnect {p.label}
+                        </button>
+                      ) : (
+                        <button
+                          key={p.id}
+                          className="w-full text-left block px-4 py-2 text-sm text-gray-300 hover:bg-white/10 hover:text-white"
+                          onClick={() => connect(p.id)}
+                        >
+                          Connect {p.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -580,31 +642,7 @@ function Dashboard() {
             </div>
 
             <div className="space-y-6">
-              <div className="rounded-lg border border-white/10 bg-black/20 p-4">
-                <h3 className="font-semibold">Connect Accounts</h3>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {PROVIDERS.map((p) => {
-                    const isConnected = connections?.some((c) => c.provider === p.id);
-                    return isConnected ? (
-                      <button
-                        key={p.id}
-                        className="flex-1 rounded-md border border-transparent bg-blue-600 px-3 py-2 text-sm text-white hover:bg-blue-700"
-                        onClick={() => disconnect(p.id)}
-                      >
-                        Disconnect {p.label}
-                      </button>
-                    ) : (
-                      <button
-                        key={p.id}
-                        className="flex-1 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm hover:bg-white/10"
-                        onClick={() => connect(p.id)}
-                      >
-                        Connect {p.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+              
               <div className="rounded-lg border border-white/10 bg-black/20 p-4">
                 <h3 className="font-semibold">Tips</h3>
                 <ul className="mt-2 list-disc space-y-2 pl-5 text-sm text-gray-400">
@@ -629,6 +667,8 @@ function Dashboard() {
             onEdit={handleEditPost}
           />
         )}
+
+        {tab === "templates" && <TemplatesPage />}
 
         
 

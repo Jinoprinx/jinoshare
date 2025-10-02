@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import './../styles/globals.css';
 import AuthProvider from "@components/AuthProvider";
 
@@ -27,6 +28,7 @@ export default function RootLayout({
         {/* Existing Glow Light */}
         <div className="glow-light"></div>
 
+                <Toaster />
         {children}
         </AuthProvider>
       </body>
