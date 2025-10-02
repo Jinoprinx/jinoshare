@@ -140,9 +140,16 @@ export default function PlannerPageClient() {
         <p className="text-gray-400 mb-4">
           Answer the following questions to generate a personalized content plan.
         </p>
+        {!templateName && (
+          <div className="mb-4 p-4 bg-yellow-900/30 border border-yellow-600/50 rounded-md">
+            <p className="text-yellow-400">
+              Please select a template first. Go back to the templates page and choose a template to continue.
+            </p>
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="grid gap-4">
           <DynamicForm templateName={templateName} />
-          <button type="submit" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700" disabled={loading}>
+          <button type="submit" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700" disabled={loading || !templateName}>
             {loading ? "Generating..." : "Generate Content Plan"}
           </button>
         </form>
