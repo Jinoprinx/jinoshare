@@ -2,6 +2,8 @@
 import { useState, useMemo } from "react";
 import { useSearchParams } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 const DynamicForm = ({ templateName }: { templateName: string }) => {
   const commonFields = [
     { name: 'mission_vision', label: 'What is your brand\'s mission and vision?', type: 'textarea' },
