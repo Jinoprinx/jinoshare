@@ -39,7 +39,7 @@ const DynamicForm = ({ templateName }: { templateName: string }) => {
             <textarea name={field.name} id={field.name} className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
           ) : field.type === 'select' ? (
             <select name={field.name} id={field.name} className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md">
-              {field.options?.map((option) => (
+              {field.options?.map((option: string) => (
                 <option key={option} value={option}>{option.charAt(0).toUpperCase() + option.slice(1)}</option>
               ))}
             </select>
