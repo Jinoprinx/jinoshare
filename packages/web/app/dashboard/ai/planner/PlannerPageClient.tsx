@@ -54,7 +54,8 @@ const DynamicForm = ({ templateName }: { templateName: string }) => {
 
 export default function PlannerPageClient() {
   const searchParams = useSearchParams();
-  const templateName = searchParams.get('template') || '';
+  // Default to "Generic" template if no template is specified
+  const templateName = searchParams.get('template') || 'Generic';
 
   const [posts, setPosts] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -144,16 +145,16 @@ export default function PlannerPageClient() {
         <p className="text-gray-400 mb-4">
           Answer the following questions to generate a personalized content plan.
         </p>
-        {!templateName && (
-          <div className="mb-4 p-4 bg-yellow-900/30 border border-yellow-600/50 rounded-md">
-            <p className="text-yellow-400">
-              Please select a template first. Go back to the templates page and choose a template to continue.
+        {templateName && templateName !== 'Generic' && (
+          <div className="mb-4 p-4 bg-blue-900/30 border border-blue-600/50 rounded-md">
+            <p className="text-blue-400">
+              Using template: <span className="font-semibold">{templateName}</span>
             </p>
           </div>
         )}
         <form onSubmit={handleSubmit} className="grid gap-4">
           <DynamicForm templateName={templateName} />
-          <button type="submit" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700" disabled={loading || !templateName}>
+          <button type="submit" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700" disabled={loading}>
             {loading ? "Generating..." : "Generate Content Plan"}
           </button>
         </form>

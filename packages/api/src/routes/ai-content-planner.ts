@@ -7,16 +7,19 @@ export const aiContentPlannerRouter = Router();
 aiContentPlannerRouter.post("/", async (req, res) => {
   try {
     const { templateName, variables } = req.body || {};
-    if (!templateName || !variables) {
-      console.error("Missing required fields:", { templateName, variables });
+
+    // Default to "Generic" template if no templateName is provided
+    const template = templateName || "Generic";
+
+    if (!variables) {
+      console.error("Missing variables:", { variables });
       return res.status(400).json({
         ok: false,
-        error: "templateName and variables are required",
-        details: { hasTemplateName: !!templateName, hasVariables: !!variables }
+        error: "variables are required"
       });
     }
 
-    const prompt = buildPromptFromTemplate(templateName, variables);
+    const prompt = buildPromptFromTemplate(template, variables);
 
     const raw = await aiGenerate(prompt, { maxTokens: 2000 });
     let posts: string[];
