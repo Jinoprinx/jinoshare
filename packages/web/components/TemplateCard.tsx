@@ -25,7 +25,7 @@ const TemplateCard: React.FC<TemplateCardProps> = ({ title, category, content, t
       </div>
       <p className="text-sm text-neutral-300 mb-8">{content}</p>
       <Link href={`/dashboard/ai/planner?template=${templateName}`}>
-        <a className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-white/10 hover:border-white/20 transition-all duration-200">
+        <a className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-black hover:bg-white/90 transition-all duration-200 shadow-lg shadow-white/20">
           Use Template
         </a>
       </Link>
