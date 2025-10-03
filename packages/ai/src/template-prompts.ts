@@ -331,3 +331,60 @@ Return a valid JSON array of 5 strings. Each string should be a complete social 
 Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
+export const buildAIAcceleratredFounderPrompt = (variables: any) => {
+  const {niche, target_audience, ai_integration, tone_of_voice, offer_type } = variables;
+
+  return `
+Your task is to create a 5-day compelling, scroll-stopping social media content in the voice of a battle-tested founder who has scaled a business to 7–9 figures.
+
+**Brand Information:**
+**Niche:** ${niche} [Insert niche, e.g., fitness coaching, e-commerce, real estate wholesaling, SaaS for dentists, freelance copywriting]
+**Core Contrarian Truth:** [Insert a blunt, counterintuitive insight that flips common belief in this ${niche}]
+**Framework Name:** [Give your system a punchy name, e.g., The $10K Client Filter, The 3-Day Offer Test, The 5-Seller Sprint]
+**Target Audience:** ${target_audience} [Be hyper-specific: e.g., newly licensed real estate agents in Texas with <6 months experience, freelance designers tired of scope creep, e-commerce founders stuck at $20K/month]
+**AI Integration (Optional):** ${ai_integration} [Briefly describe how AI accelerates results in this niche—e.g., AI scrapes client pain points from Reddit, AI writes 30 cold DMs in 2 minutes, AI analyzes property comps instantly]
+**Offer Type:** ${offer_type} [Choose: free masterclass / private workshop / replay to get access]
+**Offer Hook:** [What they’ll learn/do—e.g., launch your first offer in 72 hours, find 10 dream clients without cold outreach, validate your idea before spending a dime]
+
+Use this exact structure:
+
+1. OPEN WITH A CONTRARIAN, BRUTAL TRUTH OR PERSONAL FAILURE
+Start with one short, hard-hitting sentence that exposes a painful reality or debunks a myth in [Niche]. Make it feel earned—not theoretical.
+
+2. INTRODUCE A SIMPLE, ACTIONABLE FRAMEWORK OR TEST
+Present [Framework Name]—a 3–5 step system that turns confusion into clarity. For each step:
+
+Replace vague language with hyper-specific examples (e.g., not “clients” → “e-commerce founders running Shopify stores with 2–5 SKUs and 30% cart abandonment”)
+Include real math or metrics (e.g., “5 DMs × 20% reply × 2 calls = 1 client”)
+3. CONTRAST “MOST PEOPLE” VS. “WINNERS”
+Use sharp comparisons:
+
+“Most ${target_audience}… / Winners…”
+“Then vs. Now” (especially if AI changes the game)
+Emphasize speed, specificity, or systems as the differentiator.
+4. INTEGRATE AI AS A FORCE MULTIPLIER (if applicable)
+Show how ${ai_integration} compresses months of work into hours. Use concrete verbs: scrape, generate, analyze, draft, validate.
+
+5. CLOSE WITH A HIGH-VALUE, LOW-FRICTION OFFER
+End with:
+
+A free but exclusive-feeling ${offer_type} for ${target_audience}
+Clear outcome: “You’ll learn how to [Offer Hook]”
+Reassurance: “No experience required” or “Even if you’ve never…”
+CTA: “👉 Grab your spot, drop a comment here: ”
+Tone Rules: 
+Use ${tone_of_voice}.
+Confident. Direct. Slightly provocative.
+Short sentences. Fragments for rhythm.
+Zero fluff. No “tips” or “hacks.”
+Anchor credibility in real results (e.g., “scaled to $X,” “helped X clients,” “built X in Y time”)
+Speak to doers, not dreamers.
+✅ Example Usage (Filled-In)
+Niche: Online course creators
+Core Contrarian Truth: “If you haven’t sold 10 copies before you finish your course, you’re building a museum—not a business.”
+Framework Name: The Pre-Sell Validation Loop
+Target Audience: Coaches and consultants who’ve spent 3+ months building a course no one’s bought
+AI Integration: AI analyzes past student feedback to draft your offer, email sequence, and sales page in one afternoon
+Offer Type: free masterclass
+Offer Hook: validate demand and sell your first 10 spots before recording a single lesson `
+}
