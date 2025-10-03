@@ -7,7 +7,7 @@ export const templates = [
   },
   {
     title: 'AI_Acceleratred Founder Post',
-    category: ['free','launch'],
+    category: 'free',
     templateName: 'AIAcceleratred Founder Post',
     content: 'If you can’t find 10 motivated sellers in 72 hours,\n\n you don’t have a real estate business.\n\nYou have a spreadsheet full of hope and a Zillow addiction. \n\nHere’s the $100K Seller Validation Test that separates investors from dreamers: - \n\n#mondaymotivation #inspiration #quotes #success',
   },
@@ -31,7 +31,7 @@ export const templates = [
   },
   {
     title: 'Promo Offer',
-    category: ['promos','free'],
+    category: 'promos',
     templateName: 'PromoOffer',
     content: '🔥 Flash Sale! 🔥\n\nGet 50% off all our products for the next 24 hours!\n\nDon\'t miss out on this amazing deal!\n\n#promo #sale #discount #limitedtimeoffer',
   },
