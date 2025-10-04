@@ -1,4 +1,20 @@
-const TemplateInfo = ({ templateName, commonFields, templateFields }) => {
+
+export interface Field {
+  name: string;
+  label: string;
+  type: string;
+  multiple?: boolean;
+  options?: string[];
+  example?: string;
+}
+
+interface TemplateInfoProps {
+  templateName: string;
+  commonFields: Field[];
+  templateFields: { [key: string]: Field[] };
+}
+
+export const TemplateInfo = ({ templateName, commonFields, templateFields }: TemplateInfoProps) => {
   const fields = [...commonFields, ...(templateFields[templateName] || [])];
 
   return (

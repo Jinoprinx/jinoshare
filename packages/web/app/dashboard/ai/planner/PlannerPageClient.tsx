@@ -1,8 +1,18 @@
+'use client'
 import { useState, useMemo } from "react";
 import { useSearchParams } from 'next/navigation';
-import TemplateInfo from "./TemplateInfo";
+import {TemplateInfo} from "./TemplateInfo";
 
-const DynamicForm = ({ fields }) => {
+interface Field {
+  name: string;
+  label: string;
+  type: string;
+  multiple?: boolean;
+  options?: string[];
+  example?: string;
+}
+
+const DynamicForm = ({ fields }: { fields: Field[] }) => {
   return (
     <>
       {fields.map((field) => (
@@ -36,13 +46,13 @@ export default function PlannerPageClient() {
   const [isAdding, setIsAdding] = useState(false);
   const [error, setError] = useState<string>('');
 
-  const commonFields = [
+  const commonFields = useMemo(() => [
     { name: 'niche', label: 'What is your niche?', type: 'textarea', example: 'fitness coaching, e-commerce, real estate wholesaling, SaaS for dentists, freelance copywriting' },
     { name: 'target_audience', label: 'Who is your target audience?', type: 'textarea', example: 'newly licensed real estate agents in Texas with 6 months experience, freelance designers tired of scope creep, e-commerce founders stuck at $20K/month' },
     { name: 'tone_of_voice', label: 'What is your brand\'s tone of voice?', type: 'select', multiple: true, options: ['formal', 'informal', 'friendly', 'professional', 'humorous'] },
-  ];
+  ], []);
 
-  const templateFields: { [key: string]: any[] } = {
+  const templateFields: { [key: string]: any[] } = useMemo(() => ({
     FreebieAlert: [
       { name: 'productName', label: 'Product Name', type: 'text', example: 'The Ultimate Guide to...' },
       { name: 'benefit', label: 'Benefit', type: 'textarea', example: 'Get more clients, save time, ...' },
@@ -74,7 +84,7 @@ export default function PlannerPageClient() {
     MondayMotivation: [
       { name: 'motivationTheme', label: 'Motivation Theme (e.g., perseverance, growth)', type: 'text', example: 'perseverance' },
     ],
-  };
+  }), []);
 
   const fields = useMemo(() => {
     return [...commonFields, ...(templateFields[templateName] || [])];
