@@ -233,6 +233,7 @@ Return a single, concise prompt string for a video generation model.`;
 import * as templatePrompts from './template-prompts';
 
 export function buildPromptFromTemplate(templateName: string, variables: any) {
+  console.log("templateName", templateName);
   const builderName = `build${templateName.replace(/\s/g, "")}Prompt`;
   const promptBuilder = (templatePrompts as any)[builderName];
   if (promptBuilder) {

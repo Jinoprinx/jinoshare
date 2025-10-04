@@ -6,7 +6,7 @@ export const templates = [
     content: 'Get our new e-book for free! 🎁\n\nLearn how to grow your social media presence with our expert tips and tricks.\n\n#freebie #ebook #socialmedia #growthhacking',
   },
   {
-    title: 'AI_Acceleratred Founder Post',
+    title: 'AI Accelerated Founder Post',
     category: 'free',
     templateName: 'AIAccelerated Founder Post',
     content: 'If you can’t find 10 motivated sellers in 72 hours,\n\n you don’t have a real estate business.\n\nYou have a spreadsheet full of hope and a Zillow addiction. \n\nHere’s the $100K Seller Validation Test that separates investors from dreamers: - \n\n#mondaymotivation #inspiration #quotes #success',
