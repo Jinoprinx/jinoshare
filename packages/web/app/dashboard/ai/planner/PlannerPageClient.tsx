@@ -3,52 +3,47 @@ import { useState, useMemo } from "react";
 import { useSearchParams } from 'next/navigation';
 
 const DynamicForm = ({ templateName }: { templateName: string }) => {
-  const commonFields = [
-    { name: 'mission_vision', label: 'What is your brand\'s mission and vision?', type: 'textarea' },
-    { name: 'target_audience', label: 'Who is your target audience?', type: 'textarea' },
-    { name: 'core_values', label: 'What are your brand\'s core values?', type: 'textarea' },
-    { name: 'tone_of_voice', label: 'What is your brand\'s tone of voice?', type: 'select', options: ['formal', 'informal', 'friendly', 'professional', 'humorous'] },
-    { name: 'products_services', label: 'What are your key products or services?', type: 'textarea' },
-    { name: 'competitors', label: 'Who are your main competitors?', type: 'textarea' },
-    { name: 'unique_selling_proposition', label: 'What makes your brand unique?', type: 'textarea' },
-    { name: 'content_goals', label: 'What are your content goals?', type: 'textarea' },
-  ];
-
-  const templateFields: { [key: string]: any[] } = {
-    FreebieAlert: [
-      { name: 'productName', label: 'Product Name', type: 'text' },
-      { name: 'benefit', label: 'Benefit', type: 'textarea' },
-    ],
-    PaidCourse: [
-      { name: 'courseName', label: 'Course Name', type: 'text' },
-      { name: 'price', label: 'Price', type: 'text' },
-      { name: 'discount', label: 'Discount', type: 'text' },
-    ],
-    QuickTutorial: [
-      { name: 'tutorialTopic', label: 'Tutorial Topic', type: 'text' },
-      { name: 'tutorialDuration', label: 'Duration (e.g., 5 minutes)', type: 'text' },
-      { name: 'keyTakeaways', label: 'Key Takeaways', type: 'textarea' },
-    ],
-    CarouselPost: [
-      { name: 'carouselTopic', label: 'Carousel Topic', type: 'text' },
-      { name: 'numberOfSlides', label: 'Number of Slides', type: 'text' },
-    ],
-    PromoOffer: [
-      { name: 'offerDetails', label: 'Offer Details', type: 'textarea' },
-      { name: 'discountPercentage', label: 'Discount Percentage (e.g., 50%)', type: 'text' },
-      { name: 'expirationDate', label: 'Expiration Date', type: 'text' },
-    ],
-    ProductLaunch: [
-      { name: 'productName', label: 'Product Name', type: 'text' },
-      { name: 'productDescription', label: 'Product Description', type: 'textarea' },
-      { name: 'launchDate', label: 'Launch Date', type: 'text' },
-    ],
-    MondayMotivation: [
-      { name: 'motivationTheme', label: 'Motivation Theme (e.g., perseverance, growth)', type: 'text' },
-    ],
-  };
-
   const fields = useMemo(() => {
+    const commonFields = [
+      { name: 'niche', label: 'What is your niche?', type: 'textarea' },
+      { name: 'target_audience', label: 'Who is your target audience?', type: 'textarea' },
+      { name: 'tone_of_voice', label: 'What is your brand\'s tone of voice?', type: 'select', multiple: true, options: ['formal', 'informal', 'friendly', 'professional', 'humorous'] },
+    ];
+
+    const templateFields: { [key: string]: any[] } = {
+      FreebieAlert: [
+        { name: 'productName', label: 'Product Name', type: 'text' },
+        { name: 'benefit', label: 'Benefit', type: 'textarea' },
+      ],
+      PaidCourse: [
+        { name: 'courseName', label: 'Course Name', type: 'text' },
+        { name: 'price', label: 'Price', type: 'text' },
+        { name: 'discount', label: 'Discount', type: 'text' },
+      ],
+      QuickTutorial: [
+        { name: 'tutorialTopic', label: 'Tutorial Topic', type: 'text' },
+        { name: 'tutorialDuration', label: 'Duration (e.g., 5 minutes)', type: 'text' },
+        { name: 'keyTakeaways', label: 'Key Takeaways', type: 'textarea' },
+      ],
+      CarouselPost: [
+        { name: 'carouselTopic', label: 'Carousel Topic', type: 'text' },
+        { name: 'numberOfSlides', label: 'Number of Slides', type: 'text' },
+      ],
+      PromoOffer: [
+        { name: 'offerDetails', label: 'Offer Details', type: 'textarea' },
+        { name: 'discountPercentage', label: 'Discount Percentage (e.g., 50%)', type: 'text' },
+        { name: 'expirationDate', label: 'Expiration Date', type: 'text' },
+      ],
+      ProductLaunch: [
+        { name: 'productName', label: 'Product Name', type: 'text' },
+        { name: 'productDescription', label: 'Product Description', type: 'textarea' },
+        { name: 'launchDate', label: 'Launch Date', type: 'text' },
+      ],
+      MondayMotivation: [
+        { name: 'motivationTheme', label: 'Motivation Theme (e.g., perseverance, growth)', type: 'text' },
+      ],
+    };
+
     return [...commonFields, ...(templateFields[templateName] || [])];
   }, [templateName]);
 
@@ -60,7 +55,7 @@ const DynamicForm = ({ templateName }: { templateName: string }) => {
           {field.type === 'textarea' ? (
             <textarea name={field.name} id={field.name} className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
           ) : field.type === 'select' ? (
-            <select name={field.name} id={field.name} className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md">
+            <select name={field.name} id={field.name} multiple={field.multiple} className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md">
               {field.options?.map((option: string) => (
                 <option key={option} value={option}>{option.charAt(0).toUpperCase() + option.slice(1)}</option>
               ))}
@@ -92,6 +87,10 @@ export default function PlannerPageClient() {
     setError('');
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
+    const toneOfVoice = formData.getAll('tone_of_voice');
+    if (toneOfVoice) {
+      data.tone_of_voice = toneOfVoice.join(', ');
+    }
 
     try {
       const response = await fetch("/api/ai/content-planner/", {
