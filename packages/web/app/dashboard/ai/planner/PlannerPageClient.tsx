@@ -1,52 +1,8 @@
-"use client";
 import { useState, useMemo } from "react";
 import { useSearchParams } from 'next/navigation';
+import TemplateInfo from "./TemplateInfo";
 
-const DynamicForm = ({ templateName }: { templateName: string }) => {
-  const fields = useMemo(() => {
-    const commonFields = [
-      { name: 'niche', label: 'What is your niche?', type: 'textarea' },
-      { name: 'target_audience', label: 'Who is your target audience?', type: 'textarea' },
-      { name: 'tone_of_voice', label: 'What is your brand\'s tone of voice?', type: 'select', multiple: true, options: ['formal', 'informal', 'friendly', 'professional', 'humorous'] },
-    ];
-
-    const templateFields: { [key: string]: any[] } = {
-      FreebieAlert: [
-        { name: 'productName', label: 'Product Name', type: 'text' },
-        { name: 'benefit', label: 'Benefit', type: 'textarea' },
-      ],
-      PaidCourse: [
-        { name: 'courseName', label: 'Course Name', type: 'text' },
-        { name: 'price', label: 'Price', type: 'text' },
-        { name: 'discount', label: 'Discount', type: 'text' },
-      ],
-      QuickTutorial: [
-        { name: 'tutorialTopic', label: 'Tutorial Topic', type: 'text' },
-        { name: 'tutorialDuration', label: 'Duration (e.g., 5 minutes)', type: 'text' },
-        { name: 'keyTakeaways', label: 'Key Takeaways', type: 'textarea' },
-      ],
-      CarouselPost: [
-        { name: 'carouselTopic', label: 'Carousel Topic', type: 'text' },
-        { name: 'numberOfSlides', label: 'Number of Slides', type: 'text' },
-      ],
-      PromoOffer: [
-        { name: 'offerDetails', label: 'Offer Details', type: 'textarea' },
-        { name: 'discountPercentage', label: 'Discount Percentage (e.g., 50%)', type: 'text' },
-        { name: 'expirationDate', label: 'Expiration Date', type: 'text' },
-      ],
-      ProductLaunch: [
-        { name: 'productName', label: 'Product Name', type: 'text' },
-        { name: 'productDescription', label: 'Product Description', type: 'textarea' },
-        { name: 'launchDate', label: 'Launch Date', type: 'text' },
-      ],
-      MondayMotivation: [
-        { name: 'motivationTheme', label: 'Motivation Theme (e.g., perseverance, growth)', type: 'text' },
-      ],
-    };
-
-    return [...commonFields, ...(templateFields[templateName] || [])];
-  }, [templateName]);
-
+const DynamicForm = ({ fields }) => {
   return (
     <>
       {fields.map((field) => (
@@ -79,6 +35,50 @@ export default function PlannerPageClient() {
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [error, setError] = useState<string>('');
+
+  const commonFields = [
+    { name: 'niche', label: 'What is your niche?', type: 'textarea', example: 'fitness coaching, e-commerce, real estate wholesaling, SaaS for dentists, freelance copywriting' },
+    { name: 'target_audience', label: 'Who is your target audience?', type: 'textarea', example: 'newly licensed real estate agents in Texas with 6 months experience, freelance designers tired of scope creep, e-commerce founders stuck at $20K/month' },
+    { name: 'tone_of_voice', label: 'What is your brand\'s tone of voice?', type: 'select', multiple: true, options: ['formal', 'informal', 'friendly', 'professional', 'humorous'] },
+  ];
+
+  const templateFields: { [key: string]: any[] } = {
+    FreebieAlert: [
+      { name: 'productName', label: 'Product Name', type: 'text', example: 'The Ultimate Guide to...' },
+      { name: 'benefit', label: 'Benefit', type: 'textarea', example: 'Get more clients, save time, ...' },
+    ],
+    PaidCourse: [
+      { name: 'courseName', label: 'Course Name', type: 'text', example: 'The 90-Day...' },
+      { name: 'price', label: 'Price', type: 'text', example: '$997' },
+      { name: 'discount', label: 'Discount', type: 'text', example: '50% off' },
+    ],
+    QuickTutorial: [
+      { name: 'tutorialTopic', label: 'Tutorial Topic', type: 'text', example: 'How to...' },
+      { name: 'tutorialDuration', label: 'Duration (e.g., 5 minutes)', type: 'text', example: '5 minutes' },
+      { name: 'keyTakeaways', label: 'Key Takeaways', type: 'textarea', example: '1. ..., 2. ..., 3. ...' },
+    ],
+    CarouselPost: [
+      { name: 'carouselTopic', label: 'Carousel Topic', type: 'text', example: '5 mistakes...' },
+      { name: 'numberOfSlides', label: 'Number of Slides', type: 'text', example: '5' },
+    ],
+    PromoOffer: [
+      { name: 'offerDetails', label: 'Offer Details', type: 'textarea', example: 'Get 50% off...' },
+      { name: 'discountPercentage', label: 'Discount Percentage (e.g., 50%)', type: 'text', example: '50%' },
+      { name: 'expirationDate', label: 'Expiration Date', type: 'text', example: 'Tomorrow' },
+    ],
+    ProductLaunch: [
+      { name: 'productName', label: 'Product Name', type: 'text', example: 'My new product' },
+      { name: 'productDescription', label: 'Product Description', type: 'textarea', example: 'This product will help you...' },
+      { name: 'launchDate', label: 'Launch Date', type: 'text', example: 'Next week' },
+    ],
+    MondayMotivation: [
+      { name: 'motivationTheme', label: 'Motivation Theme (e.g., perseverance, growth)', type: 'text', example: 'perseverance' },
+    ],
+  };
+
+  const fields = useMemo(() => {
+    return [...commonFields, ...(templateFields[templateName] || [])];
+  }, [templateName, commonFields, templateFields]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -167,14 +167,14 @@ export default function PlannerPageClient() {
           Answer the following questions to generate a personalized content plan.
         </p>
         {templateName && templateName !== 'Generic' && (
-          <div className="mb-4 p-4 bg-blue-900/30 border border-blue-600/50 rounded-md">
-            <p className="text-blue-400">
-              Using template: <span className="font-semibold">{templateName}</span>
-            </p>
-          </div>
+          <TemplateInfo
+            templateName={templateName}
+            commonFields={commonFields}
+            templateFields={templateFields}
+          />
         )}
         <form onSubmit={handleSubmit} className="grid gap-4">
-          <DynamicForm templateName={templateName} />
+          <DynamicForm fields={fields} />
           <button type="submit" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700" disabled={loading}>
             {loading ? "Generating..." : "Generate Content Plan"}
           </button>

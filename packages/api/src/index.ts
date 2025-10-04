@@ -26,6 +26,7 @@ import { scheduledPost } from "./routes/scheduled-post";
 import { userRoutes } from "./routes/user";
 import { worker } from "./routes/worker";
 import { connections } from "./routes/connections";
+import publishLogRouter from "./routes/publish-log";
 
 import { protect, protectBearer } from "./middleware/auth";
 import { User } from "./models/User";
@@ -108,6 +109,7 @@ async function main() {
     app.use("/api/post", protect, post);
   app.use("/api/upload", protect, uploadRouter);
   app.use("/api/media-storage", protect, mediaStorageRouter);
+  app.use("/api/publish-logs", protect, publishLogRouter);
 
   // Global error handler
   app.use((err: any, req: any, res: any, next: any) => {

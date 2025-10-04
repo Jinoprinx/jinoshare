@@ -9,7 +9,8 @@ export function Navbar() {
 
   const nav = [
     { href: "/", label: "Home" },
-    { href: "/dashboard", label: "Dashboard" }
+    { href: "/dashboard", label: "Dashboard" },
+    { href: "/dashboard/logs", label: "Logs" }
   ];
 
   return (
