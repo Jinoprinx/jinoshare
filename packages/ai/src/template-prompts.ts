@@ -331,7 +331,7 @@ Return a valid JSON array of 5 strings. Each string should be a complete social 
 Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
-export const buildAIAcceleratredFounderPrompt = (variables: any) => {
+export const buildAIAcceleratedFounderPostPrompt = (variables: any) => {
   const {niche, target_audience, ai_integration, tone_of_voice, offer_type } = variables;
 
   return `

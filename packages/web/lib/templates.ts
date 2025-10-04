@@ -8,7 +8,7 @@ export const templates = [
   {
     title: 'AI_Acceleratred Founder Post',
     category: 'free',
-    templateName: 'AIAcceleratred Founder Post',
+    templateName: 'AIAccelerated Founder Post',
     content: 'If you can’t find 10 motivated sellers in 72 hours,\n\n you don’t have a real estate business.\n\nYou have a spreadsheet full of hope and a Zillow addiction. \n\nHere’s the $100K Seller Validation Test that separates investors from dreamers: - \n\n#mondaymotivation #inspiration #quotes #success',
   },
   {
