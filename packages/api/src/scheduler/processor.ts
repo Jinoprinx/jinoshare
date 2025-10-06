@@ -29,6 +29,18 @@ export const processPostJob = async (job: Job<PostJobData>) => {
         throw new Error(`No provider found for ${connection.provider}`);
       }
 
+      const connWrapper = {
+        accessToken: connection.accessToken,
+        refreshToken: connection.refreshToken,
+        expiresAt: connection.expiresAt,
+        update: async (tokens: Partial<{ accessToken: string; refreshToken: string; scope: string; expiresAt: Date; }>) => {
+          connection.set(tokens);
+          await connection.save();
+        }
+      };
+
+      const accessToken = await provider.ensureValidAccessToken(connWrapper, post.userId);
+
       if (post.media && post.media.url) {
         if (!provider.postMedia) {
           throw new Error(`Provider ${connection.provider} does not support media posts.`);
@@ -47,10 +59,10 @@ export const processPostJob = async (job: Job<PostJobData>) => {
           originalname: post.media.url.split('/').pop() || 'mediafile'
         };
 
-        await provider.postMedia(connection.accessToken, { file, text: post.content });
+        await provider.postMedia(accessToken, { file, text: post.content });
 
       } else {
-        await provider.postText(connection.accessToken, { text: post.content });
+        await provider.postText(accessToken, { text: post.content });
       }
 
       const log = await new PublishLog({
