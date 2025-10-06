@@ -3,6 +3,9 @@ import { POST_QUEUE_NAME } from './scheduler';
 import { redisConnection } from './scheduler/redis';
 import { processPostJob } from './scheduler/processor';
 import { connectDb } from '../../common/dist/db';
+import '../models/Connection'; // Import for side-effect of model registration
+import '../models/PublishLog'; // Import for side-effect of model registration
+import '../models/Post'; // Import for side-effect of model registration
 
 console.log('Scheduler worker starting...');
 
