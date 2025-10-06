@@ -54,8 +54,9 @@ export const processPostJob = async (job: Job<PostJobData>) => {
       }
 
       const log = await new PublishLog({
-        post: post._id,
-        connection: connection._id,
+        userId: post.userId,
+        provider: connection.provider,
+        content: post.content,
         status: 'success',
       }).save();
       publishLogIds.push(log._id);
@@ -64,10 +65,11 @@ export const processPostJob = async (job: Job<PostJobData>) => {
       console.error('an error occurred and a scheduled post could not be posted');
       console.error(`Failed to publish post ${postId} to ${connection.provider}`, error);
       const log = await new PublishLog({
-        post: post._id,
-        connection: connection._id,
-        status: 'failed',
-        log: error.message,
+        userId: post.userId,
+        provider: connection.provider,
+        content: post.content,
+        status: 'error', // Changed from 'failed'
+        errorMessage: error.message, // Changed from log
       }).save();
       publishLogIds.push(log._id);
     }
