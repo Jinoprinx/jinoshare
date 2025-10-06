@@ -2,8 +2,11 @@ import { Worker } from 'bullmq';
 import { POST_QUEUE_NAME } from './scheduler';
 import { redisConnection } from './scheduler/redis';
 import { processPostJob } from './scheduler/processor';
+import { connectDb } from '../../common/dist/db';
 
 console.log('Scheduler worker starting...');
+
+connectDb();
 
 if (redisConnection) {
   const worker = new Worker(POST_QUEUE_NAME, processPostJob, {
