@@ -107,7 +107,7 @@ async function main() {
   app.use("/api/connections", protect, connections);
   app.use("/api/worker", worker);
     app.use("/api/post", protect, post);
-  app.use("/api/upload", protect, uploadRouter);
+  app.use("/api/upload", protectBearer, uploadRouter);
   app.use("/api/media-storage", protectBearer, mediaStorageRouter);
   app.use("/api/publish-logs", protect, publishLogRouter);
 
