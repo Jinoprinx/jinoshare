@@ -83,6 +83,11 @@ export default function PlannerPageClient() {
     MondayMotivation: [
       { name: 'motivationTheme', label: 'Motivation Theme (e.g., perseverance, growth)', type: 'text', example: 'perseverance' },
     ],
+    AIAcceleratedFounderPost: [
+      { name: 'industry', label: 'Industry', type: 'text', example: 'Real Estate' },
+      { name: 'painPoint', label: 'Pain Point', type: 'textarea', example: 'Finding motivated sellers' },
+      { name: 'solution', label: 'Solution', type: 'textarea', example: 'The $100K Seller Validation Test' },
+    ],
   }), []);
 
   const fields = useMemo(() => {

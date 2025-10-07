@@ -34,7 +34,6 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
 };
 
 export const protectBearer = async (req: Request, res: Response, next: NextFunction) => {
-  console.log('protectBearer middleware called');
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
