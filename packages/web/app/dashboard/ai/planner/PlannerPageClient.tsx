@@ -84,9 +84,7 @@ export default function PlannerPageClient() {
       { name: 'motivationTheme', label: 'Motivation Theme (e.g., perseverance, growth)', type: 'text', example: 'perseverance' },
     ],
     AIAcceleratedFounderPost: [
-      { name: 'industry', label: 'Industry', type: 'text', example: 'Real Estate' },
-      { name: 'painPoint', label: 'Pain Point', type: 'textarea', example: 'Finding motivated sellers' },
-      { name: 'solution', label: 'Solution', type: 'textarea', example: 'The $100K Seller Validation Test' },
+      { name: 'offer_type', label: 'Offer Type', type: 'text', example: 'Choose: free masterclass / private workshop / replay to get access' },
     ],
   }), []);
 
