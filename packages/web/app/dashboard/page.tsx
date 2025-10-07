@@ -270,7 +270,7 @@ function Dashboard() {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await fetch(`/api/media-storage/store`, {
+      const res = await fetch(`/api/media-storage-test/store`, {
         method: "POST",
         headers: { 
           "Authorization": `Bearer ${token}`
