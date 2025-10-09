@@ -41,12 +41,7 @@ export const templates = [
     templateName: 'ProductLaunch',
     content: 'We are excited to announce the launch of our new product! 🎉\n\n[Product Name] is a revolutionary new tool that will change the way you do social media.\n\n#launch #newproduct #socialmedia #innovation',
   },
-  {
-    title: 'Monday Motivation',
-    category: 'motivation',
-    templateName: 'MondayMotivation',
-    content: '"The secret of getting ahead is getting started." - Mark Twain\n\n#mondaymotivation #inspiration #quotes #success',
-  },
+
   {
     title: 'Authority Post',
     category: 'authority',

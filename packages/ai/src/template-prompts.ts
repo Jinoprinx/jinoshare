@@ -1,5 +1,5 @@
 export const buildFreebieAlertPrompt = (variables: any) => {
-  const { mission_vision, target_audience, core_values, tone_of_voice, products_services, competitors, unique_selling_proposition, content_goals, productName, benefit } = variables;
+  const { mission_vision, target_audience, core_values, tone_of_voice, productName, benefit } = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information and the freebie they are offering.
@@ -11,22 +11,17 @@ The goal is to promote the freebie and build the business/brand into a trusted, 
 - **Target Audience:** ${target_audience}
 - **Core Values:** ${core_values}
 - **Tone of Voice:** ${tone_of_voice}
-- **Key Products/Services:** ${products_services}
-- **Main Competitors:** ${competitors}
-- **Unique Selling Proposition:** ${unique_selling_proposition}
-- **Content Goals:** ${content_goals}
 
 **Freebie Information:**
 - **Product Name:** ${productName}
 - **Benefit:** ${benefit}
 
 **Instructions for each post:**
-- **Hook:** Start with a relatable question, surprising stat, or bold statement related to the freebie.
-- **Key Insight/Message:** Deliver core value and connect it to the freebie.
-- **Example/Analogy:** Use a real-world business example or relatable analogy.
-- **Call-to-Action (CTA):** Encourage users to download the freebie.
-- **Hashtags:** Include 3–5 relevant hashtags for reach.
-- **Image Prompt:** Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
+- Start with a relatable question, surprising stat, or bold statement related to the freebie.
+- Deliver core value and connect it to the freebie.
+- Use a real-world business example or relatable analogy.
+- Encourage users to download the freebie.
+- Include 3–5 relevant hashtags for reach.
 
 **General Rules:**
 - Each post must be unique and non-repetitive.
@@ -41,7 +36,7 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
 export const buildPaidCoursePrompt = (variables: any) => {
-  const { mission_vision, target_audience, core_values, tone_of_voice, products_services, competitors, unique_selling_proposition, content_goals, courseName, price, discount } = variables;
+  const { mission_vision, target_audience, tone_of_voice, courseName, price, discount } = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information and the paid course they are offering.
@@ -51,12 +46,7 @@ The goal is to promote the paid course and build the business/brand into a trust
 **Brand Information:**
 - **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
-- **Core Values:** ${core_values}
 - **Tone of Voice:** ${tone_of_voice}
-- **Key Products/Services:** ${products_services}
-- **Main Competitors:** ${competitors}
-- **Unique Selling Proposition:** ${unique_selling_proposition}
-- **Content Goals:** ${content_goals}
 
 **Paid Course Information:**
 - **Course Name:** ${courseName}
@@ -64,12 +54,11 @@ The goal is to promote the paid course and build the business/brand into a trust
 - **Discount:** ${discount}
 
 **Instructions for each post:**
-- **Hook:** Start with a relatable question, surprising stat, or bold statement related to the course.
-- **Key Insight/Message:** Deliver core value and connect it to the course.
-- **Example/Analogy:** Use a real-world business example or relatable analogy.
-- **Call-to-Action (CTA):** Encourage users to enroll in the course.
-- **Hashtags:** Include 3–5 relevant hashtags for reach.
-- **Image Prompt:** Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
+- Start with a relatable question, surprising stat, or bold statement related to the course.
+- Deliver core value and connect it to the course.
+- Use a real-world business example or relatable analogy.
+- Encourage users to enroll in the course.
+- Include 3–5 relevant hashtags for reach.
 
 **General Rules:**
 - Each post must be unique and non-repetitive.
@@ -84,7 +73,7 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
 export const buildGenericPrompt = (variables: any) => {
-  const { mission_vision, target_audience, core_values, tone_of_voice, products_services, competitors, unique_selling_proposition, content_goals } = variables;
+  const { mission_vision, target_audience, tone_of_voice} = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information.
@@ -94,20 +83,15 @@ The goal is to build the business/brand into a trusted, likeable, authority, and
 **Brand Information:**
 - **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
-- **Core Values:** ${core_values}
 - **Tone of Voice:** ${tone_of_voice}
-- **Key Products/Services:** ${products_services}
-- **Main Competitors:** ${competitors}
-- **Unique Selling Proposition:** ${unique_selling_proposition}
-- **Content Goals:** ${content_goals}
 
 **Instructions for each post:**
-- **Hook:** Start with a relatable question, surprising stat, or bold statement that resonates with the target audience.
-- **Key Insight/Message:** Deliver core value that aligns with the brand's mission and values.
-- **Example/Analogy:** Use a real-world business example or relatable analogy.
-- **Call-to-Action (CTA):** Encourage engagement, sharing, or visiting the brand's profile.
-- **Hashtags:** Include 3–5 relevant hashtags for reach.
-- **Image Prompt:** Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
+- Start with a surprising stat, or bold statement that resonates with the target audience.
+- Deliver core value that aligns with the brand's mission and values.
+- Use a real-world business example or relatable analogy.
+- Encourage engagement, sharing, or visiting the brand's profile.
+- Include 3–5 relevant hashtags for reach.
+- Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
 
 **General Rules:**
 - Each post must be unique and non-repetitive.
@@ -122,7 +106,7 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
 export const buildQuickTutorialPrompt = (variables: any) => {
-  const { mission_vision, target_audience, core_values, tone_of_voice, products_services, competitors, unique_selling_proposition, content_goals, tutorialTopic, tutorialDuration, keyTakeaways } = variables;
+  const { mission_vision, target_audience, tone_of_voice, tutorialTopic, tutorialDuration, keyTakeaways } = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information and the tutorial they are creating.
@@ -132,12 +116,7 @@ The goal is to promote the tutorial and build the business/brand into a trusted,
 **Brand Information:**
 - **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
-- **Core Values:** ${core_values}
 - **Tone of Voice:** ${tone_of_voice}
-- **Key Products/Services:** ${products_services}
-- **Main Competitors:** ${competitors}
-- **Unique Selling Proposition:** ${unique_selling_proposition}
-- **Content Goals:** ${content_goals}
 
 **Tutorial Information:**
 - **Tutorial Topic:** ${tutorialTopic}
@@ -145,12 +124,11 @@ The goal is to promote the tutorial and build the business/brand into a trusted,
 - **Key Takeaways:** ${keyTakeaways}
 
 **Instructions for each post:**
-- **Hook:** Start with a relatable question, surprising stat, or bold statement related to the tutorial topic.
-- **Key Insight/Message:** Deliver core value and connect it to the tutorial.
-- **Example/Analogy:** Use a real-world business example or relatable analogy.
-- **Call-to-Action (CTA):** Encourage users to watch/read the tutorial.
-- **Hashtags:** Include 3–5 relevant hashtags for reach.
-- **Image Prompt:** Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
+- Start with a surprising stat, or bold statement related to the tutorial topic.
+- Deliver core value and connect it to the tutorial.
+- Use a real-world business example or relatable analogy.
+- Encourage users to watch/read the tutorial.
+- Include 3–5 relevant hashtags for reach.
 
 **General Rules:**
 - Each post must be unique and non-repetitive.
@@ -165,7 +143,7 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
 export const buildCarouselPostPrompt = (variables: any) => {
-  const { mission_vision, target_audience, core_values, tone_of_voice, products_services, competitors, unique_selling_proposition, content_goals, carouselTopic, numberOfSlides } = variables;
+  const { mission_vision, target_audience, tone_of_voice, carouselTopic, numberOfSlides } = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information and the carousel post they are creating.
@@ -175,24 +153,18 @@ The goal is to promote the carousel content and build the business/brand into a 
 **Brand Information:**
 - **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
-- **Core Values:** ${core_values}
 - **Tone of Voice:** ${tone_of_voice}
-- **Key Products/Services:** ${products_services}
-- **Main Competitors:** ${competitors}
-- **Unique Selling Proposition:** ${unique_selling_proposition}
-- **Content Goals:** ${content_goals}
 
 **Carousel Information:**
 - **Carousel Topic:** ${carouselTopic}
 - **Number of Slides:** ${numberOfSlides}
 
 **Instructions for each post:**
-- **Hook:** Start with a relatable question, surprising stat, or bold statement related to the carousel topic.
-- **Key Insight/Message:** Deliver core value and encourage users to swipe through.
-- **Example/Analogy:** Use a real-world business example or relatable analogy.
-- **Call-to-Action (CTA):** Encourage users to swipe through the carousel.
-- **Hashtags:** Include 3–5 relevant hashtags for reach.
-- **Image Prompt:** Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
+- Start with a relatable question, surprising stat, or bold statement related to the carousel topic.
+- Deliver core value and encourage users to swipe through.
+- Use a real-world business example or relatable analogy.
+- Encourage users to swipe through the carousel.
+- Include 3–5 relevant hashtags for reach.
 
 **General Rules:**
 - Each post must be unique and non-repetitive.
@@ -207,7 +179,7 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
 export const buildPromoOfferPrompt = (variables: any) => {
-  const { mission_vision, target_audience, core_values, tone_of_voice, products_services, competitors, unique_selling_proposition, content_goals, offerDetails, discountPercentage, expirationDate } = variables;
+  const { target_audience, tone_of_voice, offerDetails, discountPercentage, expirationDate } = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information and the promotional offer they are running.
@@ -215,14 +187,8 @@ Your task is to create a 5-day social media content plan based on the user's bra
 The goal is to promote the offer and build the business/brand into a trusted, likeable, authority, and relatable brand.
 
 **Brand Information:**
-- **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
-- **Core Values:** ${core_values}
 - **Tone of Voice:** ${tone_of_voice}
-- **Key Products/Services:** ${products_services}
-- **Main Competitors:** ${competitors}
-- **Unique Selling Proposition:** ${unique_selling_proposition}
-- **Content Goals:** ${content_goals}
 
 **Promotional Offer Information:**
 - **Offer Details:** ${offerDetails}
@@ -230,12 +196,11 @@ The goal is to promote the offer and build the business/brand into a trusted, li
 - **Expiration Date:** ${expirationDate}
 
 **Instructions for each post:**
-- **Hook:** Start with urgency and excitement related to the promotional offer.
-- **Key Insight/Message:** Highlight the value and limited-time nature of the offer.
-- **Example/Analogy:** Use a real-world business example or relatable analogy.
-- **Call-to-Action (CTA):** Encourage users to take advantage of the offer before it expires.
-- **Hashtags:** Include 3–5 relevant hashtags for reach.
-- **Image Prompt:** Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
+- Start with urgency and excitement related to the promotional offer.
+- Highlight the value and limited-time nature of the offer.
+- Use a real-world business example or relatable analogy.
+- Encourage users to take advantage of the offer before it expires.
+- Include 3–5 relevant hashtags for reach.
 
 **General Rules:**
 - Each post must be unique and non-repetitive.
@@ -250,7 +215,7 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
 export const buildProductLaunchPrompt = (variables: any) => {
-  const { mission_vision, target_audience, core_values, tone_of_voice, products_services, competitors, unique_selling_proposition, content_goals, productName, productDescription, launchDate } = variables;
+  const { mission_vision, target_audience, tone_of_voice, productName, productDescription, launchDate } = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information and the product they are launching.
@@ -260,12 +225,7 @@ The goal is to build anticipation for the product launch and position the busine
 **Brand Information:**
 - **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
-- **Core Values:** ${core_values}
 - **Tone of Voice:** ${tone_of_voice}
-- **Key Products/Services:** ${products_services}
-- **Main Competitors:** ${competitors}
-- **Unique Selling Proposition:** ${unique_selling_proposition}
-- **Content Goals:** ${content_goals}
 
 **Product Launch Information:**
 - **Product Name:** ${productName}
@@ -273,12 +233,11 @@ The goal is to build anticipation for the product launch and position the busine
 - **Launch Date:** ${launchDate}
 
 **Instructions for each post:**
-- **Hook:** Start with excitement and anticipation related to the product launch.
-- **Key Insight/Message:** Highlight the innovative features and benefits of the product.
-- **Example/Analogy:** Use a real-world business example or relatable analogy.
-- **Call-to-Action (CTA):** Encourage users to stay tuned for the launch or sign up for updates.
-- **Hashtags:** Include 3–5 relevant hashtags for reach.
-- **Image Prompt:** Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
+- Start with excitement and anticipation related to the product launch.
+- Highlight the innovative features and benefits of the product.
+- Use a real-world business example or relatable analogy.
+- Encourage users to stay tuned for the launch or sign up for updates.
+- Include 3–5 relevant hashtags for reach.
 
 **General Rules:**
 - Each post must be unique and non-repetitive.
@@ -291,51 +250,11 @@ Return a valid JSON array of 5 strings. Each string should be a complete social 
 Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
-
-export const buildMondayMotivationPrompt = (variables: any) => {
-  const { mission_vision, target_audience, core_values, tone_of_voice, products_services, competitors, unique_selling_proposition, content_goals, motivationTheme } = variables;
-
-  return `You are a world-class brand strategist and social media expert.
-Your task is to create a 5-day social media content plan based on the user's brand information with a Monday Motivation theme.
-
-The goal is to inspire and motivate the target audience while building the business/brand into a trusted, likeable, authority, and relatable brand.
-
-**Brand Information:**
-- **Mission and Vision:** ${mission_vision}
-- **Target Audience:** ${target_audience}
-- **Core Values:** ${core_values}
-- **Tone of Voice:** ${tone_of_voice}
-- **Key Products/Services:** ${products_services}
-- **Main Competitors:** ${competitors}
-- **Unique Selling Proposition:** ${unique_selling_proposition}
-- **Content Goals:** ${content_goals}
-
-**Motivation Theme:** ${motivationTheme}
-
-**Instructions for each post:**
-- **Hook:** Start with an inspiring quote, question, or statement related to the motivation theme.
-- **Key Insight/Message:** Deliver motivational value that resonates with the target audience.
-- **Example/Analogy:** Use a real-world success story or relatable analogy.
-- **Call-to-Action (CTA):** Encourage engagement, reflection, or action.
-- **Hashtags:** Include 3–5 relevant hashtags for reach (including #MondayMotivation).
-- **Image Prompt:** Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
-
-**General Rules:**
-- Each post must be unique and non-repetitive.
-- The posts should be uplifting and authentic.
-- Avoid jargon; focus on inspiration, growth, and human connection.
-- Do not include links.
-
-**Output:**
-Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
-Ensure JSON is syntactically correct with no trailing commas.`;
-};
 export const buildAIAcceleratedFounderPostPrompt = (variables: any) => {
   const {niche, target_audience, ai_integration, tone_of_voice, offer_type } = variables;
 
   return `
-Your task is to create a 5-day compelling, scroll-stopping social media content in the voice of a battle-tested founder who has scaled a business to 7–9 figures.
+Your task is to create a compelling, scroll-stopping social media content in the voice of a battle-tested founder who has scaled a business to 7–9 figures.
 
 **Brand Information:**
 **Niche:** ${niche} [Insert niche, e.g., fitness coaching, e-commerce, real estate wholesaling, SaaS for dentists, freelance copywriting]
@@ -350,21 +269,17 @@ Use this exact structure:
 
 1. OPEN WITH A CONTRARIAN, BRUTAL TRUTH OR PERSONAL FAILURE
 Start with one short, hard-hitting sentence that exposes a painful reality or debunks a myth in [Niche]. Make it feel earned—not theoretical.
-
 2. INTRODUCE A SIMPLE, ACTIONABLE FRAMEWORK OR TEST
 Present [Framework Name]—a 3–5 step system that turns confusion into clarity. For each step:
-
 Replace vague language with hyper-specific examples (e.g., not “clients” → “e-commerce founders running Shopify stores with 2–5 SKUs and 30% cart abandonment”)
 Include real math or metrics (e.g., “5 DMs × 20% reply × 2 calls = 1 client”)
 3. CONTRAST “MOST PEOPLE” VS. “WINNERS”
 Use sharp comparisons:
-
 “Most ${target_audience}… / Winners…”
 “Then vs. Now” (especially if AI changes the game)
 Emphasize speed, specificity, or systems as the differentiator.
 4. INTEGRATE AI AS A FORCE MULTIPLIER (if applicable)
 Show how ${ai_integration} compresses months of work into hours. Use concrete verbs: scrape, generate, analyze, draft, validate.
-
 5. CLOSE WITH A HIGH-VALUE, LOW-FRICTION OFFER
 End with:
 
@@ -394,7 +309,7 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`
 };
 export const buildAuthorityPostPrompt = (variables: any) => {
-  const { niche, target_audience, contrarian_truth, tone_of_voice, credibility_anchor } = variables;
+  const { niche, target_audience, tone_of_voice, credibility_anchor, contrarian_truth } = variables;
 
   return `
 Your task is to create a bold, authority-building post that positions the founder as a thought leader in ${niche}.
@@ -402,12 +317,12 @@ Your task is to create a bold, authority-building post that positions the founde
 **Brand Info:**
 - Niche: ${niche}
 - Target Audience: ${target_audience}
-- Contrarian Truth: ${contrarian_truth}
 - Credibility Anchor: ${credibility_anchor} (e.g., "scaled to $5M ARR", "helped 200+ clients")
+- Contrarian Truth: ${contrarian_truth}
 
 Structure:
 1. OPEN with a sharp contrarian statement that challenges common beliefs in ${niche}.
-2. SHARE a personal story or lesson that proves the contrarian truth.
+2. SHARE a personal story or lesson that proves the ${contrarian_truth}.
 3. TEACH one actionable insight that ${target_audience} can apply immediately.
 4. CLOSE with a confident takeaway that reinforces authority.
 
@@ -418,7 +333,7 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildFounderJourneyPostPrompt = (variables: any) => {
-  const { niche, founder_story, milestone, struggle, lesson, tone_of_voice } = variables;
+  const { niche, founder_story, milestone, struggle, tone_of_voice } = variables;
 
   return `
 Create a behind-the-scenes founder story post that feels raw and relatable.
@@ -428,13 +343,12 @@ Create a behind-the-scenes founder story post that feels raw and relatable.
 - Founder Story: ${founder_story}
 - Milestone: ${milestone}
 - Struggle: ${struggle}
-- Lesson Learned: ${lesson}
 
 Structure:
 1. OPEN with a vulnerable or surprising detail from the founder’s journey.
 2. DESCRIBE the ${struggle} in vivid, human terms.
 3. SHARE the turning point that led to ${milestone}.
-4. TEACH the ${lesson} in one or two punchy sentences.
+4. TEACH a practical lesson in one or two punchy sentences.
 5. CLOSE with encouragement for others in ${niche}.
 
 Tone: ${tone_of_voice}. Honest. Relatable. Human.
@@ -472,17 +386,14 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildHowToPostPrompt = (variables: any) => {
-  const { niche, target_audience, framework_name, tone_of_voice } = variables;
+  const { niche, target_audience, tone_of_voice } = variables;
 
   return `
 Write an educational "how-to" post for ${target_audience} in ${niche}.
 
-**Inputs:**
-- Framework Name: ${framework_name}
-
 Structure:
 1. HOOK with a bold promise or myth-busting statement.
-2. INTRODUCE the ${framework_name}.
+2. INTRODUCE a framework [Give your system a punchy name, e.g., The $10K Client Filter, The 3-Day Offer Test, The 5-Seller Sprint]
 3. BREAK IT DOWN in 3–5 clear steps with specific, actionable detail.
 4. CLOSE with encouragement and a CTA to try it today.
 
@@ -494,17 +405,14 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildMythBustingPostPrompt = (variables: any) => {
-  const { niche, myth, truth, tone_of_voice } = variables;
+  const { niche, tone_of_voice } = variables;
 
   return `
 Create a myth-busting post for ${niche}.
 
-**Inputs:**
-- Myth: ${myth}
-- Truth: ${truth}
 
 Structure:
-1. OPEN with the myth stated as if it’s common knowledge.
+1. OPEN with the myth regarding ${niche}, stated as if it’s common knowledge.
 2. FLIP it with the blunt truth.
 3. PROVE it with a practical and relatable example.
 4. CLOSE with a call to think differently.
@@ -541,18 +449,17 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildListiclePostPrompt = (variables: any) => {
-  const { niche, target_audience, list_topic, items, tone_of_voice } = variables;
+  const { niche, target_audience, list_topic, tone_of_voice } = variables;
 
   return `
 Write a listicle-style post for ${target_audience} in ${niche}.
 
 **Inputs:**
 - Topic: ${list_topic}
-- Items: ${items} (3–7 punchy items)
 
 Structure:
 1. HOOK with a bold statement about why ${list_topic} matters.
-2. LIST the ${items}, each with 1–2 sentences of detail.
+2. LIST the 3–7 punchy items, each with 1–2 sentences of detail.
 3. CLOSE with a challenge or CTA to apply one today.
 
 Tone: ${tone_of_voice}. Punchy. Skimmable. Shareable.
@@ -585,14 +492,13 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildMotivationalPostPrompt = (variables: any) => {
-  const { niche, target_audience, struggle, mindset_shift, tone_of_voice } = variables;
+  const { niche, target_audience, struggle, tone_of_voice } = variables;
 
   return `
 Write a motivational mindset post for ${target_audience} in ${niche}.
 
 **Inputs:**
 - Struggle: ${struggle}
-- Mindset Shift: ${mindset_shift}
 
 Structure:
 1. OPEN with a relatable description of ${struggle}.
@@ -608,19 +514,18 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildOfferPostPrompt = (variables: any) => {
-  const { niche, target_audience, offer_type, offer_hook, urgency, tone_of_voice } = variables;
+  const { niche, target_audience, offer_type, tone_of_voice } = variables;
 
   return `
 Write a high-converting offer post for ${target_audience} in ${niche}.
 
 **Inputs:**
 - Offer Type: ${offer_type}
-- Offer Hook: ${offer_hook}
 
 Structure:
 1. HOOK with a painful problem ${target_audience} face.
 2. PRESENT the ${offer_type} as the solution.
-3. PROMISE the ${offer_hook} outcome.
+3. PROMISE the Hook outcome.
 4. ADD urgency.
 5. CLOSE with a clear CTA.
 
@@ -632,20 +537,19 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInFounderStoryPrompt = (vars: any) => {
-  const { niche, milestone, struggle, lesson, tone_of_voice } = vars;
+  const { niche, milestone, struggle, tone_of_voice } = vars;
 
   return `
 Write a LinkedIn post that shares a founder’s journey in ${niche}.
 
 Inputs:
 - Milestone: ${milestone}
-- Struggle: ${struggle}
-- Lesson: ${lesson}
+- Struggle: ${struggle}}
 
 Structure:
 1. OPEN with a vulnerable or surprising detail about ${struggle}.
 2. SHOW the turning point that led to ${milestone}.
-3. TEACH the ${lesson} in one or two punchy sentences.
+3. TEACH a relatable valuable lesson in one or two punchy sentences.
 4. CLOSE with encouragement for peers in ${niche}.
 
 Tone: ${tone_of_voice}. Professional yet human. Relatable but authoritative.
@@ -656,20 +560,18 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInTrendPrompt = (vars: any) => {
-  const { niche, trend, stat, implication, tone_of_voice } = vars;
+  const { niche, trend, implication, tone_of_voice } = vars;
 
   return `
 Write a LinkedIn post analyzing a trend in ${niche}.
 
 Inputs:
 - Trend: ${trend}
-- Stat: ${stat}
-- Implication: ${implication}
 
 Structure:
-1. HOOK with ${stat} that grabs attention.
+1. HOOK with 2 stats that grabs attention.
 2. EXPLAIN what ${trend} means for ${niche}.
-3. SHARE ${implication} in practical terms.
+3. SHARE the implications in practical terms for ${niche}.
 4. CLOSE with a prediction or open-ended question.
 
 Tone: ${tone_of_voice}. Analytical. Forward-looking. Engaging.
@@ -703,7 +605,7 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInCaseStudyPrompt = (vars: any) => {
-  const { client_type, problem, solution, result, credibility_anchor, tone_of_voice } = vars;
+  const { client_type, problem, solution, result, tone_of_voice } = vars;
 
   return `
 Write a LinkedIn case study post.
@@ -713,13 +615,13 @@ Inputs:
 - Problem: ${problem}
 - Solution: ${solution}
 - Result: ${result}
-- Credibility Anchor: ${credibility_anchor}
 
 Structure:
 1. OPEN with the ${problem} the ${client_type} faced.
 2. SHOW the ${solution} applied.
 3. QUANTIFY the ${result}.
-4. CLOSE with ${credibility_anchor} and a takeaway.
+4. SHOW a credibity anchor to validate claims
+4. CLOSE with a takeaway.
 
 Tone: ${tone_of_voice}. Results-driven. Professional. Inspiring.
 
@@ -729,17 +631,14 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInHowToPrompt = (vars: any) => {
-  const { niche, framework_name, target_audience, tone_of_voice } = vars;
+  const { niche, target_audience, tone_of_voice } = vars;
 
   return `
 Write a LinkedIn how-to post for ${target_audience} in ${niche}.
 
-Inputs:
-- Framework: ${framework_name}
-
 Structure:
 1. HOOK with a bold promise or myth-busting statement.
-2. INTRODUCE the ${framework_name}.
+2. INTRODUCE a framework [Give your system a punchy name, e.g., The $10K Noise Filter, The 3-Way Validator Test, The 5-Seller Magnet].
 3. BREAK IT DOWN in 3-5 steps with specifics.
 4. CLOSE with encouragement to try it.
 
@@ -751,19 +650,18 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInListiclePrompt = (vars: any) => {
-  const { niche, list_topic, items, target_audience, tone_of_voice } = vars;
+  const { niche, list_topic, target_audience, tone_of_voice } = vars;
 
   return `
-Write a LinkedIn listicle post.
+Write a LinkedIn listicle post for ${niche}.
 
 Inputs:
 - Topic: ${list_topic}
-- Items: ${items}
 - Audience: ${target_audience}
 
 Structure:
 1. HOOK with why ${list_topic} matters.
-2. LIST ${items} with 1–2 sentences each.
+2. LIST 3-7 items with 1–2 sentences each.
 3. CLOSE with a challenge or CTA.
 
 Tone: ${tone_of_voice}. Punchy. Skimmable. Shareable.
@@ -781,11 +679,10 @@ Write a LinkedIn hot-take post for ${niche}.
 
 Inputs:
 - Hot Take: ${hot_take}
-- Reasoning: ${reasoning}
 
 Structure:
-1. OPEN with the hot take in one sentence.
-2. DEFEND it with ${reasoning}.
+1. OPEN with the ${hot_take} in one sentence.
+2. DEFEND it with a systematic Logical reasoning.
 3. CONTRAST with what "most people" believe.
 4. CLOSE with a provocative question.
 
@@ -797,19 +694,18 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInMotivationPrompt = (vars: any) => {
-  const { niche, struggle, mindset_shift, target_audience, tone_of_voice } = vars;
+  const { niche, struggle, target_audience, tone_of_voice } = vars;
 
   return `
-Write a motivational LinkedIn post.
+Write a motivational LinkedIn post in ${niche}.
 
 Inputs:
 - Struggle: ${struggle}
-- Mindset Shift: ${mindset_shift}
 - Audience: ${target_audience}
 
 Structure:
-1. OPEN with a relatable ${struggle}.
-2. REVEAL the ${mindset_shift}.
+1. OPEN with a relatable ${struggle} for ${target_audience}.
+2. REVEAL the mindset shift.
 3. GIVE an example of applying it.
 4. CLOSE with encouragement.
 
@@ -854,8 +750,6 @@ Write a LinkedIn promotional post.
 Inputs:
 - Event: ${event_name}
 - Offer Type: ${offer_type}
-- Hook:
-- Urgency:
 - Audience: ${target_audience}
 
 Structure:

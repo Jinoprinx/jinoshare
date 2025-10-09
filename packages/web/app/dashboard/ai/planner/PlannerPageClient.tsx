@@ -50,6 +50,8 @@ export default function PlannerPageClient() {
     { name: 'niche', label: 'What is your niche?', type: 'textarea', example: 'fitness coaching, e-commerce, real estate wholesaling, SaaS for dentists, freelance copywriting' },
     { name: 'target_audience', label: 'Who is your target audience? Be hyper-specific:', type: 'textarea', example: 'newly licensed real estate agents in Texas with 6 months experience, freelance designers tired of scope creep, e-commerce founders stuck at $20K/month' },
     { name: 'tone_of_voice', label: 'What is your brand\'s tone of voice?', type: 'select', multiple: true, options: ['formal', 'informal', 'friendly', 'professional', 'humorous'] },
+    { name: 'mission_vision', label: 'What is your mission and vision?', type: 'textarea', example: 'To empower small businesses with AI tools' },
+    { name: 'core_values', label: 'What are your core values?', type: 'textarea', example: 'Innovation, customer success, integrity' },
   ], []);
   const templateFields: { [key: string]: any[] } = useMemo(() => ({
     FreebieAlert: [
@@ -80,21 +82,18 @@ export default function PlannerPageClient() {
       { name: 'productDescription', label: 'Product Description', type: 'textarea', example: 'This product will help you...' },
       { name: 'launchDate', label: 'Launch Date', type: 'text', example: 'Next week' },
     ],
-    MondayMotivation: [
-      { name: 'motivationTheme', label: 'Motivation Theme (e.g., perseverance, growth)', type: 'text', example: 'perseverance' },
-    ],
     AIAcceleratedFounderPost: [
-      { name: 'offer_type', label: 'Offer Type', type: 'text', example: 'Choose: free masterclass / private workshop / replay to get access' },
+        { name: 'ai_integration', label: 'AI Integration', type: 'textarea', example: 'Used AI to personalize the onboarding experience' },
+        { name: 'offer_type', label: 'Offer Type', type: 'text', example: 'Choose: free masterclass / private workshop / replay to get access' },
     ],
     AuthorityPost: [
-        { name: 'contrarian_truth', label: 'Contrarian Truth', type: 'textarea', example: 'The biggest myth in [Your Niche] is...' },
         { name: 'credibility_anchor', label: 'Credibility Anchor', type: 'text', example: 'scaled to $5M ARR' },
+        { name: 'contrarian_truth', label: 'Contrarian Truth', type: 'textarea', example: 'The biggest myth in [Your Niche] is...' },
     ],
     FounderJourneyPost: [
         { name: 'founder_story', label: 'Founder Story', type: 'textarea', example: 'I started with nothing but a laptop and a dream...' },
         { name: 'milestone', label: 'Milestone', type: 'text', example: 'Reached 1000 customers' },
         { name: 'struggle', label: 'Struggle', type: 'text', example: 'Almost gave up after 6 months' },
-        { name: 'lesson', label: 'Lesson Learned', type: 'textarea', example: 'Persistence is key' },
     ],
     CaseStudyPost: [
         { name: 'client_type', label: 'Client Type', type: 'text', example: 'SaaS companies' },
@@ -103,13 +102,6 @@ export default function PlannerPageClient() {
         { name: 'result', label: 'Result', type: 'text', example: 'Increased engagement by 50%' },
         { name: 'ai_integration', label: 'AI Integration', type: 'textarea', example: 'Used AI to personalize the onboarding experience' },
     ],
-    HowToPost: [
-        { name: 'framework_name', label: 'Framework Name', type: 'text', example: 'The 5-Step Growth Framework' },
-    ],
-    MythBustingPost: [
-        { name: 'myth', label: 'Myth', type: 'textarea', example: 'You need a big budget to succeed on social media' },
-        { name: 'truth', label: 'Truth', type: 'textarea', example: 'Creativity and consistency are more important than budget' },
-    ],
     TrendInsightPost: [
         { name: 'trend', label: 'Trend', type: 'text', example: 'The rise of AI-powered content creation' },
         { name: 'implication', label: 'Implication', type: 'textarea', example: 'Marketers need to adapt to new technologies' },
@@ -117,28 +109,22 @@ export default function PlannerPageClient() {
     ],
     ListiclePost: [
         { name: 'list_topic', label: 'List Topic', type: 'text', example: '5 ways to improve your social media presence' },
-        { name: 'items', label: 'Items (comma-separated)', type: 'textarea', example: '1. Post consistently, 2. Engage with your audience, 3. Use high-quality visuals' },
     ],
     HotTakePost: [
         { name: 'hot_take', label: 'Hot Take', type: 'textarea', example: 'Instagram is dead for organic growth' },
     ],
     MotivationalPost: [
         { name: 'struggle', label: 'Struggle', type: 'text', example: 'Feeling uninspired' },
-        { name: 'mindset_shift', label: 'Mindset Shift', type: 'textarea', example: 'Focus on progress, not perfection' },
     ],
     OfferPost: [
         { name: 'offer_type', label: 'Offer Type', type: 'text', example: 'Free consultation' },
-        { name: 'offer_hook', label: 'Offer Hook', type: 'textarea', example: 'Double your leads in 30 days' },
-        { name: 'urgency', label: 'Urgency', type: 'text', example: 'Limited to the first 5 people' },
     ],
     LinkedInFounderStory: [
         { name: 'milestone', label: 'Milestone', type: 'text', example: 'Secured $1M in funding' },
         { name: 'struggle', label: 'Struggle', type: 'text', example: 'Faced hundreds of rejections' },
-        { name: 'lesson', label: 'Lesson Learned', type: 'textarea', example: 'Never give up on your vision' },
     ],
     LinkedInTrend: [
         { name: 'trend', label: 'Trend', type: 'text', example: 'The increasing importance of personal branding on LinkedIn' },
-        { name: 'stat', label: 'Statistic', type: 'text', example: '80% of B2B leads come from LinkedIn' },
         { name: 'implication', label: 'Implication', type: 'textarea', example: 'Professionals need to actively manage their LinkedIn presence' },
     ],
     LinkedInContrarian: [
@@ -150,14 +136,9 @@ export default function PlannerPageClient() {
         { name: 'problem', label: 'Problem', type: 'textarea', example: 'Struggling to generate leads on LinkedIn' },
         { name: 'solution', label: 'Solution', type: 'textarea', example: 'Implemented a targeted outreach campaign' },
         { name: 'result', label: 'Result', type: 'text', example: 'Generated 50 new leads in one month' },
-        { name: 'credibility_anchor', label: 'Credibility Anchor', type: 'text', example: 'As featured in Forbes' },
-    ],
-    LinkedInHowTo: [
-        { name: 'framework_name', label: 'Framework Name', type: 'text', example: 'The LinkedIn Content Funnel' },
     ],
     LinkedInListicle: [
         { name: 'list_topic', label: 'List Topic', type: 'text', example: '3 ways to optimize your LinkedIn profile' },
-        { name: 'items', label: 'Items (comma-separated)', type: 'textarea', example: '1. Use a professional headshot, 2. Write a compelling headline, 3. Showcase your accomplishments' },
     ],
     LinkedInHotTake: [
         { name: 'hot_take', label: 'Hot Take', type: 'textarea', example: 'LinkedIn endorsements are meaningless' },
@@ -165,7 +146,6 @@ export default function PlannerPageClient() {
     ],
     LinkedInMotivation: [
         { name: 'struggle', label: 'Struggle', type: 'text', example: 'Fear of posting on LinkedIn' },
-        { name: 'mindset_shift', label: 'Mindset Shift', type: 'textarea', example: 'Your voice deserves to be heard' },
     ],
     LinkedInHiring: [
         { name: 'role', label: 'Role', type: 'text', example: 'Software Engineer' },
