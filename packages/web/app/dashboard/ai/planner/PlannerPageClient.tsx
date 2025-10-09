@@ -86,6 +86,98 @@ export default function PlannerPageClient() {
     AIAcceleratedFounderPost: [
       { name: 'offer_type', label: 'Offer Type', type: 'text', example: 'Choose: free masterclass / private workshop / replay to get access' },
     ],
+    AuthorityPost: [
+        { name: 'contrarian_truth', label: 'Contrarian Truth', type: 'textarea', example: 'The biggest myth in [Your Niche] is...' },
+        { name: 'credibility_anchor', label: 'Credibility Anchor', type: 'text', example: 'scaled to $5M ARR' },
+    ],
+    FounderJourneyPost: [
+        { name: 'founder_story', label: 'Founder Story', type: 'textarea', example: 'I started with nothing but a laptop and a dream...' },
+        { name: 'milestone', label: 'Milestone', type: 'text', example: 'Reached 1000 customers' },
+        { name: 'struggle', label: 'Struggle', type: 'text', example: 'Almost gave up after 6 months' },
+        { name: 'lesson', label: 'Lesson Learned', type: 'textarea', example: 'Persistence is key' },
+    ],
+    CaseStudyPost: [
+        { name: 'client_type', label: 'Client Type', type: 'text', example: 'SaaS companies' },
+        { name: 'problem', label: 'Problem', type: 'textarea', example: 'Low user engagement' },
+        { name: 'solution', label: 'Solution', type: 'textarea', example: 'Implemented a new onboarding flow' },
+        { name: 'result', label: 'Result', type: 'text', example: 'Increased engagement by 50%' },
+        { name: 'ai_integration', label: 'AI Integration', type: 'textarea', example: 'Used AI to personalize the onboarding experience' },
+    ],
+    HowToPost: [
+        { name: 'framework_name', label: 'Framework Name', type: 'text', example: 'The 5-Step Growth Framework' },
+    ],
+    MythBustingPost: [
+        { name: 'myth', label: 'Myth', type: 'textarea', example: 'You need a big budget to succeed on social media' },
+        { name: 'truth', label: 'Truth', type: 'textarea', example: 'Creativity and consistency are more important than budget' },
+    ],
+    TrendInsightPost: [
+        { name: 'trend', label: 'Trend', type: 'text', example: 'The rise of AI-powered content creation' },
+        { name: 'implication', label: 'Implication', type: 'textarea', example: 'Marketers need to adapt to new technologies' },
+        { name: 'ai_angle', label: 'AI Angle', type: 'textarea', example: 'How AI can be used to create more effective content' },
+    ],
+    ListiclePost: [
+        { name: 'list_topic', label: 'List Topic', type: 'text', example: '5 ways to improve your social media presence' },
+        { name: 'items', label: 'Items (comma-separated)', type: 'textarea', example: '1. Post consistently, 2. Engage with your audience, 3. Use high-quality visuals' },
+    ],
+    HotTakePost: [
+        { name: 'hot_take', label: 'Hot Take', type: 'textarea', example: 'Instagram is dead for organic growth' },
+    ],
+    MotivationalPost: [
+        { name: 'struggle', label: 'Struggle', type: 'text', example: 'Feeling uninspired' },
+        { name: 'mindset_shift', label: 'Mindset Shift', type: 'textarea', example: 'Focus on progress, not perfection' },
+    ],
+    OfferPost: [
+        { name: 'offer_type', label: 'Offer Type', type: 'text', example: 'Free consultation' },
+        { name: 'offer_hook', label: 'Offer Hook', type: 'textarea', example: 'Double your leads in 30 days' },
+        { name: 'urgency', label: 'Urgency', type: 'text', example: 'Limited to the first 5 people' },
+    ],
+    LinkedInFounderStory: [
+        { name: 'milestone', label: 'Milestone', type: 'text', example: 'Secured $1M in funding' },
+        { name: 'struggle', label: 'Struggle', type: 'text', example: 'Faced hundreds of rejections' },
+        { name: 'lesson', label: 'Lesson Learned', type: 'textarea', example: 'Never give up on your vision' },
+    ],
+    LinkedInTrend: [
+        { name: 'trend', label: 'Trend', type: 'text', example: 'The increasing importance of personal branding on LinkedIn' },
+        { name: 'stat', label: 'Statistic', type: 'text', example: '80% of B2B leads come from LinkedIn' },
+        { name: 'implication', label: 'Implication', type: 'textarea', example: 'Professionals need to actively manage their LinkedIn presence' },
+    ],
+    LinkedInContrarian: [
+        { name: 'contrarian_truth', label: 'Contrarian Truth', type: 'textarea', example: 'Your LinkedIn profile is not your resume' },
+        { name: 'reasoning', label: 'Reasoning', type: 'textarea', example: 'It\'s a landing page for your career' },
+    ],
+    LinkedInCaseStudy: [
+        { name: 'client_type', label: 'Client Type', type: 'text', example: 'Tech startups' },
+        { name: 'problem', label: 'Problem', type: 'textarea', example: 'Struggling to generate leads on LinkedIn' },
+        { name: 'solution', label: 'Solution', type: 'textarea', example: 'Implemented a targeted outreach campaign' },
+        { name: 'result', label: 'Result', type: 'text', example: 'Generated 50 new leads in one month' },
+        { name: 'credibility_anchor', label: 'Credibility Anchor', type: 'text', example: 'As featured in Forbes' },
+    ],
+    LinkedInHowTo: [
+        { name: 'framework_name', label: 'Framework Name', type: 'text', example: 'The LinkedIn Content Funnel' },
+    ],
+    LinkedInListicle: [
+        { name: 'list_topic', label: 'List Topic', type: 'text', example: '3 ways to optimize your LinkedIn profile' },
+        { name: 'items', label: 'Items (comma-separated)', type: 'textarea', example: '1. Use a professional headshot, 2. Write a compelling headline, 3. Showcase your accomplishments' },
+    ],
+    LinkedInHotTake: [
+        { name: 'hot_take', label: 'Hot Take', type: 'textarea', example: 'LinkedIn endorsements are meaningless' },
+        { name: 'reasoning', label: 'Reasoning', type: 'textarea', example: 'They are often given without much thought' },
+    ],
+    LinkedInMotivation: [
+        { name: 'struggle', label: 'Struggle', type: 'text', example: 'Fear of posting on LinkedIn' },
+        { name: 'mindset_shift', label: 'Mindset Shift', type: 'textarea', example: 'Your voice deserves to be heard' },
+    ],
+    LinkedInHiring: [
+        { name: 'role', label: 'Role', type: 'text', example: 'Software Engineer' },
+        { name: 'company', label: 'Company', type: 'text', example: 'Acme Corporation' },
+        { name: 'mission', label: 'Mission', type: 'textarea', example: 'To build the future of software development' },
+        { name: 'culture', label: 'Culture', type: 'textarea', example: 'We value collaboration, innovation, and diversity' },
+    ],
+    LinkedInOffer: [
+        { name: 'event_name', label: 'Event Name', type: 'text', example: 'The LinkedIn Growth Summit' },
+        { name: 'offer_type', label: 'Offer Type', type: 'text', example: 'Free webinar' },
+    ],
+    Generic: [],
   }), []);
 
   const fields = useMemo(() => {

@@ -386,5 +386,489 @@ Framework Name: The Pre-Sell Validation Loop
 Target Audience: Coaches and consultants who’ve spent 3+ months building a course no one’s bought
 AI Integration: AI analyzes past student feedback to draft your offer, email sequence, and sales page in one afternoon
 Offer Type: free masterclass
-Offer Hook: validate demand and sell your first 10 spots before recording a single lesson `
-}
+Offer Hook: validate demand and sell your first 10 spots before recording a single lesson
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`
+};
+export const buildAuthorityPostPrompt = (variables: any) => {
+  const { niche, target_audience, contrarian_truth, tone_of_voice, credibility_anchor } = variables;
+
+  return `
+Your task is to create a bold, authority-building post that positions the founder as a thought leader in ${niche}.
+
+**Brand Info:**
+- Niche: ${niche}
+- Target Audience: ${target_audience}
+- Contrarian Truth: ${contrarian_truth}
+- Credibility Anchor: ${credibility_anchor} (e.g., "scaled to $5M ARR", "helped 200+ clients")
+
+Structure:
+1. OPEN with a sharp contrarian statement that challenges common beliefs in ${niche}.
+2. SHARE a personal story or lesson that proves the contrarian truth.
+3. TEACH one actionable insight that ${target_audience} can apply immediately.
+4. CLOSE with a confident takeaway that reinforces authority.
+
+Tone: ${tone_of_voice}. Direct. Confident. Human. No fluff.
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildFounderJourneyPostPrompt = (variables: any) => {
+  const { niche, founder_story, milestone, struggle, lesson, tone_of_voice } = variables;
+
+  return `
+Create a behind-the-scenes founder story post that feels raw and relatable.
+
+**Inputs:**
+- Niche: ${niche}
+- Founder Story: ${founder_story}
+- Milestone: ${milestone}
+- Struggle: ${struggle}
+- Lesson Learned: ${lesson}
+
+Structure:
+1. OPEN with a vulnerable or surprising detail from the founder’s journey.
+2. DESCRIBE the ${struggle} in vivid, human terms.
+3. SHARE the turning point that led to ${milestone}.
+4. TEACH the ${lesson} in one or two punchy sentences.
+5. CLOSE with encouragement for others in ${niche}.
+
+Tone: ${tone_of_voice}. Honest. Relatable. Human.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.
+`;
+};
+export const buildCaseStudyPostPrompt = (variables: any) => {
+  const { client_type, problem, solution, result, ai_integration, tone_of_voice } = variables;
+
+  return `
+Write a case study style post that highlights a client win.
+
+**Inputs:**
+- Client Type: ${client_type}
+- Problem: ${problem}
+- Solution: ${solution}
+- Result: ${result}
+- AI Integration: ${ai_integration}
+
+Structure:
+1. OPEN with the painful problem the ${client_type} faced.
+2. SHOW the simple solution applied (include ${ai_integration} if relevant).
+3. QUANTIFY the result with numbers (e.g., revenue, time saved, % growth).
+4. CLOSE with a takeaway that inspires similar ${client_type}.
+
+Tone: ${tone_of_voice}. Clear. Results-driven. Inspiring.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildHowToPostPrompt = (variables: any) => {
+  const { niche, target_audience, framework_name, tone_of_voice } = variables;
+
+  return `
+Write an educational "how-to" post for ${target_audience} in ${niche}.
+
+**Inputs:**
+- Framework Name: ${framework_name}
+
+Structure:
+1. HOOK with a bold promise or myth-busting statement.
+2. INTRODUCE the ${framework_name}.
+3. BREAK IT DOWN in 3–5 clear steps with specific, actionable detail.
+4. CLOSE with encouragement and a CTA to try it today.
+
+Tone: ${tone_of_voice}. Practical. Clear. Teacher-like but approachable.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildMythBustingPostPrompt = (variables: any) => {
+  const { niche, myth, truth, tone_of_voice } = variables;
+
+  return `
+Create a myth-busting post for ${niche}.
+
+**Inputs:**
+- Myth: ${myth}
+- Truth: ${truth}
+
+Structure:
+1. OPEN with the myth stated as if it’s common knowledge.
+2. FLIP it with the blunt truth.
+3. PROVE it with a practical and relatable example.
+4. CLOSE with a call to think differently.
+
+Tone: ${tone_of_voice}. Bold. Direct. Slightly provocative.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildTrendInsightPostPrompt = (variables: any) => {
+  const { niche, trend, implication, ai_angle, tone_of_voice } = variables;
+
+  return `
+Write a trend/insight post for ${niche}.
+
+**Inputs:**
+- Trend: ${trend}
+- Implication: ${implication}
+- AI Angle: ${ai_angle}
+
+Structure:
+1. OPEN with a surprising stat or headline about ${trend}.
+2. EXPLAIN why it matters for ${niche}.
+3. SHOW how ${ai_angle} changes the game.
+4. CLOSE with a prediction or challenge to ${niche} leaders.
+
+Tone: ${tone_of_voice}. Forward-looking. Analytical. Confident.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildListiclePostPrompt = (variables: any) => {
+  const { niche, target_audience, list_topic, items, tone_of_voice } = variables;
+
+  return `
+Write a listicle-style post for ${target_audience} in ${niche}.
+
+**Inputs:**
+- Topic: ${list_topic}
+- Items: ${items} (3–7 punchy items)
+
+Structure:
+1. HOOK with a bold statement about why ${list_topic} matters.
+2. LIST the ${items}, each with 1–2 sentences of detail.
+3. CLOSE with a challenge or CTA to apply one today.
+
+Tone: ${tone_of_voice}. Punchy. Skimmable. Shareable.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildHotTakePostPrompt = (variables: any) => {
+  const { niche, hot_take, tone_of_voice } = variables;
+
+  return `
+Write a hot-take opinion post for ${niche}.
+
+**Inputs:**
+- Hot Take: ${hot_take}
+
+Structure:
+1. OPEN with the hot take in one blunt sentence.
+2. DEFEND it with a sound and practical reasoning.
+3. CONTRAST with what "most people" believe.
+4. CLOSE with a provocative question to spark comments.
+
+Tone: ${tone_of_voice}. Bold. Confident. Debate-starting.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildMotivationalPostPrompt = (variables: any) => {
+  const { niche, target_audience, struggle, mindset_shift, tone_of_voice } = variables;
+
+  return `
+Write a motivational mindset post for ${target_audience} in ${niche}.
+
+**Inputs:**
+- Struggle: ${struggle}
+- Mindset Shift: ${mindset_shift}
+
+Structure:
+1. OPEN with a relatable description of ${struggle}.
+2. REVEAL the mindset shift that changes everything.
+3. GIVE a short example of the shift in action.
+4. CLOSE with encouragement and a call to keep going.
+
+Tone: ${tone_of_voice}. Uplifting. Direct. No clichés.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildOfferPostPrompt = (variables: any) => {
+  const { niche, target_audience, offer_type, offer_hook, urgency, tone_of_voice } = variables;
+
+  return `
+Write a high-converting offer post for ${target_audience} in ${niche}.
+
+**Inputs:**
+- Offer Type: ${offer_type}
+- Offer Hook: ${offer_hook}
+
+Structure:
+1. HOOK with a painful problem ${target_audience} face.
+2. PRESENT the ${offer_type} as the solution.
+3. PROMISE the ${offer_hook} outcome.
+4. ADD urgency.
+5. CLOSE with a clear CTA.
+
+Tone: ${tone_of_voice}. Persuasive. Direct. No fluff.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildLinkedInFounderStoryPrompt = (vars: any) => {
+  const { niche, milestone, struggle, lesson, tone_of_voice } = vars;
+
+  return `
+Write a LinkedIn post that shares a founder’s journey in ${niche}.
+
+Inputs:
+- Milestone: ${milestone}
+- Struggle: ${struggle}
+- Lesson: ${lesson}
+
+Structure:
+1. OPEN with a vulnerable or surprising detail about ${struggle}.
+2. SHOW the turning point that led to ${milestone}.
+3. TEACH the ${lesson} in one or two punchy sentences.
+4. CLOSE with encouragement for peers in ${niche}.
+
+Tone: ${tone_of_voice}. Professional yet human. Relatable but authoritative.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildLinkedInTrendPrompt = (vars: any) => {
+  const { niche, trend, stat, implication, tone_of_voice } = vars;
+
+  return `
+Write a LinkedIn post analyzing a trend in ${niche}.
+
+Inputs:
+- Trend: ${trend}
+- Stat: ${stat}
+- Implication: ${implication}
+
+Structure:
+1. HOOK with ${stat} that grabs attention.
+2. EXPLAIN what ${trend} means for ${niche}.
+3. SHARE ${implication} in practical terms.
+4. CLOSE with a prediction or open-ended question.
+
+Tone: ${tone_of_voice}. Analytical. Forward-looking. Engaging.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildLinkedInContrarianPrompt = (vars: any) => {
+  const { niche, contrarian_truth, reasoning, tone_of_voice } = vars;
+
+  return `
+Write a contrarian thought-leadership post for ${niche}.
+
+Inputs:
+- Contrarian Truth: ${contrarian_truth}
+- Reasoning: ${reasoning}
+
+Structure:
+1. OPEN with the contrarian truth in one blunt sentence.
+2. DEFEND it with ${reasoning}.
+3. PROVE it with 1-2 practical examples.
+4. CLOSE with a challenge to rethink assumptions.
+
+Tone: ${tone_of_voice}. Confident. Provocative. Respectful.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildLinkedInCaseStudyPrompt = (vars: any) => {
+  const { client_type, problem, solution, result, credibility_anchor, tone_of_voice } = vars;
+
+  return `
+Write a LinkedIn case study post.
+
+Inputs:
+- Client Type: ${client_type}
+- Problem: ${problem}
+- Solution: ${solution}
+- Result: ${result}
+- Credibility Anchor: ${credibility_anchor}
+
+Structure:
+1. OPEN with the ${problem} the ${client_type} faced.
+2. SHOW the ${solution} applied.
+3. QUANTIFY the ${result}.
+4. CLOSE with ${credibility_anchor} and a takeaway.
+
+Tone: ${tone_of_voice}. Results-driven. Professional. Inspiring.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildLinkedInHowToPrompt = (vars: any) => {
+  const { niche, framework_name, target_audience, tone_of_voice } = vars;
+
+  return `
+Write a LinkedIn how-to post for ${target_audience} in ${niche}.
+
+Inputs:
+- Framework: ${framework_name}
+
+Structure:
+1. HOOK with a bold promise or myth-busting statement.
+2. INTRODUCE the ${framework_name}.
+3. BREAK IT DOWN in 3-5 steps with specifics.
+4. CLOSE with encouragement to try it.
+
+Tone: ${tone_of_voice}. Clear. Practical. Teacher-like.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildLinkedInListiclePrompt = (vars: any) => {
+  const { niche, list_topic, items, target_audience, tone_of_voice } = vars;
+
+  return `
+Write a LinkedIn listicle post.
+
+Inputs:
+- Topic: ${list_topic}
+- Items: ${items}
+- Audience: ${target_audience}
+
+Structure:
+1. HOOK with why ${list_topic} matters.
+2. LIST ${items} with 1–2 sentences each.
+3. CLOSE with a challenge or CTA.
+
+Tone: ${tone_of_voice}. Punchy. Skimmable. Shareable.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildLinkedInHotTakePrompt = (vars: any) => {
+  const { niche, hot_take, reasoning, tone_of_voice } = vars;
+
+  return `
+Write a LinkedIn hot-take post for ${niche}.
+
+Inputs:
+- Hot Take: ${hot_take}
+- Reasoning: ${reasoning}
+
+Structure:
+1. OPEN with the hot take in one sentence.
+2. DEFEND it with ${reasoning}.
+3. CONTRAST with what "most people" believe.
+4. CLOSE with a provocative question.
+
+Tone: ${tone_of_voice}. Bold. Debate-starting. Professional.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildLinkedInMotivationPrompt = (vars: any) => {
+  const { niche, struggle, mindset_shift, target_audience, tone_of_voice } = vars;
+
+  return `
+Write a motivational LinkedIn post.
+
+Inputs:
+- Struggle: ${struggle}
+- Mindset Shift: ${mindset_shift}
+- Audience: ${target_audience}
+
+Structure:
+1. OPEN with a relatable ${struggle}.
+2. REVEAL the ${mindset_shift}.
+3. GIVE an example of applying it.
+4. CLOSE with encouragement.
+
+Tone: ${tone_of_voice}. Uplifting. Direct. No clichés.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildLinkedInHiringPrompt = (vars: any) => {
+  const { role, company, mission, culture, tone_of_voice } = vars;
+
+  return `
+Write a LinkedIn hiring announcement.
+
+Inputs:
+- Role: ${role}
+- Company: ${company}
+- Mission: ${mission}
+- Culture: ${culture}
+
+Structure:
+1. OPEN with excitement about growth.
+2. DESCRIBE the ${role} and why it matters.
+3. SHARE ${mission} and ${culture}.
+4. CLOSE with a clear CTA to apply.
+
+Tone: ${tone_of_voice}. Professional. Warm. Inviting.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};
+export const buildLinkedInOfferPrompt = (vars: any) => {
+  const { event_name, offer_type, target_audience, tone_of_voice } = vars;
+
+  return `
+Write a LinkedIn promotional post.
+
+Inputs:
+- Event: ${event_name}
+- Offer Type: ${offer_type}
+- Hook:
+- Urgency:
+- Audience: ${target_audience}
+
+Structure:
+1. HOOK with a pain point ${target_audience} face.
+2. PRESENT the ${offer_type} (${event_name}) as the solution.
+3. PROMISE the HOOK.
+4. ADD urgency.
+5. CLOSE with a CTA.
+
+Tone: ${tone_of_voice}. Persuasive. Professional. No fluff.
+
+**Output:**
+Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
+};

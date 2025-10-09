@@ -47,4 +47,131 @@ export const templates = [
     templateName: 'MondayMotivation',
     content: '"The secret of getting ahead is getting started." - Mark Twain\n\n#mondaymotivation #inspiration #quotes #success',
   },
+  },
+  {
+    title: 'Authority Post',
+    category: 'authority',
+    templateName: 'AuthorityPost',
+    content: 'The biggest myth in [Your Niche] is that you need more time. You don’t. You need more focus. Here’s how to get it...'
+  },
+  {
+    title: 'Founder Journey Post',
+    category: 'story',
+    templateName: 'FounderJourneyPost',
+    content: 'I went from zero to a 7-figure business. It wasn’t easy. Here’s the real story...'
+  },
+  {
+    title: 'Case Study Post',
+    category: 'casestudy',
+    templateName: 'CaseStudyPost',
+    content: 'How we helped a client double their revenue in 30 days. Here’s the breakdown...'
+  },
+  {
+    title: 'How-To Post',
+    category: 'howto',
+    templateName: 'HowToPost',
+    content: 'How to achieve [desired outcome] in 3 simple steps. A step-by-step guide...'
+  },
+  {
+    title: 'Myth-Busting Post',
+    category: 'myth',
+    templateName: 'MythBustingPost',
+    content: 'You’ve been told [common myth]. The truth is, [surprising truth]. Here’s why...'
+  },
+  {
+    title: 'Trend/Insight Post',
+    category: 'trend',
+    templateName: 'TrendInsightPost',
+    content: 'The latest trend in [Your Niche] is changing everything. Are you prepared?'
+  },
+  {
+    title: 'Listicle Post',
+    category: 'listicle',
+    templateName: 'ListiclePost',
+    content: '5 must-read books for every entrepreneur. A curated list to help you grow...'
+  },
+  {
+    title: 'Hot-Take Post',
+    category: 'hottake',
+    templateName: 'HotTakePost',
+    content: 'Unpopular opinion: [Your Hot Take]. Here’s why I’m right...'
+  },
+  {
+    title: 'Motivational Post',
+    category: 'motivation',
+    templateName: 'MotivationalPost',
+    content: 'Your only limit is you. Believe in yourself and you will be unstoppable.'
+  },
+  {
+    title: 'Offer Post',
+    category: 'offer',
+    templateName: 'OfferPost',
+    content: 'Limited-time offer! Get [Your Offer] before it’s too late. Your success is one click away.'
+  },
+  {
+    title: 'LinkedIn Founder Story',
+    category: 'linkedin',
+    templateName: 'LinkedInFounderStory',
+    content: 'From a garage to a global company. My journey as a founder on LinkedIn...'
+  },
+  {
+    title: 'LinkedIn Trend',
+    category: 'linkedin',
+    templateName: 'LinkedInTrend',
+    content: 'The future of [Your Niche] on LinkedIn. A deep dive into the latest trends...'
+  },
+  {
+    title: 'LinkedIn Contrarian',
+    category: 'linkedin',
+    templateName: 'LinkedInContrarian',
+    content: 'Why everything you know about [Your Niche] on LinkedIn is wrong. A contrarian view...'
+  },
+  {
+    title: 'LinkedIn Case Study',
+    category: 'linkedin',
+    templateName: 'LinkedInCaseStudy',
+    content: 'How we generated [impressive result] for a client using LinkedIn. A case study...'
+  },
+  {
+    title: 'LinkedIn How-To',
+    category: 'linkedin',
+    templateName: 'LinkedInHowTo',
+    content: 'How to master LinkedIn for [Your Goal]. A practical guide...'
+  },
+  {
+    title: 'LinkedIn Listicle',
+    category: 'linkedin',
+    templateName: 'LinkedInListicle',
+    content: 'Top 7 LinkedIn strategies for [Your Target Audience]. A comprehensive list...'
+  },
+  {
+    title: 'LinkedIn Hot-Take',
+    category: 'linkedin',
+    templateName: 'LinkedInHotTake',
+    content: 'My hot take on the state of LinkedIn in 2025. You might not like it...'
+  },
+  {
+    title: 'LinkedIn Motivation',
+    category: 'linkedin',
+    templateName: 'LinkedInMotivation',
+    content: 'Feeling stuck? Here’s your daily dose of motivation to conquer LinkedIn.'
+  },
+  {
+    title: 'LinkedIn Hiring',
+    category: 'linkedin',
+    templateName: 'LinkedInHiring',
+    content: 'We’re hiring! Join our team and help us build the future of [Your Industry].'
+  },
+  {
+    title: 'LinkedIn Offer',
+    category: 'linkedin',
+    templateName: 'LinkedInOffer',
+    content: 'Exclusive LinkedIn offer! Connect with me to learn more about [Your Offer].'
+  },
+  {
+    title: 'Generic Post',
+    category: 'generic',
+    templateName: 'Generic',
+    content: 'A generic post template for all your social media needs. Customizable and versatile.'
+  }
 ];
