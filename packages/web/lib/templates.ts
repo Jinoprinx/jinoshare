@@ -47,7 +47,6 @@ export const templates = [
     templateName: 'MondayMotivation',
     content: '"The secret of getting ahead is getting started." - Mark Twain\n\n#mondaymotivation #inspiration #quotes #success',
   },
-  },
   {
     title: 'Authority Post',
     category: 'authority',
