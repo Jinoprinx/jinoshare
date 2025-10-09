@@ -39,6 +39,8 @@ const nextConfig = {
       ...config.resolve.alias,
       "@common": require("path").resolve(__dirname, "../common/src"),
       "@": require("path").resolve(__dirname, "./"),
+      "@components": require("path").resolve(__dirname, "./components"),
+      "@lib": require("path").resolve(__dirname, "./lib"),
     };
     return config;
   },
