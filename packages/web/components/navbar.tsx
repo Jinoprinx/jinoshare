@@ -9,6 +9,7 @@ export function Navbar() {
 
   const nav = [
     { href: "/", label: "Home" },
+    { href: session ? "/dashboard/templates" : "/auth", label: "Templates" },
     { href: "/dashboard", label: "Dashboard" },
     { href: "/dashboard/logs", label: "Logs" }
   ];
