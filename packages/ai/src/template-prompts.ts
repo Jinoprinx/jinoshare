@@ -29,7 +29,6 @@ The goal is to promote the freebie and build the business/brand into a trusted, 
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
@@ -65,7 +64,6 @@ The goal is to promote the paid course and build the business/brand into a trust
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
@@ -96,7 +94,6 @@ The goal is to build the business/brand into a trusted, likeable, authority, and
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
@@ -132,7 +129,6 @@ The goal is to promote the tutorial and build the business/brand into a trusted,
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
@@ -167,7 +163,6 @@ The goal is to promote the carousel content and build the business/brand into a 
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
@@ -203,7 +198,6 @@ The goal is to promote the offer and build the business/brand into a trusted, li
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
@@ -239,7 +233,6 @@ The goal is to build anticipation for the product launch and position the busine
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildAIAcceleratedFounderPostPrompt = (variables: any) => {
@@ -294,7 +287,6 @@ Offer Hook: validate demand and sell your first 10 spots before recording a sing
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`
 };
 export const buildAuthorityPostPrompt = (variables: any) => {
@@ -317,7 +309,6 @@ Structure:
 Tone: ${tone_of_voice}. Direct. Confident. Human. No fluff.
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildFounderJourneyPostPrompt = (variables: any) => {
@@ -343,7 +334,6 @@ Tone: ${tone_of_voice}. Honest. Relatable. Human.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.
 `;
 };
@@ -370,7 +360,6 @@ Tone: ${tone_of_voice}. Clear. Results-driven. Inspiring.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildHowToPostPrompt = (variables: any) => {
@@ -389,7 +378,6 @@ Tone: ${tone_of_voice}. Practical. Clear. Teacher-like but approachable.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildMythBustingPostPrompt = (variables: any) => {
@@ -409,7 +397,6 @@ Tone: ${tone_of_voice}. Bold. Direct. Slightly provocative.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildTrendInsightPostPrompt = (variables: any) => {
@@ -433,7 +420,6 @@ Tone: ${tone_of_voice}. Forward-looking. Analytical. Confident.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildListiclePostPrompt = (variables: any) => {
@@ -454,7 +440,6 @@ Tone: ${tone_of_voice}. Punchy. Skimmable. Shareable.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildHotTakePostPrompt = (variables: any) => {
@@ -476,7 +461,6 @@ Tone: ${tone_of_voice}. Bold. Confident. Debate-starting.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildMotivationalPostPrompt = (variables: any) => {
@@ -498,7 +482,6 @@ Tone: ${tone_of_voice}. Uplifting. Direct. No clichés.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildOfferPostPrompt = (variables: any) => {
@@ -521,7 +504,6 @@ Tone: ${tone_of_voice}. Persuasive. Direct. No fluff.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInFounderStoryPrompt = (vars: any) => {
@@ -544,7 +526,6 @@ Tone: ${tone_of_voice}. Professional yet human. Relatable but authoritative.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInTrendPrompt = (vars: any) => {
@@ -566,7 +547,6 @@ Tone: ${tone_of_voice}. Analytical. Forward-looking. Engaging.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInContrarianPrompt = (vars: any) => {
@@ -589,7 +569,6 @@ Tone: ${tone_of_voice}. Confident. Provocative. Respectful.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInCaseStudyPrompt = (vars: any) => {
@@ -615,7 +594,6 @@ Tone: ${tone_of_voice}. Results-driven. Professional. Inspiring.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInHowToPrompt = (vars: any) => {
@@ -634,7 +612,6 @@ Tone: ${tone_of_voice}. Clear. Practical. Teacher-like.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInListiclePrompt = (vars: any) => {
@@ -656,7 +633,6 @@ Tone: ${tone_of_voice}. Punchy. Skimmable. Shareable.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInHotTakePrompt = (vars: any) => {
@@ -678,7 +654,6 @@ Tone: ${tone_of_voice}. Bold. Debate-starting. Professional.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInMotivationPrompt = (vars: any) => {
@@ -701,7 +676,6 @@ Tone: ${tone_of_voice}. Uplifting. Direct. No clichés.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInHiringPrompt = (vars: any) => {
@@ -726,7 +700,6 @@ Tone: ${tone_of_voice}. Professional. Warm. Inviting.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInOfferPrompt = (vars: any) => {
@@ -751,6 +724,5 @@ Tone: ${tone_of_voice}. Persuasive. Professional. No fluff.
 
 **Output:**
 Return a valid JSON array of 5 strings. Each string should be a complete social media post.
-Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
