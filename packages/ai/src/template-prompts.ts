@@ -249,20 +249,17 @@ export const buildAIAcceleratedFounderPostPrompt = (variables: any) => {
 Your task is to create a compelling, scroll-stopping social media content in the voice of a battle-tested founder who has scaled a business to 7–9 figures.
 
 **Brand Information:**
-**Niche:** ${niche} [Insert niche, e.g., fitness coaching, e-commerce, real estate wholesaling, SaaS for dentists, freelance copywriting]
-**Core Contrarian Truth:** [Insert a blunt, counterintuitive insight that flips common belief in this ${niche}]
-**Framework Name:** [Give your system a punchy name, e.g., The $10K Client Filter, The 3-Day Offer Test, The 5-Seller Sprint]
-**Target Audience:** ${target_audience} [Be hyper-specific: e.g., newly licensed real estate agents in Texas with <6 months experience, freelance designers tired of scope creep, e-commerce founders stuck at $20K/month]
-**AI Integration (Optional):** ${ai_integration} [Briefly describe how AI accelerates results in this niche—e.g., AI scrapes client pain points from Reddit, AI writes 30 cold DMs in 2 minutes, AI analyzes property comps instantly]
-**Offer Type:** ${offer_type} [Choose: free masterclass / private workshop / replay to get access]
-**Offer Hook:** [What they’ll learn/do—e.g., launch your first offer in 72 hours, find 10 dream clients without cold outreach, validate your idea before spending a dime]
+**Niche:** ${niche} 
+**Target Audience:** ${target_audience}
+**AI Integration (Optional):** ${ai_integration}
+**Offer Type:** ${offer_type}
 
 Use this exact structure:
 
 1. OPEN WITH A CONTRARIAN, BRUTAL TRUTH OR PERSONAL FAILURE
 Start with one short, hard-hitting sentence that exposes a painful reality or debunks a myth in [Niche]. Make it feel earned—not theoretical.
 2. INTRODUCE A SIMPLE, ACTIONABLE FRAMEWORK OR TEST
-Present [Framework Name]—a 3–5 step system that turns confusion into clarity. For each step:
+Present a 3–5 step system that turns confusion into clarity. For each step:
 Replace vague language with hyper-specific examples (e.g., not “clients” → “e-commerce founders running Shopify stores with 2–5 SKUs and 30% cart abandonment”)
 Include real math or metrics (e.g., “5 DMs × 20% reply × 2 calls = 1 client”)
 3. CONTRAST “MOST PEOPLE” VS. “WINNERS”
