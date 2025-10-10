@@ -50,8 +50,6 @@ export default function PlannerPageClient() {
     { name: 'niche', label: 'What is your niche?', type: 'textarea', example: 'fitness coaching, e-commerce, real estate wholesaling, SaaS for dentists, freelance copywriting' },
     { name: 'target_audience', label: 'Who is your target audience? Be hyper-specific:', type: 'textarea', example: 'newly licensed real estate agents in Texas with 6 months experience, freelance designers tired of scope creep, e-commerce founders stuck at $20K/month' },
     { name: 'tone_of_voice', label: 'What is your brand\'s tone of voice?', type: 'select', multiple: true, options: ['formal', 'informal', 'friendly', 'professional', 'humorous'] },
-    { name: 'mission_vision', label: 'What is your mission and vision?', type: 'textarea', example: 'To empower small businesses with AI tools' },
-    { name: 'core_values', label: 'What are your core values?', type: 'textarea', example: 'Innovation, customer success, integrity' },
   ], []);
   const templateFields: { [key: string]: any[] } = useMemo(() => ({
     FreebieAlert: [
@@ -88,7 +86,6 @@ export default function PlannerPageClient() {
     ],
     AuthorityPost: [
         { name: 'credibility_anchor', label: 'Credibility Anchor', type: 'text', example: 'scaled to $5M ARR' },
-        { name: 'contrarian_truth', label: 'Contrarian Truth', type: 'textarea', example: 'The biggest myth in [Your Niche] is...' },
     ],
     FounderJourneyPost: [
         { name: 'founder_story', label: 'Founder Story', type: 'textarea', example: 'I started with nothing but a laptop and a dream...' },

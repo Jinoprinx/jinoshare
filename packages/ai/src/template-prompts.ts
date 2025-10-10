@@ -1,5 +1,5 @@
 export const buildFreebieAlertPrompt = (variables: any) => {
-  const { mission_vision, target_audience, core_values, tone_of_voice, productName, benefit } = variables;
+  const { target_audience, tone_of_voice, productName, benefit } = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information and the freebie they are offering.
@@ -7,9 +7,7 @@ Your task is to create a 5-day social media content plan based on the user's bra
 The goal is to promote the freebie and build the business/brand into a trusted, likeable, authority, and relatable brand.
 
 **Brand Information:**
-- **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
-- **Core Values:** ${core_values}
 - **Tone of Voice:** ${tone_of_voice}
 
 **Freebie Information:**
@@ -36,7 +34,7 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
 export const buildPaidCoursePrompt = (variables: any) => {
-  const { mission_vision, target_audience, tone_of_voice, courseName, price, discount } = variables;
+  const { target_audience, tone_of_voice, courseName, price, discount } = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information and the paid course they are offering.
@@ -44,7 +42,6 @@ Your task is to create a 5-day social media content plan based on the user's bra
 The goal is to promote the paid course and build the business/brand into a trusted, likeable, authority, and relatable brand.
 
 **Brand Information:**
-- **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
 - **Tone of Voice:** ${tone_of_voice}
 
@@ -73,7 +70,7 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
 export const buildGenericPrompt = (variables: any) => {
-  const { mission_vision, target_audience, tone_of_voice} = variables;
+  const { target_audience, tone_of_voice} = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information.
@@ -81,7 +78,6 @@ Your task is to create a 5-day social media content plan based on the user's bra
 The goal is to build the business/brand into a trusted, likeable, authority, and relatable brand.
 
 **Brand Information:**
-- **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
 - **Tone of Voice:** ${tone_of_voice}
 
@@ -91,7 +87,6 @@ The goal is to build the business/brand into a trusted, likeable, authority, and
 - Use a real-world business example or relatable analogy.
 - Encourage engagement, sharing, or visiting the brand's profile.
 - Include 3–5 relevant hashtags for reach.
-- Provide a detailed text-to-image generator prompt for a scroll-stopping visual to match the post theme.
 
 **General Rules:**
 - Each post must be unique and non-repetitive.
@@ -106,7 +101,7 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
 export const buildQuickTutorialPrompt = (variables: any) => {
-  const { mission_vision, target_audience, tone_of_voice, tutorialTopic, tutorialDuration, keyTakeaways } = variables;
+  const { target_audience, tone_of_voice, tutorialTopic, tutorialDuration, keyTakeaways } = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information and the tutorial they are creating.
@@ -114,7 +109,6 @@ Your task is to create a 5-day social media content plan based on the user's bra
 The goal is to promote the tutorial and build the business/brand into a trusted, likeable, authority, and relatable brand.
 
 **Brand Information:**
-- **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
 - **Tone of Voice:** ${tone_of_voice}
 
@@ -143,7 +137,7 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
 export const buildCarouselPostPrompt = (variables: any) => {
-  const { mission_vision, target_audience, tone_of_voice, carouselTopic, numberOfSlides } = variables;
+  const { target_audience, tone_of_voice, carouselTopic, numberOfSlides } = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information and the carousel post they are creating.
@@ -151,7 +145,6 @@ Your task is to create a 5-day social media content plan based on the user's bra
 The goal is to promote the carousel content and build the business/brand into a trusted, likeable, authority, and relatable brand.
 
 **Brand Information:**
-- **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
 - **Tone of Voice:** ${tone_of_voice}
 
@@ -215,7 +208,7 @@ Ensure JSON is syntactically correct with no trailing commas.`;
 };
 
 export const buildProductLaunchPrompt = (variables: any) => {
-  const { mission_vision, target_audience, tone_of_voice, productName, productDescription, launchDate } = variables;
+  const { target_audience, tone_of_voice, productName, productDescription, launchDate } = variables;
 
   return `You are a world-class brand strategist and social media expert.
 Your task is to create a 5-day social media content plan based on the user's brand information and the product they are launching.
@@ -223,7 +216,6 @@ Your task is to create a 5-day social media content plan based on the user's bra
 The goal is to build anticipation for the product launch and position the business/brand as innovative and customer-focused.
 
 **Brand Information:**
-- **Mission and Vision:** ${mission_vision}
 - **Target Audience:** ${target_audience}
 - **Tone of Voice:** ${tone_of_voice}
 
@@ -309,7 +301,7 @@ Do not include explanations, markdown, or extra text.
 Ensure JSON is syntactically correct with no trailing commas.`
 };
 export const buildAuthorityPostPrompt = (variables: any) => {
-  const { niche, target_audience, tone_of_voice, credibility_anchor, contrarian_truth } = variables;
+  const { niche, target_audience, tone_of_voice, credibility_anchor} = variables;
 
   return `
 Your task is to create a bold, authority-building post that positions the founder as a thought leader in ${niche}.
@@ -318,11 +310,10 @@ Your task is to create a bold, authority-building post that positions the founde
 - Niche: ${niche}
 - Target Audience: ${target_audience}
 - Credibility Anchor: ${credibility_anchor} (e.g., "scaled to $5M ARR", "helped 200+ clients")
-- Contrarian Truth: ${contrarian_truth}
 
 Structure:
 1. OPEN with a sharp contrarian statement that challenges common beliefs in ${niche}.
-2. SHARE a personal story or lesson that proves the ${contrarian_truth}.
+2. SHARE a personal story or lesson that proves the contrarian truth.
 3. TEACH one actionable insight that ${target_audience} can apply immediately.
 4. CLOSE with a confident takeaway that reinforces authority.
 
