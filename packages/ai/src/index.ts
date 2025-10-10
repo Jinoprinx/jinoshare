@@ -29,9 +29,9 @@ export async function aiGenerate(
       Authorization: `Bearer ${key}`,
     },
     body: JSON.stringify({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4.1-mini",
       messages: [{ role: "user", content: prompt }],
-      max_tokens: opts?.maxTokens || 800,
+      max_tokens: opts?.maxTokens || 2000,
       temperature: 0.7,
     }),
   });

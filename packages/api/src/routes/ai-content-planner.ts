@@ -21,7 +21,7 @@ aiContentPlannerRouter.post("/", async (req, res) => {
 
     const prompt = buildPromptFromTemplate(template, variables);
 
-    const raw = await aiGenerate(prompt, { maxTokens: 2000 });
+    const raw = await aiGenerate(prompt, { maxTokens: 3000 });
     let posts: string[];
     try {
       posts = JSON.parse(stripJsonFences(raw));

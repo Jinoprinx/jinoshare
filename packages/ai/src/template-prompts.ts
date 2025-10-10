@@ -431,15 +431,18 @@ Write a listicle-style post for ${target_audience} in ${niche}.
 **Inputs:**
 - Topic: ${list_topic}
 
-Structure:
+Structure FOR EACH POST:
 1. HOOK with a bold statement about why ${list_topic} matters.
-2. LIST the 3–7 punchy items, each with 1–2 sentences of detail.
+2. LIST: Include 3–7 actionable items. For each item:
+     - Give it a clear title or number
+     - Provide 1-2 sentences of explanation and practical detail
+     - Include examples or specific tactics where relevant
 3. CLOSE with a challenge or CTA to apply one today.
 
 Tone: ${tone_of_voice}. Punchy. Skimmable. Shareable.
 
 **Output:**
-Return a valid JSON array of 5 strings. Each string should be a complete social media post.
+Return a valid JSON array of 5 strings. Each string should be a complete, detailed social media post.
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildHotTakePostPrompt = (variables: any) => {
@@ -636,7 +639,7 @@ Return a valid JSON array of 5 strings. Each string should be a complete social 
 Ensure JSON is syntactically correct with no trailing commas.`;
 };
 export const buildLinkedInHotTakePrompt = (vars: any) => {
-  const { niche, hot_take, reasoning, tone_of_voice } = vars;
+  const { niche, hot_take, tone_of_voice } = vars;
 
   return `
 Write a LinkedIn hot-take post for ${niche}.
