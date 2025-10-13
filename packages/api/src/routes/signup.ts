@@ -54,12 +54,14 @@ signup.post("/", async (req, res) => {
 
     const verificationUrl = `${process.env.CLIENT_ORIGIN}/auth/verify-email?token=${emailVerificationToken}`;
 
-    await sendEmail(
-      user.email,
-      "Verify your email address",
-      `Please click this link to verify your email address: ${verificationUrl}`,
-      `<p>Please click this link to verify your email address: <a href="${verificationUrl}">${verificationUrl}</a></p>`
-    );
+    if (user.email) {
+      await sendEmail(
+        user.email,
+        "Verify your email address",
+        `Please click this link to verify your email address: ${verificationUrl}`,
+        `<p>Please click this link to verify your email address: <a href="${verificationUrl}">${verificationUrl}</a></p>`
+      );
+    }
 
     res.status(201).json({ message: "User created successfully. Please check your email to verify your account." });
   } catch (error) {

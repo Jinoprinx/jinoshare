@@ -1,11 +1,11 @@
 import mongoose, { Document, Schema } from "mongoose";
 
 export interface IUser extends Document {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
   image?: string;
-  password?: string;
+  password: string;
   emailVerified?: Date;
   is_auto_posting_enabled: boolean;
   role: 'user' | 'admin';

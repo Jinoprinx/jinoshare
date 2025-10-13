@@ -1,5 +1,6 @@
 
 import { Router } from "express";
+import mongoose from "mongoose";
 import { Plan } from "../models/Plan";
 import { Subscription } from "../models/Subscription";
 import { User } from "../models/User";
@@ -61,7 +62,7 @@ subscriptionsRouter.get("/verify", async (req, res) => {
 
     const user = await User.findById(subscription.user);
     if (user) {
-      user.subscription = subscription._id;
+      user.subscription = subscription._id as mongoose.Types.ObjectId;
       await user.save();
     }
 
