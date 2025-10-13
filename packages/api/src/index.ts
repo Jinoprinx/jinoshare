@@ -26,7 +26,10 @@ import { scheduledPost } from "./routes/scheduled-post";
 import { userRoutes } from "./routes/user";
 import { worker } from "./routes/worker";
 import { connections } from "./routes/connections";
+import { verifyEmail } from "./routes/verify-email";
 import publishLogRouter from "./routes/publish-log";
+import { plansRouter } from "./routes/plans";
+import { subscriptionsRouter } from "./routes/subscriptions";
 
 import { protect, protectBearer } from "./middleware/auth";
 import { User } from "./models/User";
@@ -93,6 +96,7 @@ async function main() {
 
   app.use("/auth", auth);
   app.use("/signup", signup);
+  app.use("/auth/verify-email", verifyEmail);
   app.use("/api/ai/generate/", aiGenerateRouter);
   app.use("/api/ai/image-generate/", aiImageGenerateRouter);
   app.use("/api/ai/video-generate/", aiVideoGenerateRouter);
@@ -110,6 +114,8 @@ async function main() {
   app.use("/api/upload", protect, uploadRouter);
   app.use("/api/media-storage", protectBearer, mediaStorageRouter);
   app.use("/api/publish-logs", protect, publishLogRouter);
+  app.use("/api/plans", plansRouter);
+  app.use("/api/subscriptions", subscriptionsRouter);
 
   // Global error handler
   app.use((err: any, req: any, res: any, next: any) => {

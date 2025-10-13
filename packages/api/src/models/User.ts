@@ -11,6 +11,10 @@ export interface IUser extends Document {
   role: 'user' | 'admin';
   createdAt: Date;
   updatedAt: Date;
+  emailVerificationToken?: string;
+  emailVerificationTokenExpires?: Date;
+  isEmailVerified: boolean;
+  subscription?: mongoose.Types.ObjectId;
 }
 
 const UserSchema: Schema = new Schema(
@@ -26,6 +30,13 @@ const UserSchema: Schema = new Schema(
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
+    },
+    emailVerificationToken: { type: String, select: false },
+    emailVerificationTokenExpires: { type: Date, select: false },
+    isEmailVerified: { type: Boolean, default: false },
+    subscription: {
+      type: Schema.Types.ObjectId,
+      ref: "Subscription",
     },
   },
   { timestamps: true }

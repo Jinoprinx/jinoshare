@@ -18,7 +18,7 @@ const Header = () => {
             <Link className="px-4 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200" href="#templates">Templates</Link>
             <Link className="px-4 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200" href="#integrations">Integrations</Link>
             <Link className="px-4 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200" href="#analytics">Analytics</Link>
-            <Link className="px-4 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200" href="#pricing">Pricing</Link>
+            <Link className="px-4 py-2 rounded-xl text-white/80 hover:text-white hover:bg-white/5 transition-all duration-200" href="/pricing">Pricing</Link>
           </nav>
 
           <div className="flex items-center gap-2">

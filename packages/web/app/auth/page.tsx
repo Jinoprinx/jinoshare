@@ -18,6 +18,7 @@ export default function AuthPage() {
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [signupSuccess, setSignupSuccess] = useState(false);
 
   const handleEmailAuth = async () => {
     setIsSubmitting(true);
@@ -36,11 +37,7 @@ export default function AuthPage() {
         });
 
         if (res.ok) {
-          await signIn('credentials', {
-            email,
-            password,
-            callbackUrl: '/dashboard',
-          });
+          setSignupSuccess(true);
         } else {
           const data = await res.json();
           alert(data.message || 'Something went wrong');
@@ -58,6 +55,19 @@ export default function AuthPage() {
       setIsSubmitting(false);
     }
   };
+
+  if (signupSuccess) {
+    return (
+      <div className="min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-8">
+        <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 shadow-[0_0_1px_0_rgba(255,255,255,0.25),0_20px_60px_-20px_rgba(0,0,0,0.6)] backdrop-blur-md supports-[backdrop-filter]:bg-white/5 p-6 space-y-4 text-center">
+          <h2 className="font-display text-2xl font-bold">Check your email</h2>
+          <p className="text-gray-300">
+            We've sent a verification link to <strong>{email}</strong>. Please check your inbox and click the link to complete your registration.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (status === 'loading') {
     return (
