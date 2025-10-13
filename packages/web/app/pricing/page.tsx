@@ -55,7 +55,7 @@ export default function PricingPage() {
     <div className="min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-8">
       <div className="w-full max-w-4xl mb-6 text-center space-y-2">
         <h1 className="font-display text-3xl font-bold">Pricing</h1>
-        <p className="text-sm text-gray-400">Choose the plan that's right for you.</p>
+        <p className="text-sm text-gray-400">Choose the plan that&apos;s right for you.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
