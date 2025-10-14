@@ -45,7 +45,7 @@ signup.post("/", async (req, res) => {
     user.emailVerificationTokenExpires = new Date(Date.now() + 3600000); // 1 hour
 
     await user.save();
-    const verificationUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/verify-email?token=${emailVerificationToken}`;
+    const verificationUrl = `${process.env.APP_URL}/auth/verify-email?token=${emailVerificationToken}`;
 
     if (user.email) {
       await sendEmail(
