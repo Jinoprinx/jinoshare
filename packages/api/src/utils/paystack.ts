@@ -4,13 +4,14 @@ import crypto from "crypto";
 
 const paystackInstance = paystack(process.env.PAYSTACK_SECRET_KEY || "");
 
-export const initializeTransaction = async (email: string, amount: number) => {
+export const initializeTransaction = async (email: string, amount: number, callback_url: string) => {
   try {
     const response = await paystackInstance.transaction.initialize({
       email,
       amount: amount * 100, // Paystack expects amount in kobo
       name: email,
       reference: crypto.randomBytes(16).toString("hex"),
+      callback_url,
     });
     return response;
   } catch (error) {

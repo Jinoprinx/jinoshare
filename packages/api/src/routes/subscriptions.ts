@@ -19,8 +19,11 @@ subscriptionsRouter.post("/initialize", protect, async (req, res) => {
       return res.status(404).json({ message: "User or plan not found" });
     }
 
-    const transaction = await initializeTransaction(user.email, plan.price);
-    console.log("Paystack transaction:", transaction);
+    const transaction = await initializeTransaction(
+      user.email,
+      plan.price,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subscriptions/verify`
+    );
 
     const subscription = new Subscription({
       user: user._id,

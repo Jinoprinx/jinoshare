@@ -19,23 +19,18 @@ signup.options("/", (req, res) => {
 
 signup.post("/", async (req, res) => {
   try {
-    console.log("Signup request received:", { body: req.body });
     const { email, password, firstName, lastName } = req.body;
 
     if (!email || !password || !firstName || !lastName) {
-      console.log("Missing required fields");
       return res.status(400).json({ message: "All fields are required." });
     }
 
-    console.log("Checking for existing user with email:", email);
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      console.log("User already exists");
       return res.status(409).json({ message: "User already exists." });
     }
 
-    console.log("Creating new user");
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User({
@@ -50,9 +45,7 @@ signup.post("/", async (req, res) => {
     user.emailVerificationTokenExpires = new Date(Date.now() + 3600000); // 1 hour
 
     await user.save();
-    console.log("User created successfully:", user.id);
-
-    const verificationUrl = `${process.env.CLIENT_ORIGIN}/auth/verify-email?token=${emailVerificationToken}`;
+    const verificationUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/verify-email?token=${emailVerificationToken}`;
 
     if (user.email) {
       await sendEmail(
