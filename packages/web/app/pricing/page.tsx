@@ -31,6 +31,7 @@ export default function PricingPage() {
   }, []);
 
   const handleSubscribe = async (planId: string) => {
+    console.log('Subscribing to plan:', planId);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subscriptions/initialize`,
         {
@@ -44,6 +45,7 @@ export default function PricingPage() {
       );
 
       const data = await res.json();
+      console.log('Subscription response:', data);
 
       if (data.authorization_url) {
         router.push(data.authorization_url);
