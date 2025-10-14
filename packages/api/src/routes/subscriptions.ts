@@ -20,6 +20,7 @@ subscriptionsRouter.post("/initialize", protect, async (req, res) => {
     }
 
     const transaction = await initializeTransaction(user.email, plan.price);
+    console.log("Paystack transaction:", transaction);
 
     const subscription = new Subscription({
       user: user._id,
