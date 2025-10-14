@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 interface IPlan {
   _id: string;
@@ -13,14 +14,13 @@ interface IPlan {
 export default function PricingPage() {
   const [plans, setPlans] = useState<IPlan[]>([]);
   const router = useRouter();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
-    console.log('NEXT_PUBLIC_BACKEND_URL:', process.env.NEXT_PUBLIC_BACKEND_URL);
     const fetchPlans = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/plans`);
         const data = await res.json();
-        console.log('Fetched plans:', data);
         setPlans(data);
       } catch (error) {
         console.error('Error fetching plans:', error);
@@ -31,21 +31,24 @@ export default function PricingPage() {
   }, []);
 
   const handleSubscribe = async (planId: string) => {
-    console.log('Subscribing to plan:', planId);
+    if (status === 'unauthenticated') {
+      router.push('/auth');
+      return;
+    }
+
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subscriptions/initialize`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${session?.accessToken}`,
           },
           body: JSON.stringify({ planId }),
         }
       );
 
       const data = await res.json();
-      console.log('Subscription response:', data);
 
       if (data.authorization_url) {
         router.push(data.authorization_url);
