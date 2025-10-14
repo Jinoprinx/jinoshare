@@ -20,6 +20,7 @@ export default function PricingPage() {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/plans`);
         const data = await res.json();
+        console.log('Fetched plans:', data);
         setPlans(data);
       } catch (error) {
         console.error('Error fetching plans:', error);
@@ -67,6 +68,7 @@ export default function PricingPage() {
 
         <div className="flex justify-center">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl">
+            {console.log('Rendering plans:', plans)}
             {plans.map((plan) => (
               <div key={plan._id} className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6" style={{ width: '19rem', backgroundColor: 'hsla(240, 15%, 9%, 1)', boxShadow: '0px -16px 24px 0px rgba(255,255,255,0.10) inset', border: '1px solid rgba(255,255,255,0.1)' }}>
                 <div className="flex items-center justify-between mb-6">
