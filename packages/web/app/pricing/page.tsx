@@ -17,7 +17,7 @@ export default function PricingPage() {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/plans`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/plans`);
         const data = await res.json();
         setPlans(data);
       } catch (error) {
@@ -30,7 +30,7 @@ export default function PricingPage() {
 
   const handleSubscribe = async (planId: string) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/subscriptions/initialize`,
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subscriptions/initialize`,
         {
           method: 'POST',
           headers: {
