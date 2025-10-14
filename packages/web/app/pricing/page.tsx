@@ -15,6 +15,7 @@ export default function PricingPage() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log('NEXT_PUBLIC_BACKEND_URL:', process.env.NEXT_PUBLIC_BACKEND_URL);
     const fetchPlans = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/plans`);
