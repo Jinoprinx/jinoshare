@@ -64,12 +64,26 @@ const PricingCard: React.FC<PricingCardProps> = ({ plan, handleSubscribe }) => {
           icon: <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 stroke-[1.5]" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21a8 8 0 0 0-16 0"/><circle cx="8" cy="7" r="4"/></svg>,
           featureDotClass: 'bg-blue-600',
           button: (
-            <button
-              onClick={() => handleSubscribe(plan._id)}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-white/10 hover:border-white/20 transition-all duration-200"
-            >
-              Get Started Free
-            </button>
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  const glowText = document.getElementById(`glow-text-${plan._id}`);
+                  if (glowText) {
+                    glowText.classList.add('glow');
+                    setTimeout(() => {
+                      glowText.classList.remove('glow');
+                    }, 700);
+                  }
+                }}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-white/10 hover:border-white/20 transition-all duration-200"
+              >
+                Get Started Free
+              </button>
+              <p id={`glow-text-${plan._id}`} className="text-center text-xs text-white/50 transition-all duration-300">
+                You are already on this plan
+              </p>
+            </div>
           ),
         };
     }
