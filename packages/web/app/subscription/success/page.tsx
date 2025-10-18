@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CheckCircleIcon, XCircleIcon, Loader2Icon, ArrowRightIcon } from "lucide-react";
 
-export default function SubscriptionSuccess() {
+function SubscriptionSuccessContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
@@ -102,5 +102,20 @@ export default function SubscriptionSuccess() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SubscriptionSuccess() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
+        <div className="homepage-gradient" />
+        <div className="relative z-10">
+          <Loader2Icon className="h-16 w-16 text-blue-500 animate-spin" />
+        </div>
+      </div>
+    }>
+      <SubscriptionSuccessContent />
+    </Suspense>
   );
 }
