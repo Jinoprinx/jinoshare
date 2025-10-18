@@ -22,7 +22,7 @@ export const initializePayment = async (email: string, amount: number, meta: any
                 logo: 'https://jino.com/favicon.ico',
             },
         };
-        const response = await flw.Payment.initiate(payload);
+        const response = await (flw.Payment.initiate ? flw.Payment.initiate(payload) : flw.initiatePayment(payload));
         return response;
     } catch (error) {
         console.log(error);
@@ -32,7 +32,7 @@ export const initializePayment = async (email: string, amount: number, meta: any
 
 export const verifyPayment = async (transactionId: string) => {
     try {
-        const response = await flw.Transaction.verify({ id: transactionId });
+        const response = await (flw.Transaction.verify ? flw.Transaction.verify({ id: transactionId }) : flw.verify_transaction({ id: transactionId }));
         return response;
     } catch (error) {
         console.log(error);
