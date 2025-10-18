@@ -5,6 +5,11 @@ const flw = new Flutterwave(config.flutterwavePublicKey, config.flutterwaveSecre
 
 export const initializePayment = async (email: string, amount: number, meta: any) => {
     try {
+        // Validate that Flutterwave keys are configured
+        if (!config.flutterwavePublicKey || !config.flutterwaveSecretKey) {
+            throw new Error('Flutterwave keys not configured. Please set FLUTTERWAVE_PUBLIC_KEY and FLUTTERWAVE_SECRET_KEY in your environment variables.');
+        }
+
         const payload = {
             tx_ref: 'JINO-' + Date.now(),
             amount,
@@ -20,10 +25,10 @@ export const initializePayment = async (email: string, amount: number, meta: any
                 logo: 'https://jino.com/favicon.ico',
             },
         };
-        const response = await flw.Payment.initiate(payload);
+        const response = await flw.Charge.initialize(payload);
         return response;
     } catch (error) {
-        console.log(error);
+        console.log('Flutterwave initialization error:', error);
         throw new Error('Error initializing payment');
     }
 }
