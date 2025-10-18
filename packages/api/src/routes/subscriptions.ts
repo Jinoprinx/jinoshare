@@ -11,7 +11,7 @@ export const subscriptionsRouter = Router();
 subscriptionsRouter.post("/initialize", protect, async (req, res) => {
     try {
         const { planId } = req.body;
-        const user = await User.findById(req.user.id);
+        const user = await User.findById(req.user.sub);
         const plan = await Plan.findById(planId);
 
         if (!user || !plan) {
