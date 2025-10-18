@@ -1,4 +1,5 @@
 const Flutterwave = require('flutterwave-node-v3');
+import axios from 'axios';
 import { config } from '../config';
 
 const flw = new Flutterwave(config.flutterwavePublicKey, config.flutterwaveSecretKey);
@@ -25,10 +26,22 @@ export const initializePayment = async (email: string, amount: number, meta: any
                 logo: 'https://jino.com/favicon.ico',
             },
         };
-        const response = await flw.Charge.initialize(payload);
-        return response;
-    } catch (error) {
-        console.log('Flutterwave initialization error:', error);
+
+        // Use direct API call for Flutterwave Standard (hosted checkout)
+        const response = await axios.post(
+            'https://api.flutterwave.com/v3/payments',
+            payload,
+            {
+                headers: {
+                    'Authorization': `Bearer ${config.flutterwaveSecretKey}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        return response.data;
+    } catch (error: any) {
+        console.log('Flutterwave initialization error:', error.response?.data || error.message);
         throw new Error('Error initializing payment');
     }
 }
