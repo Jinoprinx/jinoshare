@@ -3,6 +3,7 @@ const Flutterwave = require('flutterwave-node-v3');
 import { config } from '../config';
 
 const flw = new Flutterwave(config.flutterwavePublicKey, config.flutterwaveSecretKey);
+console.log(flw);
 
 export const initializePayment = async (email: string, amount: number, meta: any) => {
     try {
