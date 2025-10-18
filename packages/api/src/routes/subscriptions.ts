@@ -11,8 +11,8 @@ export const subscriptionsRouter = Router();
 subscriptionsRouter.post("/initialize", protect, async (req, res) => {
     try {
         const { planId } = req.body;
-        const user = await User.findById(req.user.sub);
-        const plan = await Plan.findById(planId);
+        const user = await User.findById(req.user.sub) as any;
+        const plan = await Plan.findById(planId) as any;
 
         if (!user || !plan) {
             return res.status(404).json({ message: "User or plan not found" });
@@ -21,7 +21,7 @@ subscriptionsRouter.post("/initialize", protect, async (req, res) => {
         const subscription = new Subscription({
             user: user._id,
             plan: plan._id,
-        });
+        }) as any;
 
         await subscription.save();
 

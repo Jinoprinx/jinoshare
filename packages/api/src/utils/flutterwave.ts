@@ -1,6 +1,6 @@
 
 import Flutterwave from 'flutterwave-node-v3';
-import config from '../config';
+import { config } from '../config';
 
 const flw = new Flutterwave(config.flutterwavePublicKey, config.flutterwaveSecretKey);
 
