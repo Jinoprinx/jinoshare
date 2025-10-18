@@ -106,6 +106,7 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [posting, setPosting] = useState<ProviderId | "all" | null>(null);
   const [tab, setTab] = useState<string>("write");
+  const [showCalendar, setShowCalendar] = useState(false);
   
 
   const [autoPostEnabled, setAutoPostEnabled] = useState(false);
@@ -388,7 +389,6 @@ function Dashboard() {
       [
         { key: "write", label: "Write", icon: PenSquareIcon },
 
-        { key: "calendar", label: "Calendar", icon: CalendarIcon },
         { key: "library", label: "Library", icon: SparklesIcon },
         { key: "templates", label: "Templates", icon: LayoutGridIcon },
         { 
@@ -513,6 +513,12 @@ function Dashboard() {
                 </div>
               )}
             </div>
+            <a
+              href="/pricing"
+              className="flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10"
+            >
+              Upgrade
+            </a>
           </div>
         </div>
 
@@ -596,6 +602,12 @@ function Dashboard() {
                 <div className="flex gap-2">
                   <button
                     className="rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10"
+                    onClick={() => setShowCalendar(true)}
+                  >
+                    Schedule
+                  </button>
+                  <button
+                    className="rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10"
                     onClick={saveDraft}
                     disabled={loading}
                   >
@@ -603,6 +615,8 @@ function Dashboard() {
                   </button>
                 </div>
               </div>
+
+              {showCalendar && <Calendar posts={posts} />}
 
               <div className="mt-4 border-t border-white/10 pt-4">
                 <div className="flex flex-wrap items-center gap-2">
@@ -656,8 +670,6 @@ function Dashboard() {
         )}
 
 
-
-        {tab === "calendar" && <Calendar posts={posts} />}
 
         {tab === "library" && (
           <ContentList
