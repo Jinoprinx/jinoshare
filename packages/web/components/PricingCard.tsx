@@ -113,7 +113,7 @@ const PricingCard: React.FC<PricingCardProps> = ({ plan, handleSubscribe }) => {
 
       <div className="mb-6">
         <div className="flex items-baseline gap-2">
-          <span className="text-4xl text-white font-geist font-light tracking-tighter">${plan.price}</span>
+          <span className="text-4xl text-white font-geist font-light tracking-tighter">₦{plan.price}</span>
           <span className="text-sm text-neutral-400">/month</span>
         </div>
         <p className="text-xs text-neutral-500 mt-1">

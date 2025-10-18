@@ -11,6 +11,9 @@ export const config = {
   defaultUserId: process.env.DEFAULT_USER_ID || "dev-user",
   workerSecret: process.env.WORKER_SECRET || "dev-worker-secret",
   nextAuthSecret: process.env.NEXTAUTH_SECRET || "dev-nextauth-secret",
+  flutterwavePublicKey: process.env.FLUTTERWAVE_PUBLIC_KEY,
+  flutterwaveSecretKey: process.env.FLUTTERWAVE_SECRET_KEY,
+  flutterwaveRedirectUrl: process.env.FLUTTERWAVE_REDIRECT_URL || "http://localhost:3000/dashboard",
   providers: {
     x: {
       clientId: process.env.X_CLIENT_ID!,

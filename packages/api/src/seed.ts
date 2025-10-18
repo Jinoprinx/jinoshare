@@ -39,7 +39,7 @@ const seedPlans = async () => {
     },
     {
       name: 'Pro',
-      price: 24,
+      price: 20000,
       features: [
         'Unlimited AI generations',
         '10 platforms + one-click publish',
@@ -52,7 +52,7 @@ const seedPlans = async () => {
     },
     {
       name: 'Business',
-      price: 59,
+      price: 50000,
       features: [
         'Unlimited AI generations + assets',
         '15 platforms + per-channel customization',
@@ -80,6 +80,7 @@ const seed = async () => {
   await seedAdmin();
   await seedPlans();
   mongoose.connection.close();
+  process.exit(0);
 };
 
 seed();

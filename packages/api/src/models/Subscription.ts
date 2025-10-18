@@ -6,7 +6,7 @@ export interface ISubscription extends Document {
   plan: mongoose.Types.ObjectId;
   status: "active" | "inactive" | "expired";
   expiresAt: Date;
-  paystackReference: string;
+  flutterwaveReference: string;
 }
 
 const SubscriptionSchema: Schema = new Schema(
@@ -19,7 +19,7 @@ const SubscriptionSchema: Schema = new Schema(
       default: "inactive",
     },
     expiresAt: { type: Date },
-    paystackReference: { type: String },
+    flutterwaveReference: { type: String },
   },
   { timestamps: true }
 );
