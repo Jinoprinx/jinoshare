@@ -8,7 +8,7 @@ const aiFeatures = [
     path: "/dashboard/ai/planner",
   },
   {
-    title: "Generate Posts",
+    title: "Generate Posts Ideas",
     description: "Create social media posts from a topic.",
     path: "/dashboard/ai/generate",
   },

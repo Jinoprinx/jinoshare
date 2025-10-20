@@ -1,6 +1,7 @@
 'use client'
 import { useState, useMemo } from "react";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { ArrowLeftIcon } from "lucide-react";
 import {TemplateInfo} from "./TemplateInfo";
 
 interface Field {
@@ -12,14 +13,14 @@ interface Field {
   example?: string;
 }
 
-const DynamicForm = ({ fields }: { fields: Field[] }) => {
+const DynamicForm = ({ fields, defaultValue }: { fields: Field[], defaultValue?: string }) => {
   return (
     <>
       {fields.map((field) => (
         <div key={field.name} className="grid gap-2">
           <label htmlFor={field.name} className="font-semibold">{field.label}</label>
           {field.type === 'textarea' ? (
-            <textarea name={field.name} id={field.name} className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" />
+            <textarea name={field.name} id={field.name} className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md" defaultValue={field.name === 'niche' ? defaultValue : ''} />
           ) : field.type === 'select' ? (
             <select name={field.name} id={field.name} multiple={field.multiple} className="w-full p-2 bg-gray-800 border border-gray-700 rounded-md">
               {field.options?.map((option: string) => (
@@ -36,7 +37,12 @@ const DynamicForm = ({ fields }: { fields: Field[] }) => {
 };
 
 export default function PlannerPageClient() {
+  const router = useRouter();
   const searchParams = useSearchParams();
+  const ideasQuery = searchParams.get('ideas');
+  const ideas = ideasQuery ? JSON.parse(decodeURIComponent(ideasQuery)) : [];
+  const nicheDefaultValue = ideas.join(', ');
+
   // Default to "Generic" template if no template is specified
   const templateName = searchParams.get('template') || 'Generic';
 
@@ -242,6 +248,15 @@ export default function PlannerPageClient() {
 
   return (
     <div className="flex-1 p-8 pt-6">
+      <div className="w-full max-w-4xl mb-6">
+        <button
+          onClick={() => router.back()}
+          className="flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium hover:bg-white/10"
+        >
+          <ArrowLeftIcon className="h-4 w-4" />
+          Back
+        </button>
+      </div>
       <div className="rounded-lg border border-white/10 bg-black/20 p-6">
         <h2 className="text-2xl font-bold mb-4">AI Content Planner</h2>
         <p className="text-gray-400 mb-4">
@@ -255,7 +270,7 @@ export default function PlannerPageClient() {
           />
         )}
         <form onSubmit={handleSubmit} className="grid gap-4">
-          <DynamicForm fields={fields} />
+          <DynamicForm fields={fields} defaultValue={nicheDefaultValue} />
           <button type="submit" className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700" disabled={loading}>
             {loading ? "Generating..." : "Generate Content Plan"}
           </button>

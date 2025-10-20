@@ -9,6 +9,8 @@ export default function GeneratePostIdeasPage() {
   const [niche, setNiche] = useState("");
   const [generatedIdeas, setGeneratedIdeas] = useState<string[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedIdeas, setSelectedIdeas] = useState<string[]>([]);
+  const [isAdding, setIsAdding] = useState(false);
   const router = useRouter();
 
   const handleGenerate = async () => {
@@ -21,6 +23,55 @@ export default function GeneratePostIdeasPage() {
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const handleIdeaSelect = (idea: string) => {
+    setSelectedIdeas((prev) =>
+      prev.includes(idea)
+        ? prev.filter((p) => p !== idea)
+        : [...prev, idea]
+    );
+  };
+
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setSelectedIdeas(generatedIdeas);
+    } else {
+      setSelectedIdeas([]);
+    }
+  };
+
+  const handleSaveToLibrary = async () => {
+    if (selectedIdeas.length === 0) return;
+
+    setIsAdding(true);
+    try {
+      await Promise.all(
+        selectedIdeas.map((postContent) =>
+          fetch("/api/posts", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ content: postContent }),
+          })
+        )
+      );
+
+      alert(`${selectedIdeas.length} post(s) added to your library as drafts!`);
+      setSelectedIdeas([]);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to add posts.");
+    } finally {
+      setIsAdding(false);
+    }
+  };
+
+  const handleMoveToContentPlanner = () => {
+    if (selectedIdeas.length === 0) return;
+    const ideas = JSON.stringify(selectedIdeas);
+    router.push(`/dashboard/ai/planner?ideas=${encodeURIComponent(ideas)}`);
   };
 
   return (
@@ -57,16 +108,51 @@ export default function GeneratePostIdeasPage() {
               {isGenerating ? "Generating..." : "Generate"}
             </button>
 
-            <div className="mt-4 space-y-4">
-              {generatedIdeas.map((idea, index) => (
-                <div
-                  key={index}
-                  className="rounded-lg border border-white/10 bg-black/20 p-4"
-                >
-                  {idea}
+            {generatedIdeas.length > 0 && (
+              <div className="mt-4 space-y-4">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="select-all"
+                    onChange={handleSelectAll}
+                    checked={selectedIdeas.length === generatedIdeas.length}
+                    className="mr-4"
+                  />
+                  <label htmlFor="select-all">Select All</label>
                 </div>
-              ))}
-            </div>
+                {generatedIdeas.map((idea, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center rounded-lg border border-white/10 bg-black/20 p-4"
+                  >
+                    <input
+                      type="checkbox"
+                      id={`idea-${index}`}
+                      checked={selectedIdeas.includes(idea)}
+                      onChange={() => handleIdeaSelect(idea)}
+                      className="mr-4"
+                    />
+                    <label htmlFor={`idea-${index}`} className="cursor-pointer w-full">{idea}</label>
+                  </div>
+                ))}
+                <div className="flex gap-4 mt-4">
+                  <button
+                    onClick={handleSaveToLibrary}
+                    disabled={selectedIdeas.length === 0 || isAdding}
+                    className="rounded-md bg-green-600 px-4 py-3 text-sm font-medium text-white hover:bg-green-700 disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {isAdding ? "Saving..." : "Save to Library"}
+                  </button>
+                  <button
+                    onClick={handleMoveToContentPlanner}
+                    disabled={selectedIdeas.length === 0}
+                    className="rounded-md bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    Move to Content Planner
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
