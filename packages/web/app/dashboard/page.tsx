@@ -396,7 +396,7 @@ function Dashboard() {
           label: "AI", 
           icon: SparklesIcon, 
           children: [
-            { key: "ai-generate", label: "Generate Posts", path: "/dashboard/ai/generate" },
+            { key: "ai-generate", label: "Generate Post Ideas", path: "/dashboard/ai/generate" },,
             { key: "ai-content", label: "Content Planner", path: "/dashboard/ai/planner" },
             { key: "ai-rewrite", label: "Rewrite Post", path: "/dashboard/ai/rewrite" },
             { key: "ai-image", label: "Generate Images", path: "/dashboard/ai/image" },
