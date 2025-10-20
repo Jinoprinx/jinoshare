@@ -1,33 +1,29 @@
 import { Router } from "express";
 import { aiGenerate, stripJsonFences } from "@jino/ai";
-import { buildGeneratePostsPrompt } from "@jino/ai"
+import { buildGeneratePostIdeasPrompt } from "@jino/ai"
 
 export const aiGenerateRouter = Router();
 
-aiGenerateRouter.post("/", async (req, res) => {
+
+
+aiGenerateRouter.post("/post-ideas", async (req, res) => {
   try {
-    const { topic, platform, tone = "concise", count = 5 } = req.body || {};
-    if (!topic || !platform) {
-      return res.status(400).json({ ok: false, error: "topic and platform are required" });
+    const { niche } = req.body || {};
+    if (!niche) {
+      return res.status(400).json({ ok: false, error: "niche is required" });
     }
 
-    
+    const prompt = buildGeneratePostIdeasPrompt(niche);
 
-    const prompt = buildGeneratePostsPrompt(topic, platform, tone, count);
-
-//     const prompt = `Generate ${count} distinct ${platform} posts about "${topic}".
-// Tone: ${tone}. Style: ${platformHints[platform] || platformHints.generic}.
-// Output as a JSON array of strings only.`;
-
-    const raw = await aiGenerate(prompt, { maxTokens: 800 });
-    let posts: string[];
+    const raw = await aiGenerate(prompt, { maxTokens: 2000 });
+    let ideas: string[];
     try {
-      posts = JSON.parse(stripJsonFences(raw));
-      if (!Array.isArray(posts)) throw new Error();
+      ideas = JSON.parse(stripJsonFences(raw));
+      if (!Array.isArray(ideas)) throw new Error();
     } catch {
-      posts = raw.split(/\n+/).filter(Boolean).slice(0, count);
+      ideas = raw.split(/\n+/).filter(Boolean);
     }
-    res.json({ ok: true, posts });
+    res.json({ ok: true, ideas });
   } catch (err: any) {
     res.status(400).json({ ok: false, error: err.message });
   }

@@ -2,16 +2,7 @@ import type { AIGenerateRequest, AIGenerateResponse, AIRewriteRequest, AIRewrite
 
 const API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:4000";
 
-export async function generatePosts(req: AIGenerateRequest) {
-  const res = await fetch(`${API_BASE}/api/ai/generate/`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(req)
-  });
-  const data: AIGenerateResponse = await res.json();
-  if (!data.ok) throw new Error(data.error || "AI generate failed");
-  return data.posts || [];
-}
+
 
 export async function rewritePost(text: string, platform: string, tone: string, improve: string) {
   const req: AIRewriteRequest = { text, platform, tone, improve };
@@ -23,4 +14,17 @@ export async function rewritePost(text: string, platform: string, tone: string, 
   const data: AIRewriteResponse = await res.json();
   if (!data.ok) throw new Error(data.error || "AI rewrite failed");
   return data.text || "";
+}
+
+export async function generatePostIdeas({ niche }: { niche: string }) {
+  const res = await fetch(`${API_BASE}/api/ai/generate/post-ideas`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ niche }),
+    }
+  );
+  const data = await res.json();
+  if (!data.ok) throw new Error(data.error || "AI generate failed");
+  return data.ideas || [];
 }

@@ -1,23 +1,21 @@
 'use client';
 
 import { useState } from "react";
-import { generatePosts } from "../../../../lib/ai";
+import { generatePostIdeas } from "../../../../lib/ai";
 import { useRouter } from "next/navigation";
 import { ArrowLeftIcon } from "lucide-react";
 
-export default function GeneratePostsPage() {
-  const [topic, setTopic] = useState("");
-  const [platform, setPlatform] = useState("x");
-  const [tone, setTone] = useState("concise");
-  const [generatedPosts, setGeneratedPosts] = useState<string[]>([]);
+export default function GeneratePostIdeasPage() {
+  const [niche, setNiche] = useState("");
+  const [generatedIdeas, setGeneratedIdeas] = useState<string[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const router = useRouter();
 
   const handleGenerate = async () => {
     setIsGenerating(true);
     try {
-      const posts = await generatePosts({ topic, platform, tone });
-      setGeneratedPosts(posts);
+      const ideas = await generatePostIdeas({ niche });
+      setGeneratedIdeas(ideas);
     } catch (error) {
       console.error(error);
     } finally {
@@ -36,7 +34,7 @@ export default function GeneratePostsPage() {
           <ArrowLeftIcon className="h-4 w-4" />
           Back
         </button>
-        <h2 className="font-display text-3xl text-center font-bold mt-4">Generate Posts</h2>
+        <h2 className="font-display text-3xl text-center font-bold mt-4">Generate Post Ideas</h2>
       </div>
 
       {/* Glassmorphism content card */}
@@ -45,31 +43,11 @@ export default function GeneratePostsPage() {
           <div className="flex flex-col gap-4">
             <input
               type="text"
-              placeholder="Topic"
-              value={topic}
-              onChange={(e) => setTopic(e.target.value)}
+              placeholder="Your Niche or Business Idea"
+              value={niche}
+              onChange={(e) => setNiche(e.target.value)}
               className="rounded-md border border-white/10 bg-white/5 p-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600/40"
             />
-
-            <select
-              value={platform}
-              onChange={(e) => setPlatform(e.target.value)}
-              className="rounded-md border border-white/20 bg-black/60 text-white p-2 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-            >
-              <option value="x">X (Twitter)</option>
-              <option value="linkedin">LinkedIn</option>
-              <option value="instagram">Instagram</option>
-            </select>
-
-            <select
-              value={tone}
-              onChange={(e) => setTone(e.target.value)}
-              className="rounded-md border border-white/20 bg-black/60 p-2 focus:outline-none focus:ring-2 focus:ring-blue-600/40"
-            >
-              <option value="concise">Concise</option>
-              <option value="formal">Formal</option>
-              <option value="casual">Casual</option>
-            </select>
 
             <button
               onClick={handleGenerate}
@@ -80,12 +58,12 @@ export default function GeneratePostsPage() {
             </button>
 
             <div className="mt-4 space-y-4">
-              {generatedPosts.map((post, index) => (
+              {generatedIdeas.map((idea, index) => (
                 <div
                   key={index}
                   className="rounded-lg border border-white/10 bg-black/20 p-4"
                 >
-                  {post}
+                  {idea}
                 </div>
               ))}
             </div>

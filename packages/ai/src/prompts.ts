@@ -30,31 +30,7 @@ const PLATFORM_GUIDES: Record<string, string> = {
   generic: "Clear, concise, actionable. Avoid filler and overused phrases."
 };
 
-// 1. Post Generation
-export function buildGeneratePostsPrompt(
-  topic: string,
-  platform: string,
-  tone: string,
-  count: number
-) {
-  return `You are a skilled social media copywriter.
-Generate ${count} distinct, high-quality posts for the ${platform} platform about the topic "${topic}".
-Tone: ${tone}.
-Platform style guide:
-${PLATFORM_GUIDES[platform] || PLATFORM_GUIDES.generic}
 
-Rules:
-- Each post must be unique and non-repetitive.
-- Avoid generic hooks like "Check this out".
-- Follow platform-specific length, tone, and style rules exactly.
-- Do not include links unless explicitly requested.
-- Avoid banned or irrelevant hashtags.
-
-Output:
-Return a valid JSON array of strings.
-Do not include explanations, markdown, or extra text.
-Ensure JSON is syntactically correct with no trailing commas.`;
-}
 
 // 2. Rewrite/Remix
 export function buildRewritePrompt(
@@ -240,4 +216,22 @@ export function buildPromptFromTemplate(templateName: string, variables: any) {
     return promptBuilder(variables);
   }
   throw new Error(`Prompt template not found: ${templateName}`);
+}
+
+export function buildGeneratePostIdeasPrompt(niche: string) {
+  return `You are a viral content strategist.
+Generate 30 short-form video or post ideas for the niche "${niche}".
+
+The ideas should be emotionally engaging, feel original, and contain a clear hook in the first line.
+The hook must be bold, emotional, and curiosity-driven, and under 10 words.
+
+Rules:
+- Each idea must be unique and non-repetitive.
+- The hook should be the first sentence of the idea.
+- The idea should be concise and easy to understand.
+
+Output:
+Return a valid JSON array of strings.
+Do not include explanations, markdown, or extra text.
+Ensure JSON is syntactically correct with no trailing commas.`;
 }
