@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { connectDb } from "../../../common/dist/db";
 import { sendEmail } from "../utils/email";
 import crypto from "crypto";
-
+import { addContactToList } from "../providers/email-marketing";
 export const signup = Router();
 
 // Handle preflight OPTIONS request
@@ -19,7 +19,7 @@ signup.options("/", (req, res) => {
 
 signup.post("/", async (req, res) => {
   try {
-    const { email, password, firstName, lastName } = req.body;
+    const { email, password, firstName, lastName, newsletterConsent } = req.body;
 
     if (!email || !password || !firstName || !lastName) {
       return res.status(400).json({ message: "All fields are required." });
@@ -45,6 +45,12 @@ signup.post("/", async (req, res) => {
     user.emailVerificationTokenExpires = new Date(Date.now() + 3600000); // 1 hour
 
     await user.save();
+
+    // Add user to marketing list if consent is given
+    if (newsletterConsent) {
+      await addContactToList(user.email, `${user.firstName} ${user.lastName}`);
+    }
+
     const verificationUrl = `${process.env.APP_URL}/auth/verify-email?token=${emailVerificationToken}`;
 
     if (user.email) {
