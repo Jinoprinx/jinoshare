@@ -182,30 +182,29 @@ export default function AuthPage() {
             onChange={(e) => setEmail(e.target.value)}
             className="w-full rounded-md border border-white/20 bg-black/60 text-white p-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
           />
-              <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              {isSignUp && (
-                <div className="flex items-center space-x-2 mt-4">
-                  <input
-                    type="checkbox"
-                    id="newsletterConsent"
-                    checked={newsletterConsent}
-                    onChange={(e) => setNewsletterConsent(e.target.checked)}
-                    className="form-checkbox h-4 w-4 text-primary rounded"
-                  />
-                  <Label htmlFor="newsletterConsent" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                    I agree to receive marketing emails and newsletters.
-                  </Label>
-                </div>
-              )}
+          {mode === 'signup' && (
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-md border border-white/20 bg-black/60 text-white p-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+            />
+          )}
+          {mode === 'signup' && (
+            <div className="flex items-center space-x-2 mt-2">
+              <input
+                type="checkbox"
+                id="newsletterConsent"
+                checked={newsletterConsent}
+                onChange={(e) => setNewsletterConsent(e.target.checked)}
+                className="form-checkbox h-4 w-4 text-primary rounded bg-black/60 border-white/20"
+              />
+              <label htmlFor="newsletterConsent" className="text-sm text-gray-300">
+                I agree to receive marketing emails and newsletters.
+              </label>
+            </div>
+          )}
           {mode === 'signup' && (
             <input
               type="password"
