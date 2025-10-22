@@ -192,20 +192,6 @@ export default function AuthPage() {
             />
           )}
           {mode === 'signup' && (
-            <div className="flex items-center space-x-2 mt-2">
-              <input
-                type="checkbox"
-                id="newsletterConsent"
-                checked={newsletterConsent}
-                onChange={(e) => setNewsletterConsent(e.target.checked)}
-                className="form-checkbox h-4 w-4 text-primary rounded bg-black/60 border-white/20"
-              />
-              <label htmlFor="newsletterConsent" className="text-sm text-gray-300">
-                I agree to receive marketing emails and newsletters.
-              </label>
-            </div>
-          )}
-          {mode === 'signup' && (
             <input
               type="password"
               placeholder="Confirm password"
@@ -227,6 +213,20 @@ export default function AuthPage() {
               ? 'Sign in with Email'
               : 'Create account'}
           </button>
+          {mode === 'signup' && (
+            <div className="flex items-center space-x-2 mt-2">
+              <input
+                type="checkbox"
+                id="newsletterConsent"
+                checked={newsletterConsent}
+                onChange={(e) => setNewsletterConsent(e.target.checked)}
+                className="form-checkbox h-4 w-4 text-primary rounded bg-black/60 border-white/20"
+              />
+              <label htmlFor="newsletterConsent" className="text-sm text-gray-300">
+                I agree to receive marketing emails and newsletters.
+              </label>
+            </div>
+          )}
         </div>
 
         {/* Divider */}
