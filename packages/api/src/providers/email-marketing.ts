@@ -1,4 +1,4 @@
-'''import Mailjet from 'node-mailjet';
+import Mailjet from 'node-mailjet';
 import { config } from '../config';
 
 const mailjet = new Mailjet({
@@ -27,4 +27,3 @@ export const addContactToList = async (email: string, name: string) => {
     console.error('Error adding contact to Mailjet:', error);
   }
 };
-'''

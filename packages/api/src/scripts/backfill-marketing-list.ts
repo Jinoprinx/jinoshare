@@ -1,4 +1,3 @@
-'''
 import { connectDb } from '../../../common/dist/db';
 import { User } from '../models/User';
 import { addContactToList } from '../providers/email-marketing';
@@ -28,4 +27,3 @@ backfill().catch(err => {
   console.error('Error during backfill:', err);
   process.exit(1);
 });
-'''
