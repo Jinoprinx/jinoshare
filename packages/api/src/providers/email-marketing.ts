@@ -1,5 +1,4 @@
-'''
-import Mailjet from 'node-mailjet';
+'''import Mailjet from 'node-mailjet';
 import { config } from '../config';
 
 const mailjet = new Mailjet({
