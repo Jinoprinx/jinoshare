@@ -14,14 +14,13 @@ export const addContactToList = async (email: string, name: string) => {
 
   try {
     await mailjet
-      .post('contactslist', { 'id': config.mailjet.contactListId })
-      .action('managecontact')
-      .request({
-        Name: name,
-        Properties: 'object',
-        Action: "addnoforce",
-        Email: email
-      });
+      .post('listrecipient', { 'version': 'v3' })
+      .body({
+        'ContactAlt': email,
+        'ListID': config.mailjet.contactListId,
+        'IsActive': true,
+      })
+      .request();
     console.log(`Successfully added ${email} to Mailjet contact list.`);
   } catch (error) {
     console.error('Error adding contact to Mailjet:', error);
