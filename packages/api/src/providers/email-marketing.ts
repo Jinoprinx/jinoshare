@@ -15,12 +15,11 @@ export const addContactToList = async (email: string, name: string) => {
   try {
     await mailjet
       .post('listrecipient', { 'version': 'v3' })
-      .body({
+      .request({
         'ContactAlt': email,
         'ListID': config.mailjet.contactListId,
         'IsActive': true,
-      })
-      .request();
+      });
     console.log(`Successfully added ${email} to Mailjet contact list.`);
   } catch (error) {
     console.error('Error adding contact to Mailjet:', error);
