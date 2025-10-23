@@ -17,7 +17,7 @@ const FeaturesSection = () => {
           <div className="grid grid-cols-1 gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-3">
             <article className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/8 to-white/4 p-6 backdrop-blur-xl hover:from-white/12 hover:to-white/6 transition-all duration-500">
               <div className="relative h-48 lg:h-52 overflow-hidden rounded-xl ring-1 ring-white/10 mb-6">
-                <Image src="https://unsplash.com/photos/person-writing-on-brown-wooden-table-near-white-ceramic-mug-s9CC2SKySJM" alt="AI Copywriting" width={1200} height={800} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <Image src="https://images.unsplash.com/photo-s9CC2SKySJM?q=80&w=1200&auto=format&fit=crop" alt="AI Copywriting" width={1200} height={800} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
                 <div className="absolute top-3 right-3">
                   <button className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 ring-1 ring-white/20 backdrop-blur-xl hover:bg-white/25 transition-colors">
@@ -115,7 +115,7 @@ const FeaturesSection = () => {
 
             <article className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/8 to-white/4 p-6 backdrop-blur-xl hover:from-white/12 hover:to-white/6 transition-all duration-500">
               <div className="relative h-48 lg:h-52 overflow-hidden rounded-xl ring-1 ring-white/10 mb-6">
-                <Image src="https://unsplash.com/photos/a-computer-screen-with-a-bunch-of-data-on-it-VxLhYXuLQN8" alt="Analytics" width={1200} height={800} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <Image src="https://images.unsplash.com/photo-VxLhYXuLQN8?q=80&w=1200&auto=format&fit=crop" alt="Analytics" width={1200} height={800} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
               </div>
               <div>
