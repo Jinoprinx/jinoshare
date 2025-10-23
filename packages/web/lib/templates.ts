@@ -3,169 +3,169 @@ export const templates = [
     title: 'Freebie Alert',
     category: 'free',
     templateName: 'FreebieAlert',
-    content: 'Get our new e-book for free! 🎁\n\nLearn how to grow your social media presence with our expert tips and tricks.\n\n#freebie #ebook #socialmedia #growthhacking',
+    content: 'Struggling to grow your social media presence? 🤔\n\nWe get it. It can be tough to stand out in a crowded space.\n\nThat’s why we created our new e-book, “The Ultimate Guide to Social Media Growth.” 🚀\n\nIn this free guide, you’ll learn:\n\n✅ Our top 5 strategies for attracting new followers\n✅ How to create content that gets noticed\n✅ The secret to writing captions that convert\n\nReady to take your social media to the next level? 👇\n\nComment “GROWTH” below and we’ll send you a free copy! 🎁\n\n#socialmediagrowth #freeebook #socialmediatips #growthhacking #socialmediamarketing',
   },
   {
     title: 'AI Accelerated Founder Post',
     category: 'free',
     templateName: 'AIAcceleratedFounderPost',
-    content: 'If you can’t find 10 motivated sellers in 72 hours,\n\n you don’t have a real estate business.\n\nYou have a spreadsheet full of hope and a Zillow addiction. \n\nHere’s the $100K Seller Validation Test that separates investors from dreamers: - \n\n#mondaymotivation #inspiration #quotes #success',
+    content: 'You don’t have a real estate business if you can’t find 10 motivated sellers in 72 hours. 🤯\n\nYou have a spreadsheet full of hope and a Zillow addiction.\n\nIt’s time to separate the investors from the dreamers with the $100K Seller Validation Test. 👇\n\n1. Can you identify a motivated seller in less than 5 minutes? (Yes/No)\n2. Do you have a system for consistently generating leads? (Yes/No)\n3. Are you closing at least one deal per month? (Yes/No)\n\nIf you answered “No” to any of these questions, you’re not an investor... yet. 😉\n\nWant to learn how to become a real estate investor? Comment “INVESTOR” below! 👇\n\n#realestateinvesting #motivatedsellers #100kchallenge #realestatebusiness #investorvsidreamer',
   },
   {
     title: 'Paid Course Promotion',
     category: 'paid',
     templateName: 'PaidCourse',
-    content: 'Ready to take your skills to the next level? 🚀\n\nOur new course on advanced social media marketing is now available!\n\nEnroll now and get 20% off for a limited time.\n\n#course #marketing #socialmedia #education',
+    content: 'Ready to become a social media marketing master? 🚀\n\nBut you feel stuck, overwhelmed, and unsure of what’s next.\n\nOur new course, “Advanced Social Media Marketing,” is the path to mastery. 🎓\n\nIn this course, you’ll learn:\n\n✅ How to create a winning social media strategy\n✅ The secrets of viral content\n✅ How to build a loyal community\n✅ And so much more!\n\nEnroll now and get 20% off for a limited time. 💰\n\nLink in bio! 🔗\n\n#socialmediamarketing #advancedmarketing #onlinecourse #marketingmastery #socialmediacourse',
   },
   {
     title: 'Quick Tutorial',
     category: 'tutorials',
     templateName: 'QuickTutorial',
-    content: 'Here\'s a quick tutorial on how to create a stunning social media graphic in under 5 minutes! 🎨\n\n#tutorial #designtips #socialmedia #graphics',
+    content: 'Create stunning social media graphics in under 5 minutes! 🎨\n\nNo design skills? No problem!\n\nThis quick tutorial will show you how to create eye-catching graphics that will stop the scroll. 👇\n\nStep 1: Choose a template from our library.\nStep 2: Customize the text and colors.\nStep 3: Download and share!\n\nIt’s that easy! 🤯\n\nTry it out and tag us in your creations! We’d love to see what you come up with. 👇\n\n#designtips #socialmediagraphics #canvatutorial #graphicdesigntips #socialmediadesign',
   },
   {
     title: 'Carousel Post',
     category: 'carousels',
     templateName: 'CarouselPost',
-    content: 'Swipe through to learn our top 5 tips for writing engaging social media content! ✍️\n\n#carousel #contentwriting #socialmedia #tips',
+    content: 'The secret to writing engaging social media content is... 👇\n\n(Slide 1: Hook)\nThe secret to writing engaging social media content is to stop selling and start storytelling. 📖\n\n(Slide 2: Problem)\nAre you tired of posting content that gets zero engagement? You’re not alone.\n\n(Slide 3: Solution)\nThe solution is to tell stories that connect with your audience on an emotional level.\n\n(Slide 4: Tip 1)\nTip 1: Use the “hero’s journey” framework to structure your stories.\n\n(Slide 5: Tip 2)\nTip 2: Be vulnerable and share your struggles.\n\n(Slide 6: Tip 3)\nTip 3: Use vivid language to paint a picture in your audience’s mind.\n\n(Slide 7: CTA)\nSave this post for your next writing session! ✍️\n\n#contentwriting #storytelling #socialmediatips #engagement #carouselpost',
   },
   {
     title: 'Promo Offer',
     category: 'promos',
     templateName: 'PromoOffer',
-    content: '🔥 Flash Sale! 🔥\n\nGet 50% off all our products for the next 24 hours!\n\nDon\'t miss out on this amazing deal!\n\n#promo #sale #discount #limitedtimeoffer',
+    content: '🔥 FLASH SALE! Don’t miss out! 🔥\n\nYou’ve been waiting for this!\n\nFor the next 24 hours, get 50% off ALL our products. 🤯\n\nThis is our biggest sale of the year, and it won’t last long.\n\nDon’t let this opportunity slip away. 👇\n\nShop now! Link in bio! 🔗\n\n#flashsale #limitedtimeoffer #discount #sale #promo',
   },
   {
     title: 'Product Launch',
     category: 'launches',
     templateName: 'ProductLaunch',
-    content: 'We are excited to announce the launch of our new product! 🎉\n\n[Product Name] is a revolutionary new tool that will change the way you do social media.\n\n#launch #newproduct #socialmedia #innovation',
+    content: 'The wait is finally over! 🎉\n\nYou asked, we listened.\n\nIntroducing [Product Name], the revolutionary new tool that will change the way you do social media. 🤯\n\nWith [Product Name], you can:\n\n✅ [Benefit 1]\n✅ [Benefit 2]\n✅ [Benefit 3]\n\nReady to revolutionize your social media? 👇\n\nClick the link in our bio to be the first to get it! 🔗\n\n#productlaunch #newproduct #innovation #socialmedia #gamechanger',
   },
 
   {
     title: 'Authority Post',
     category: 'authority',
     templateName: 'AuthorityPost',
-    content: 'The biggest myth in [Your Niche] is that you need more time. You don’t. You need more focus. Here’s how to get it...'
+    content: 'You’re focused on the wrong thing in [Your Niche]. 🤯\n\nIt’s not about having more time. It’s about having more focus.\n\nHere’s how to get it: 👇\n\nMyth: You need to work 12-hour days to be successful.\nReality: You need to work smarter, not harder.\n\nMyth: You need to be everywhere, all the time.\nReality: You need to focus on the one thing that will move the needle.\n\nMyth: You need to have all the answers.\nReality: You need to be willing to learn and adapt.\n\nWhat are your thoughts on this? Let me know in the comments! 👇\n\n#[yourniche] #focus #productivity #successmindset #authority',
   },
   {
     title: 'Founder Journey Post',
     category: 'story',
     templateName: 'FounderJourneyPost',
-    content: 'I went from zero to a 7-figure business. It wasn’t easy. Here’s the real story...'
+    content: 'I built a 7-figure business from my garage. Here’s the raw, unfiltered story... 🚀\n\nIt all started with a simple idea and a whole lot of hustle.\n\nI faced countless challenges, made a ton of mistakes, and almost gave up more times than I can count.\n\nBut I refused to quit.\n\nAnd now, I’m sharing the lessons I learned along the way, so you can avoid the same pitfalls.\n\nWhat’s your founder story? Share it in the comments! 👇\n\n#founderstory #entrepreneurship #7figurebusiness #hustle #nevergiveup',
   },
   {
     title: 'Case Study Post',
     category: 'casestudy',
     templateName: 'CaseStudyPost',
-    content: 'How we helped a client double their revenue in 30 days. Here’s the breakdown...'
+    content: 'How we helped a client achieve [Specific, impressive result] in just [Timeframe]. 🤯\n\nOur client was struggling with [Problem].\n\nWe implemented our proven [Service/Product] and the results were staggering.\n\nHere’s the breakdown: 👇\n\n✅ [Result 1]\n✅ [Result 2]\n✅ [Result 3]\n\nWant results like these? DM us “CASE STUDY” to learn more. 🚀\n\n#casestudy #clientresults #successstory #marketingstrategy #[yourniche]',
   },
   {
     title: 'How-To Post',
     category: 'howto',
     templateName: 'HowToPost',
-    content: 'How to achieve [desired outcome] in 3 simple steps. A step-by-step guide...'
+    content: 'The only guide you need to achieve [Desired Outcome]. 🚀\n\nStruggling with [Problem]?\n\nThis simple 3-step guide will help you achieve [Desired Outcome] in no time. 👇\n\nStep 1: [Step 1]\nStep 2: [Step 2]\nStep 3: [Step 3]\n\nTry it out and let me know how it goes in the comments! 👇\n\n#[desiredoutcome] #howtoguide #stepbystep #[yourniche] #tutorial',
   },
   {
     title: 'Myth-Busting Post',
     category: 'myth',
     templateName: 'MythBustingPost',
-    content: 'You’ve been told [common myth]. The truth is, [surprising truth]. Here’s why...'
+    content: 'Everything you’ve been told about [Your Niche] is a lie. 🤯\n\nYou’ve been told [Common Myth].\n\nThe truth is, [Surprising Truth].\n\nHere’s why: 👇\n\n✅ [Reason 1]\n✅ [Reason 2]\n✅ [Reason 3]\n\nWhat other myths are out there? Let me know in the comments! 👇\n\n#[yourniche] #mythbusting #truthbomb #surprisingtruth #commonmisconceptions',
   },
   {
     title: 'Trend/Insight Post',
     category: 'trend',
     templateName: 'TrendInsightPost',
-    content: 'The latest trend in [Your Niche] is changing everything. Are you prepared?'
+    content: 'This new trend in [Your Niche] is a game-changer. Are you ready? 🚀\n\nThe way we do [Activity] is about to change forever.\n\nHere’s what you need to know: 👇\n\n✅ [Insight 1]\n✅ [Insight 2]\n✅ [Insight 3]\n\nWhat are your thoughts on this trend? Let me know in the comments! 👇\n\n#[yourniche] #newtrend #gamechanger #futureof #[yourindustry]',
   },
   {
     title: 'Listicle Post',
     category: 'listicle',
     templateName: 'ListiclePost',
-    content: '5 must-read books for every entrepreneur. A curated list to help you grow...'
+    content: 'These 5 books will change the way you think about entrepreneurship. 🤯\n\nFeeling stuck in your entrepreneurial journey?\n\nThis curated list of books will give you the inspiration and knowledge you need to succeed. 👇\n\n📖 [Book 1] by [Author 1]\n📖 [Book 2] by [Author 2]\n📖 [Book 3] by [Author 3]\n📖 [Book 4] by [Author 4]\n📖 [Book 5] by [Author 5]\n\nWhat’s your favorite business book? Let me know in the comments! 👇\n\n#entrepreneurbooks #mustread #businessbooks #bookrecommendations #entrepreneurship',
   },
   {
     title: 'Hot-Take Post',
     category: 'hottake',
     templateName: 'HotTakePost',
-    content: 'Unpopular opinion: [Your Hot Take]. Here’s why I’m right...'
+    content: 'My most controversial opinion about [Your Niche]... 🤫\n\nI know this is an unpopular opinion, but I have to say it.\n\n[Your Hot Take].\n\nHere’s why I’m right: 👇\n\n✅ [Reason 1]\n✅ [Reason 2]\n✅ [Reason 3]\n\nDo you agree or disagree? Let’s debate in the comments! 👇\n\n#[yourniche] #hottake #unpopularopinion #controversial #debate',
   },
   {
     title: 'Motivational Post',
     category: 'motivation',
     templateName: 'MotivationalPost',
-    content: 'Your only limit is you. Believe in yourself and you will be unstoppable.'
+    content: 'Feeling stuck? I’ve been there. Here’s what I learned... 🚀\n\nIt’s easy to feel like you’re not making progress.\n\nBut every step, no matter how small, is a step in the right direction.\n\nRemember: 👇\n\n✅ You are capable of amazing things.\n✅ You are stronger than you think.\n✅ You are not alone.\n\nWhat’s one thing you’re proud of this week? Share it in the comments! 👇\n\n#motivation #inspiration #yougotthis #nevergiveup #mindset',
   },
   {
     title: 'Offer Post',
     category: 'offer',
     templateName: 'OfferPost',
-    content: 'Limited-time offer! Get [Your Offer] before it’s too late. Your success is one click away.'
+    content: 'This is your last chance to get [Your Offer]! 🤯\n\nDon’t let this opportunity slip away.\n\n[Your Offer] will help you [Benefit].\n\nHere’s what you get: 👇\n\n✅ [Feature 1]\n✅ [Feature 2]\n✅ [Feature 3]\n\nClick the link in our bio before it’s too late! 🔗\n\n#[youroffer] #limitedtimeoffer #dealine #lastchance #success',
   },
   {
     title: 'LinkedIn Founder Story',
     category: 'linkedin',
     templateName: 'LinkedInFounderStory',
-    content: 'From a garage to a global company. My journey as a founder on LinkedIn...'
+    content: 'From a garage to a global company. My journey as a founder on LinkedIn... 🚀\n\nI’m often asked how I built a successful business from scratch.\n\nThe truth is, it wasn’t easy.\n\nI made a lot of mistakes, and I learned a lot of lessons.\n\nIn this post, I’m sharing the 3 biggest lessons I learned on my journey from a garage to a global company. 👇\n\n1️⃣ [Lesson 1]\n2️⃣ [Lesson 2]\n3️⃣ [Lesson 3]\n\nWhat’s the biggest lesson you’ve learned in your career? Let me know in the comments! 👇\n\n#founderstory #entrepreneurship #linkedin #businesslessons #success',
   },
   {
     title: 'LinkedIn Trend',
     category: 'linkedin',
     templateName: 'LinkedInTrend',
-    content: 'The future of [Your Niche] on LinkedIn. A deep dive into the latest trends...'
+    content: 'The future of [Your Niche] on LinkedIn is not what you think. 🤯\n\nWhile everyone else is focused on [Common Trend], the real opportunity is in [New Trend].\n\nHere’s a deep dive into the latest trends that will shape the future of [Your Niche] on LinkedIn. 👇\n\n✅ [Trend 1]\n✅ [Trend 2]\n✅ [Trend 3]\n\nWhat are your predictions for the future of [Your Niche] on LinkedIn? Let me know in the comments! 👇\n\n#[yourniche] #linkedin #trends #futureof #[yourindustry]',
   },
   {
     title: 'LinkedIn Contrarian',
     category: 'linkedin',
     templateName: 'LinkedInContrarian',
-    content: 'Why everything you know about [Your Niche] on LinkedIn is wrong. A contrarian view...'
+    content: 'Everything you know about [Your Niche] on LinkedIn is wrong. 🤯\n\nI know that’s a bold statement, but hear me out.\n\nThe common wisdom is to [Common Wisdom].\n\nBut the data tells a different story. 👇\n\n✅ [Contrarian Point 1]\n✅ [Contrarian Point 2]\n✅ [Contrarian Point 3]\n\nWhat’s your most contrarian view about [Your Niche] on LinkedIn? Let me know in the comments! 👇\n\n#[yourniche] #linkedin #contrarian #unpopularopinion #business',
   },
   {
     title: 'LinkedIn Case Study',
     category: 'linkedin',
     templateName: 'LinkedInCaseStudy',
-    content: 'How we generated [impressive result] for a client using LinkedIn. A case study...'
+    content: 'How we generated [Impressive Result] for a client using only LinkedIn. 🤯\n\nOur client was struggling to generate leads on LinkedIn.\n\nWe implemented our proven 3-step process, and the results were incredible. 👇\n\n1️⃣ We optimized their LinkedIn profile to attract their ideal clients.\n2️⃣ We created a content strategy to build authority and trust.\n3️⃣ We launched a targeted outreach campaign to connect with key decision-makers.\n\nWant to learn more about our LinkedIn lead generation services? DM us “LINKEDIN” to get our free case study. 🚀\n\n#linkedin #casestudy #leadgeneration #b2bmarketing #socialselling',
   },
   {
     title: 'LinkedIn How-To',
     category: 'linkedin',
     templateName: 'LinkedInHowTo',
-    content: 'How to master LinkedIn for [Your Goal]. A practical guide...'
+    content: 'The ultimate guide to mastering LinkedIn for [Your Goal]. 🚀\n\nStruggling to get results on LinkedIn?\n\nThis practical guide will show you how to master LinkedIn and achieve [Your Goal]. 👇\n\n✅ How to optimize your profile to attract opportunities.\n✅ How to create content that gets noticed by the right people.\n✅ How to build a powerful network of connections.\n\nWhat’s your biggest challenge with LinkedIn? Let me know in the comments! 👇\n\n#linkedin #linkedintips #socialselling #personalbranding #[yourgoal]',
   },
   {
     title: 'LinkedIn Listicle',
     category: 'linkedin',
     templateName: 'LinkedInListicle',
-    content: 'Top 7 LinkedIn strategies for [Your Target Audience]. A comprehensive list...'
+    content: '7 LinkedIn strategies you’re not using (but should be). 🤯\n\nIf you’re a [Your Target Audience], you need to be on LinkedIn.\n\nBut are you using it to its full potential?\n\nHere are 7 LinkedIn strategies you’re not using (but should be). 👇\n\n1️⃣ [Strategy 1]\n2️⃣ [Strategy 2]\n3️⃣ [Strategy 3]\n4️⃣ [Strategy 4]\n5️⃣ [Strategy 5]\n6️⃣ [Strategy 6]\n7️⃣ [Strategy 7]\n\nWhich of these strategies will you try first? Let me know in the comments! 👇\n\n#linkedin #linkedintips #socialselling #personalbranding #[yourtargetaudience]',
   },
   {
     title: 'LinkedIn Hot-Take',
     category: 'linkedin',
     templateName: 'LinkedInHotTake',
-    content: 'My hot take on the state of LinkedIn in 2025. You might not like it...'
+    content: 'My hot take on the state of LinkedIn in 2025... and you’re not going to like it. 🤫\n\nLinkedIn is becoming a pay-to-play platform.\n\nOrganic reach is declining, and it’s only going to get worse.\n\nHere’s what you need to do to survive the LinkedIn apocalypse. 👇\n\n✅ [Tip 1]\n✅ [Tip 2]\n✅ [Tip 3]\n\nWhat’s your hot take on the state of LinkedIn? Let me know in the comments! 👇\n\n#linkedin #hottake #unpopularopinion #linkedin2025 #socialmedia',
   },
   {
     title: 'LinkedIn Motivation',
     category: 'linkedin',
     templateName: 'LinkedInMotivation',
-    content: 'Feeling stuck? Here’s your daily dose of motivation to conquer LinkedIn.'
+    content: 'Feeling stuck on your LinkedIn journey? You’re not alone. 🚀\n\nIt’s easy to get discouraged when you’re not seeing results.\n\nBut remember why you started.\n\nHere’s your daily dose of motivation to conquer LinkedIn. 👇\n\n✅ You are an expert in your field.\n✅ You have a unique voice and perspective.\n✅ You are capable of achieving your goals.\n\nWhat are you working towards on LinkedIn? Let me know in the comments! 👇\n\n#linkedin #motivation #inspiration #yougotthis #nevergiveup',
   },
   {
     title: 'LinkedIn Hiring',
     category: 'linkedin',
     templateName: 'LinkedInHiring',
-    content: 'We’re hiring! Join our team and help us build the future of [Your Industry].'
+    content: 'We’re hiring! 🚀\n\nAre you passionate about [Your Industry]?\n\nWe’re looking for a [Job Title] to join our team and help us build the future of [Your Industry].\n\nIn this role, you will: 👇\n\n✅ [Responsibility 1]\n✅ [Responsibility 2]\n✅ [Responsibility 3]\n\nIf you’re a creative and ambitious individual with a passion for [Your Industry], we want to hear from you!\n\nApply now! Link in bio! 🔗\n\n#hiring #joinourteam #jobopening #[yourindustry] #[jobtitle]',
   },
   {
     title: 'LinkedIn Offer',
     category: 'linkedin',
     templateName: 'LinkedInOffer',
-    content: 'Exclusive LinkedIn offer! Connect with me to learn more about [Your Offer].'
+    content: 'Exclusive LinkedIn offer for my connections! 🎁\n\nAs a thank you for being a valued connection, I’m offering a [Your Offer].\n\nThis is an exclusive offer for my LinkedIn connections, and it’s only available for a limited time.\n\nHere’s what you get: 👇\n\n✅ [Benefit 1]\n✅ [Benefit 2]\n✅ [Benefit 3]\n\nDM me “OFFER” to claim your exclusive discount! 🚀\n\n#linkedin #exclusiveoffer #thankyou #connections #socialselling',
   },
   {
-    title: 'Generic Post',
-    category: 'generic',
-    templateName: 'Generic',
-    content: 'A generic post template for all your social media needs. Customizable and versatile.'
+    title: 'Flexible Post',
+    category: 'flexible',
+    templateName: 'FlexiblePost',
+    content: '[Hook: Start with a powerful, attention-grabbing statement or question.]\n\n[Relate/Problem: Connect with the audience by acknowledging a common pain point or problem.]\n\n[Solution/Value: Briefly introduce the solution or the value proposition.]\n\n[Breakdown/Intrigue: Use bullet points or a numbered list to break down the solution and build intrigue.] 👇\n\n✅ [Point 1]\n✅ [Point 2]\n✅ [Point 3]\n\n[Call to Action (CTA): A clear, low-friction call to action.]\n\n#[hashtag1] #[hashtag2] #[hashtag3] #[hashtag4] #[hashtag5]'
   }
 ];

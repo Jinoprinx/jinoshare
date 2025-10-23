@@ -14,7 +14,7 @@ export default function AuthPage() {
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [newsletterConsent, setNewsletterConsent] = useState(true); // Added for marketing consent
+  const [newsletterConsent, setNewsletterConsent] = useState(false); // Added for marketing consent
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
@@ -27,6 +27,10 @@ export default function AuthPage() {
       if (mode === 'signup') {
         if (password !== confirm) {
           alert('Passwords do not match');
+          return;
+        }
+        if (!newsletterConsent) {
+          alert('Please agree to receive marketing emails and newsletters.');
           return;
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/signup`, {
@@ -218,12 +222,13 @@ export default function AuthPage() {
               <input
                 type="checkbox"
                 id="newsletterConsent"
+                required
                 checked={newsletterConsent}
                 onChange={(e) => setNewsletterConsent(e.target.checked)}
                 className="form-checkbox h-4 w-4 text-primary rounded bg-black/60 border-white/20"
               />
               <label htmlFor="newsletterConsent" className="text-sm text-gray-300">
-                I agree to receive marketing emails and newsletters.
+                I agree to receive marketing emails and newsletters.*
               </label>
             </div>
           )}
