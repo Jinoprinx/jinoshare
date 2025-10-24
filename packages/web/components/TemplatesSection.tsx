@@ -26,7 +26,7 @@ const TemplatesSection = () => {
           </div>
 
           <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] border border-white/10 ring-1 ring-white/5">
-            <Image src="https://images.unsplash.com/photo-RUsVVa57VPI?q=80&w=1200&auto=format&fit=crop" alt="Sale" width={1200} height={800} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+            <Image src="https://unsplash.com/photos/big-brand-sale-neon-signage-RUsVVa57VPI?q=80&w=1200&auto=format&fit=crop" alt="Sale" width={1200} height={800} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/>
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="bg-black/40 backdrop-blur-xl rounded-xl p-4 ring-1 ring-white/10">
