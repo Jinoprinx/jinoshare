@@ -16,7 +16,7 @@ export const config = {
   flutterwaveRedirectUrl: process.env.FLUTTERWAVE_REDIRECT_URL || "http://localhost:3000/dashboard",
   mailjet: {
     apiKey: process.env.MAILJET_API_KEY!,
-    apiSecret: process.env.MAILJET_SECRET_KEY!,
+    apiSecret: process.env.MAILJET_API_SECRET!,
     contactListId: process.env.MAILJET_CONTACT_LIST_ID!,
   },
   providers: {
